@@ -2,6 +2,8 @@
 
 This is the game-of-life project.
 
+[![Build and tests](https://github.com/bensuperpc/game-of-life/actions/workflows/linux.yml/badge.svg)](https://github.com/bensuperpc/game-of-life/actions/workflows/linux.yml)
+
 # Building and installing
 
 See the [BUILDING](BUILDING.md) document.
