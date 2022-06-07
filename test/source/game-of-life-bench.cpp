@@ -43,8 +43,8 @@ static void gol_c_bench_update(benchmark::State& state)
     UpdateGrid(grid, width, height);
     benchmark::ClobberMemory();
   }
-  FreeGrid(grid, rows);
-
+  FreeGrid(grid, width);
+  
   state.SetItemsProcessed(state.iterations() * cells);
   state.SetBytesProcessed(state.iterations() * cells * sizeof(bool));
 }
