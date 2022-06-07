@@ -12,7 +12,7 @@ static void gol_cpp_bench_update(benchmark::State& state)
   const auto cells = width * height;
 
   auto grid = benlib::Gol(width, height);
-  grid.RandomPopulate();
+  grid.RandomFill();
   benchmark::DoNotOptimize(grid);
 
   for (auto _ : state) {
@@ -35,7 +35,7 @@ static void gol_c_bench_update(benchmark::State& state)
   const auto cells = width * height;
 
   bool** grid = CreateGrid(width, height);
-  RandomPopulate(grid, width, height);
+  RandomFill(grid, width, height);
 
   benchmark::DoNotOptimize(grid);
 
@@ -44,7 +44,7 @@ static void gol_c_bench_update(benchmark::State& state)
     benchmark::ClobberMemory();
   }
   FreeGrid(grid, width);
-  
+
   state.SetItemsProcessed(state.iterations() * cells);
   state.SetBytesProcessed(state.iterations() * cells * sizeof(bool));
 }

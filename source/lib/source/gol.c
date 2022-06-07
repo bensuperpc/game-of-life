@@ -46,7 +46,7 @@ void CopyGrid(bool** src, bool** dest, uint64_t rows, uint64_t cols)
   }
 }
 
-void RandomPopulate(bool** grid, uint64_t rows, uint64_t cols)
+void RandomFill(bool** grid, uint64_t rows, uint64_t cols)
 {
   for (uint64_t i = 0; i < rows; i++) {
     for (uint64_t j = 0; j < cols; j++) {

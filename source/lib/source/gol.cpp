@@ -152,7 +152,7 @@ void benlib::Gol::Clear()
   }
 }
 
-void benlib::Gol::RandomPopulate()
+void benlib::Gol::RandomFill()
 {
   std::mt19937_64 rng;
   std::random_device rnd_device;
@@ -169,7 +169,7 @@ void benlib::Gol::RandomPopulate()
   }
 }
 
-void benlib::Gol::RandomPopulate(const float percentage)
+void benlib::Gol::RandomFill(const float percentage)
 {
   std::mt19937_64 rng;
   std::random_device rnd_device;

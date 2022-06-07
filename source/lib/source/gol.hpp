@@ -43,9 +43,9 @@ public:
   // Clear the game of life.
   void Clear();
   // Randomly populate the game of life.
-  void RandomPopulate();
+  void RandomFill();
   // Randomly populate the game of life with a given percentage of life.
-  void RandomPopulate(const float percentage);
+  void RandomFill(const float percentage);
   // Populate the game of life with value in boolean
   void Fill(const bool value);
 

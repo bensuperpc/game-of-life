@@ -19,7 +19,7 @@ function(add_test_fn TEST_NAME)
     target_link_libraries("${TEST_NAME}" PRIVATE OpenMP::OpenMP_CXX)
   endif()
 
-  add_test("${TEST_NAME}" "${TEST_NAME}")
+  add_test(NAME "${TEST_NAME}" COMMAND $<TARGET_FILE:${TEST_NAME}>)
   #target_compile_features("${TEST_NAME}" PRIVATE cxx_std_20)
 endfunction()
 
@@ -32,7 +32,7 @@ function(add_bench_fn BENCH_NAME)
   endif()
 
   if(NOT CMAKE_BUILD_TYPE MATCHES Debug AND NOT CMAKE_BUILD_TYPE MATCHES Coverage)
-    add_test("${BENCH_NAME}" "${BENCH_NAME}")
+    add_test(NAME "${BENCH_NAME}" COMMAND $<TARGET_FILE:${BENCH_NAME}>)
   elseif()
     message(STATUS "Disable ${BENCH_NAME}, Performance benchmark test only run on Release/RelWithDebInfo/MinSizeRel")
   endif()

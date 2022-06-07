@@ -98,7 +98,7 @@ auto main() -> int
     }
 
     if (IsKeyPressed(KEY_R)) {
-      gol.RandomPopulate();
+      gol.RandomFill();
     }
 
     if (IsKeyPressed(KEY_B)) {

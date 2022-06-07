@@ -102,7 +102,7 @@ int main()
     }
 
     if (IsKeyPressed(KEY_R)) {
-      RandomPopulate(grid, cols, rows);
+      RandomFill(grid, cols, rows);
     }
 
     if (IsKeyPressed(KEY_B)) {

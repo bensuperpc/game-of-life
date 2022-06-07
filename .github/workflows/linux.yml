@@ -50,4 +50,4 @@ jobs:
       run: cmake --build build/base
 
     - name: Test
-      run: ctest --output-on-failure -C Release -j 2 --test-dir build/base
+      run: ctest --output-on-failure --verbose -C Release -j 2 --test-dir build/base
