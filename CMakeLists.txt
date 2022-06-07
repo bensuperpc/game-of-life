@@ -7,7 +7,7 @@ project(
     VERSION 0.1.0
     DESCRIPTION "game-of-life"
     HOMEPAGE_URL "https://github.com/bensuperpc"
-    LANGUAGES CXX
+    LANGUAGES C CXX
 )
 
 include(cmake/project-is-top-level.cmake)
@@ -77,22 +77,42 @@ target_include_directories(
 target_compile_features(game-of-life_lib PUBLIC cxx_std_17)
 ]]
 
-# ---- Declare executable ----
+add_subdirectory(source/lib)
 
-add_executable(game-of-life_exe source/main.cpp)
-add_executable(game-of-life::exe ALIAS game-of-life_exe)
+# ---- Declare executable raylib-cpp ----
+
+add_executable(game-of-life-cpp-exe source/main-raylib-cpp.cpp)
+add_executable(game-of-life-cpp::exe ALIAS game-of-life-cpp-exe)
 
 set_target_properties(
-    game-of-life_exe PROPERTIES
+    game-of-life-cpp-exe PROPERTIES
+    OUTPUT_NAME game-of-life-cpp
+    EXPORT_NAME exe
+)
+
+#target_compile_features(game-of-life-cpp-exe PRIVATE cxx_std_17)
+
+target_link_libraries(game-of-life-cpp-exe PRIVATE game-of-life-lib)
+
+target_link_libraries(game-of-life-cpp-exe PRIVATE raylib raylib_cpp)
+
+# ---- Declare executable raylib ----
+
+add_executable(game-of-life-exe source/main-raylib.c)
+add_executable(game-of-life::exe ALIAS game-of-life-exe)
+
+set_target_properties(
+    game-of-life-exe PROPERTIES
     OUTPUT_NAME game-of-life
     EXPORT_NAME exe
 )
 
-target_compile_features(game-of-life_exe PRIVATE cxx_std_17)
+#target_compile_features(game-of-life-exe PRIVATE cxx_std_17)
 
-#target_link_libraries(game-of-life_exe PRIVATE game-of-life_lib)
+target_link_libraries(game-of-life-exe PRIVATE game-of-life-lib)
 
-target_link_libraries(game-of-life_exe PRIVATE raylib raylib_cpp)
+target_link_libraries(game-of-life-exe PRIVATE raylib)
+
 
 # ---- Install rules ----
 

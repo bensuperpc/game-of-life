@@ -11,12 +11,12 @@ set(config_file "${config_dir}/game-of-lifeConfig.cmake")
 message(STATUS "Installing: ${config_file}")
 file(WRITE "${config_file}" "\
 get_filename_component(
-    _game-of-life_executable
+    _game-of-life-cpp-executable
     \"\${CMAKE_CURRENT_LIST_DIR}/${relative_path}\"
     ABSOLUTE
 )
 set(
-    GAME_OF_LIFE_EXECUTABLE \"\${_game-of-life_executable}\"
+    GAME_OF_LIFE_EXECUTABLE \"\${_game-of-life-cpp-executable}\"
     CACHE FILEPATH \"Path to the game-of-life executable\"
 )
 ")

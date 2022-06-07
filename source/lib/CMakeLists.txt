@@ -31,15 +31,21 @@ find_package(raylib QUIET)
 find_package(raylib_cpp QUIET)
 
 set(SRCS
-    gol.cpp
-    gol.c
+    source/gol.cpp
+    source/gol.c
 	)
 	
 set(HEADERS
-    gol.h
-    gol.hpp
+    source/gol.h
+    source/gol.hpp
     )
 
 add_library(game-of-life-lib ${SRCS} ${HEADERS})
+
+target_include_directories(
+    game-of-life-lib ${warning_guard}
+    PUBLIC
+    "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/source>"
+)
 
 target_link_libraries(game-of-life-lib PRIVATE raylib raylib_cpp)

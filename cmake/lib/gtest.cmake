@@ -16,3 +16,4 @@ set(gtest_build_samples
     CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(googletest)
+# Lib: gtest gtest_main

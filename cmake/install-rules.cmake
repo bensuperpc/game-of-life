@@ -5,7 +5,7 @@ include(GNUInstallDirs)
 set(package game-of-life)
 
 install(
-    TARGETS game-of-life_exe
+    TARGETS game-of-life-cpp-exe
     RUNTIME COMPONENT game-of-life_Runtime
 )
 
@@ -29,7 +29,7 @@ install(
 
 # Export variables for the install script to use
 install(CODE "
-set(game-of-life_NAME [[$<TARGET_FILE_NAME:game-of-life_exe>]])
+set(game-of-life_NAME [[$<TARGET_FILE_NAME:game-of-life-cpp-exe>]])
 set(game-of-life_INSTALL_CMAKEDIR [[${game-of-life_INSTALL_CMAKEDIR}]])
 set(CMAKE_INSTALL_BINDIR [[${CMAKE_INSTALL_BINDIR}]])
 " COMPONENT game-of-life_Development)

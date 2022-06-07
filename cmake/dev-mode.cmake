@@ -7,10 +7,10 @@ endif()
 
 add_custom_target(
     run-exe
-    COMMAND game-of-life_exe
+    COMMAND game-of-life-cpp-exe
     VERBATIM
 )
-add_dependencies(run-exe game-of-life_exe)
+add_dependencies(run-exe game-of-life-cpp-exe)
 
 option(BUILD_MCSS_DOCS "Build documentation using Doxygen and m.css" OFF)
 if(BUILD_MCSS_DOCS)

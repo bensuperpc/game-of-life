@@ -1,109 +1,32 @@
-#include <iostream>
-#include <random>
-#include <vector>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 
+#include "gol.h"
 #include "raylib.h"
-#include "raylib-cpp.hpp"
 
-void printGrid(const std::vector<std::vector<bool>>& grid)
-{
-  for (uint64_t x = 0; x < grid.size(); x++) {
-    for (uint64_t y = 0; y < grid[0].size(); y++) {
-      if (grid[x][y] == true) {
-        std::cout << " O ";
-      } else {
-        std::cout << " . ";
-      }
-      if (y == grid[0].size() - 1) {
-        std::cout << "\n";
-      }
-    }
-  }
-  std::cout << std::endl;
-}
-
-void updateGrid(std::vector<std::vector<bool>>& gridA)
-{
-  std::vector<std::vector<bool>> gridB {};
-
-  // Copy gridA to gridB
-  gridB.insert(gridB.end(), gridA.begin(), gridA.end());
-
-  for (uint64_t x = 0; x < gridA.size(); x++) {
-    for (uint64_t y = 0; y < gridA[0].size(); y++) {
-      std::size_t aliveCell = 0;
-      for (int64_t i = -1; i < 2; i++) {
-        for (int64_t j = -1; j < 2; j++) {
-          // If is not the center cell
-          if (!(i == 0 && j == 0)) {
-            // Avoid out of bounds error on border
-            if (x + i >= 0 && x + i < gridA.size() && y + j >= 0
-                && y + j < gridA[0].size()) {
-              if (gridB[x + i][y + j]) {
-                ++aliveCell;
-              }
-            }
-          }
-        }
-      }
-      // Game of life rules
-      if (aliveCell < 2) {
-        gridA[x][y] = false;
-      } else if (aliveCell == 3) {
-        gridA[x][y] = true;
-      } else if (aliveCell > 3) {
-        gridA[x][y] = false;
-      }
-    }
-  }
-}
-
-void clearGrid(std::vector<std::vector<bool>>& grid)
-{
-  for (uint64_t x = 0; x < grid.size(); x++) {
-    for (uint64_t y = 0; y < grid[0].size(); y++) {
-      grid[x][y] = false;
-    }
-  }
-}
-
-void randomGrid(std::vector<std::vector<bool>>& grid)
-{
-  std::mt19937_64 rng;
-  std::random_device rnd_device;
-  rng.seed(rnd_device());
-  std::uniform_int_distribution<uint64_t> dist(0, 1000);
-  for (uint64_t x = 0; x < grid.size(); x++) {
-    for (uint64_t y = 0; y < grid[0].size(); y++) {
-      if (dist(rng) < 500) {
-        grid[x][y] = true;
-      } else {
-        grid[x][y] = false;
-      }
-    }
-  }
-}
-
-auto main() -> int
+int main()
 {
   const int screenWidth = 1920;
   const int screenHeight = 1080;
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 
-  raylib::Window window(
-      screenWidth, screenHeight, "raylib-cpp game of life example");
+  InitWindow(screenWidth, screenHeight, "raylib-cpp game of life example");
 
   SetTargetFPS(60);
 
-  std::vector<std::vector<bool>> grid {192, std::vector<bool>(108)};
+  uint64_t cols = screenWidth / 10;
+  uint64_t rows = screenHeight / 10;
 
-  auto cellXSize = screenWidth / grid.size();
-  auto cellYSize = screenHeight / grid[0].size();
+  bool** grid = CreateGrid(screenWidth / 10, screenHeight / 10);
 
-  raylib::Camera2D camera = {};
+  uint64_t cellXSize = screenWidth / cols;
+  uint64_t cellYSize = screenHeight / rows;
+
+  Camera2D camera = {};
   camera.target = (Vector2) {screenWidth / 2.0f, screenHeight / 2.0f};
-
   camera.offset = (Vector2) {screenWidth / 2.0f, screenHeight / 2.0f};
   camera.rotation = 0.0f;
   camera.zoom = 1.0f;
@@ -118,23 +41,25 @@ auto main() -> int
     framesCounter++;
 
     float frameTime = GetFrameTime();
-    auto mousePosition = GetMousePosition();
+
+    Vector2 mousePosition = GetMousePosition();
 
     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-      auto vect = camera.GetScreenToWorld(mousePosition);
-      auto x = (int)(vect.x / cellXSize);
-      auto y = (int)(vect.y / cellYSize);
+      Vector2 vect = GetScreenToWorld2D(mousePosition, camera);
+      int x = (int)(vect.x / cellXSize);
+      int y = (int)(vect.y / cellYSize);
 
-      if (x >= 0 && x < grid.size() && y >= 0 && y < grid[0].size()) {
+      if (x >= 0 && x < cols && y >= 0 && y < rows) {
         grid[x][y] = true;
       }
     }
 
     if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
-      auto vect = camera.GetScreenToWorld(mousePosition);
-      auto x = (int)(vect.x / cellXSize);
-      auto y = (int)(vect.y / cellYSize);
-      if (x >= 0 && x < grid.size() && y >= 0 && y < grid[0].size()) {
+      Vector2 vect = GetScreenToWorld2D(mousePosition, camera);
+      int x = (int)(vect.x / cellXSize);
+      int y = (int)(vect.y / cellYSize);
+
+      if (x >= 0 && x < cols && y >= 0 && y < rows) {
         grid[x][y] = false;
       }
     }
@@ -156,7 +81,7 @@ auto main() -> int
     }
 
     if (framesCounter % 10 == 0 && !paused) {
-      updateGrid(grid);
+      UpdateGrid(grid, cols, rows);
     }
 
     if (IsKeyDown(KEY_LEFT)) {
@@ -173,11 +98,11 @@ auto main() -> int
     }
 
     if (IsKeyPressed(KEY_C)) {
-      clearGrid(grid);
+      ResetGrid(grid, cols, rows);
     }
 
     if (IsKeyPressed(KEY_R)) {
-      randomGrid(grid);
+      RandomPopulate(grid, cols, rows);
     }
 
     if (IsKeyPressed(KEY_B)) {
@@ -214,10 +139,10 @@ auto main() -> int
     ClearBackground(RAYWHITE);
 
     BeginMode2D(camera);
-    // Drawing world
 
-    for (int x = 0; x < grid.size(); x++) {
-      for (int y = 0; y < grid[0].size(); y++) {
+    // Drawing world
+    for (int x = 0; x < cols; x++) {
+      for (int y = 0; y < rows; y++) {
         if (grid[x][y]) {
           DrawRectangle(
               x * cellXSize, y * cellYSize, cellXSize, cellYSize, BLACK);
@@ -227,10 +152,10 @@ auto main() -> int
         }
 
         if (displayGrid) {
-          DrawRectangleLinesEx((Rectangle) {static_cast<float>(x * cellXSize),
-                                            static_cast<float>(y * cellYSize),
-                                            static_cast<float>(cellXSize),
-                                            static_cast<float>(cellYSize)},
+          DrawRectangleLinesEx((Rectangle) {(float)(x * cellXSize),
+                                            (float)(y * cellYSize),
+                                            (float)(cellXSize),
+                                            (float)(cellYSize)},
                                0.7,
                                BLACK);
         }
@@ -264,7 +189,8 @@ auto main() -> int
     EndDrawing();
   }
 
-  // CloseWindow();  // Close window and OpenGL context
+  FreeGrid(grid, rows);
+  CloseWindow();
 
   return 0;
 }

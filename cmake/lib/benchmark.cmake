@@ -27,3 +27,4 @@ set(BENCHMARK_DOWNLOAD_DEPENDENCIES
     CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(googlebenchmark)
+# Lib: benchmark::benchmark benchmark::benchmark_main
