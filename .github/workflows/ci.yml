@@ -14,9 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v3
       with: { python-version: "3.8" }
 
     - name: Install codespell
@@ -38,11 +38,10 @@ jobs:
     # edit the "<name>" placeholder to your GitHub name.
     # If you do not wish to use codecov, then simply delete this job from the
     # workflow.
-    if: github.repository_owner == '<name>'
-      && false
+    if: github.repository_owner == 'bensuperpc'
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Install LCov
       run: sudo apt-get update -q
@@ -62,7 +61,7 @@ jobs:
       run: cmake --build build/coverage -t coverage
 
     - name: Submit to codecov.io
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v3
       with:
         file: build/coverage/coverage.info
 
@@ -72,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Configure
       env: { CXX: clang++-12 }
@@ -102,7 +101,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Install static analyzers
       if: matrix.os == 'ubuntu-latest'
@@ -145,9 +144,9 @@ jobs:
       && false
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v3
       with: { python-version: "3.8" }
 
     - name: Install m.css dependencies
