@@ -2,10 +2,13 @@ cmake_minimum_required(VERSION 3.14.0)
 
 include(FetchContent)
 
+set(CMAKE_CXX_CLANG_TIDY_TMP "${CMAKE_CXX_CLANG_TIDY}")
+set(CMAKE_CXX_CLANG_TIDY "")
+
 FetchContent_Declare(
   googlebenchmark
   GIT_REPOSITORY https://github.com/google/benchmark.git
-  GIT_TAG 6d50251d8e6ed6b7f6eb1e12c558d2808fb4ddaa) # 01-06-2022
+  GIT_TAG 108ca84820dc932957b75e6b31faa6c3cf0aa37a) # 07-06-2022
 
 # Disable tests on google benchmark
 set(BENCHMARK_ENABLE_TESTING
@@ -28,3 +31,5 @@ set(BENCHMARK_DOWNLOAD_DEPENDENCIES
 
 FetchContent_MakeAvailable(googlebenchmark)
 # Lib: benchmark::benchmark benchmark::benchmark_main
+
+set(CMAKE_CXX_CLANG_TIDY "${CMAKE_CXX_CLANG_TIDY_TMP}")
