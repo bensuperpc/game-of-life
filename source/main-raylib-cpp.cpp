@@ -13,8 +13,7 @@ auto main() -> int
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_MSAA_4X_HINT);
 
-  raylib::Window window(
-      screenWidth, screenHeight, "raylib-cpp game of life");
+  raylib::Window window(screenWidth, screenHeight, "raylib-cpp game of life");
 
   SetTargetFPS(60);
 
@@ -140,11 +139,9 @@ auto main() -> int
     for (int x = 0; x < gol.GetWidth(); x++) {
       for (int y = 0; y < gol.GetHeight(); y++) {
         if (gol.GetCell(x, y)) {
-          DrawRectangle(
-              x * cellXSize, y * cellYSize, cellXSize, cellYSize, BLACK);
+          DrawRectangle(x * cellXSize, y * cellYSize, cellXSize, cellYSize, BLACK);
         } else {
-          DrawRectangle(
-              x * cellXSize, y * cellYSize, cellXSize, cellYSize, LIGHTGRAY);
+          DrawRectangle(x * cellXSize, y * cellYSize, cellXSize, cellYSize, LIGHTGRAY);
         }
 
         if (displayGrid) {

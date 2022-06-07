@@ -144,20 +144,16 @@ int main()
     for (int x = 0; x < cols; x++) {
       for (int y = 0; y < rows; y++) {
         if (grid[x][y]) {
-          DrawRectangle(
-              x * cellXSize, y * cellYSize, cellXSize, cellYSize, BLACK);
+          DrawRectangle(x * cellXSize, y * cellYSize, cellXSize, cellYSize, BLACK);
         } else {
-          DrawRectangle(
-              x * cellXSize, y * cellYSize, cellXSize, cellYSize, LIGHTGRAY);
+          DrawRectangle(x * cellXSize, y * cellYSize, cellXSize, cellYSize, LIGHTGRAY);
         }
 
         if (displayGrid) {
-          DrawRectangleLinesEx((Rectangle) {(float)(x * cellXSize),
-                                            (float)(y * cellYSize),
-                                            (float)(cellXSize),
-                                            (float)(cellYSize)},
-                               0.7,
-                               BLACK);
+          DrawRectangleLinesEx(
+              (Rectangle) {(float)(x * cellXSize), (float)(y * cellYSize), (float)(cellXSize), (float)(cellYSize)},
+              0.7,
+              BLACK);
         }
       }
     }

@@ -119,8 +119,7 @@ void benlib::Gol::Update()
           // If is not the center cell
           if (!(i == 0 && j == 0)) {
             // Avoid out of bounds error on border
-            if (x + i >= 0 && x + i < grid.size() && y + j >= 0
-                && y + j < grid[0].size()) {
+            if (x + i >= 0 && x + i < grid.size() && y + j >= 0 && y + j < grid[0].size()) {
               if (gridB[x + i][y + j]) {
                 ++aliveCell;
               }
