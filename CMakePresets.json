@@ -86,7 +86,7 @@
       "name": "ci-base",
       "generator": "Ninja",
       "hidden": true,
-      "inherits": ["ci-std", "flags-unix"],
+      "inherits": ["ci-std", "flags-unix", "dev-mode"],
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       }
