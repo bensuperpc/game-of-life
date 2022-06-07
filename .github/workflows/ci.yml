@@ -49,6 +49,9 @@ jobs:
       run: sudo apt-get update -q
         && sudo apt-get install lcov -q -y
 
+    - name: Install Linux Dependencies
+      run: sudo apt-get install xorg-dev libglu1-mesa-dev ninja-build -y
+
     - name: Configure
       run: cmake --preset=ci-coverage
 
@@ -74,6 +77,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Install Linux Dependencies
+      run: sudo apt-get install xorg-dev libglu1-mesa-dev ninja-build -y
 
     - name: Configure
       env: { CXX: clang++-12 }
@@ -108,6 +114,10 @@ jobs:
     - name: Install static analyzers
       if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get install clang-tidy cppcheck -y -q
+
+    - name: Install Linux Dependencies
+      if: matrix.os == 'ubuntu-latest'
+      run: sudo apt-get install xorg-dev libglu1-mesa-dev ninja-build -y
 
     - name: Configure
       shell: pwsh
