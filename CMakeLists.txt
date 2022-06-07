@@ -27,7 +27,7 @@ include(cmake/lib/raylib.cmake)
 include(cmake/lib/raygui.cmake)
 include(cmake/lib/raylib-cpp.cmake)
 
-include(cmake/lib/json.cmake)
+# include(cmake/lib/json.cmake)
 
 include(FetchContent)
 

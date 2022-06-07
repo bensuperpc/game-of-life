@@ -11,10 +11,10 @@ auto main() -> int
   const int screenWidth = 1920;
   const int screenHeight = 1080;
 
-  SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+  SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_MSAA_4X_HINT);
 
   raylib::Window window(
-      screenWidth, screenHeight, "raylib-cpp game of life example");
+      screenWidth, screenHeight, "raylib-cpp game of life");
 
   SetTargetFPS(60);
 
