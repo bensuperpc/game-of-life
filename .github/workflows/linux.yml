@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.platform.os }} ${{ matrix.config.name }} ${{ matrix.type.name }}
+    name: ${{ matrix.platform.os }} ${{ matrix.platform.name }} ${{ matrix.config.name }} ${{ matrix.type.name }}
     runs-on: ${{ matrix.platform.os }}
 
     strategy:

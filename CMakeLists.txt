@@ -17,7 +17,7 @@ include(cmake/variables.cmake)
 
 # ---- Enable ccache ----
 include(cmake/ccache.cmake)
-include(cmake/lto.cmake)
+# include(cmake/lto.cmake)
 
 # ---- Download and install dependencies
 set(FETCHCONTENT_BASE_DIR "${CMAKE_BINARY_DIR}/3rd-party" CACHE BOOL "" FORCE)
