@@ -44,7 +44,7 @@ jobs:
       run: sudo apt-get install xorg-dev libglu1-mesa-dev ninja-build -y
 
     - name: Configure
-      run: cmake --preset=base -Dgame-of-life_DEVELOPER_MODE=ON ${{ matrix.platform.flags }} ${{ matrix.type.flags }} ${{ matrix.config.flags }}
+      run: cmake --preset=base ${{ matrix.platform.flags }} ${{ matrix.type.flags }} ${{ matrix.config.flags }}
 
     - name: Build
       run: cmake --build build/base

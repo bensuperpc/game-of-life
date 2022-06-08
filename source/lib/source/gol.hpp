@@ -42,12 +42,22 @@ public:
   void Print();
   // Clear the game of life.
   void Clear();
+
   // Randomly populate the game of life.
   void RandomFill();
   // Randomly populate the game of life with a given percentage of life.
   void RandomFill(const float percentage);
   // Populate the game of life with value in boolean
   void Fill(const bool value);
+
+  // Overload operator== to compare a game of life.
+  bool operator==(const Gol& gol) const;
+  // Overload operator= to copy a game of life.
+  Gol& operator=(const Gol& gol);
+  // Overload operator!= to compare a game of life.
+  bool operator!=(const Gol& gol) const;
+  // Overload operator(x, y) to get the cell at the given coordinates.
+  bool operator()(const uint64_t x, const uint64_t y) const;
 
 protected:
   // The number of generations.

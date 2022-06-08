@@ -136,8 +136,8 @@ auto main() -> int
     BeginMode2D(camera);
     // Drawing world
 
-    for (int x = 0; x < gol.GetWidth(); x++) {
-      for (int y = 0; y < gol.GetHeight(); y++) {
+    for (uint64_t x = 0; x < gol.GetWidth(); x++) {
+      for (uint64_t y = 0; y < gol.GetHeight(); y++) {
         if (gol.GetCell(x, y)) {
           DrawRectangle(x * cellXSize, y * cellYSize, cellXSize, cellYSize, BLACK);
         } else {
@@ -149,7 +149,7 @@ auto main() -> int
                                             static_cast<float>(y * cellYSize),
                                             static_cast<float>(cellXSize),
                                             static_cast<float>(cellYSize)},
-                               0.7,
+                               0.7f,
                                BLACK);
         }
       }

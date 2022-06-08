@@ -232,6 +232,122 @@ TEST(gol_cpp, basic4)
   EXPECT_EQ(cells, gol.GetDeadCells());
 }
 
+TEST(gol_cpp, overload_op1)
+{
+  const auto width = 256;
+  const auto height = 256;
+
+  auto golA = benlib::Gol(width, height);
+  auto golB = benlib::Gol(width, height);
+
+  golA.RandomFill();
+  golB.RandomFill();
+
+  EXPECT_EQ(false, golA == golB);
+  EXPECT_EQ(true, golA != golB);
+
+  golA = golB;
+  EXPECT_EQ(true, golA == golB);
+  EXPECT_EQ(false, golA != golB);
+
+  golA.SetCell(0, 0, true);
+  EXPECT_EQ(true, golA(0, 0));
+}
+
+TEST(gol_cpp, overload_op2)
+{
+  const auto width = 384;
+  const auto height = 384;
+
+  auto golA = benlib::Gol(width, height);
+  auto golB = benlib::Gol(width, height);
+
+  golA.RandomFill();
+  golB.RandomFill();
+
+  EXPECT_EQ(false, golA == golB);
+  EXPECT_EQ(true, golA != golB);
+
+  golA = golB;
+  EXPECT_EQ(true, golA == golB);
+  EXPECT_EQ(false, golA != golB);
+
+  golA.SetCell(0, 0, true);
+  EXPECT_EQ(true, golA(0, 0));
+}
+
+TEST(gol_cpp, huge1)
+{
+  const auto width = 512;
+  const auto height = 512;
+
+  auto golA = benlib::Gol(width, height);
+
+  golA.RandomFill();
+  auto golB = golA;
+
+  for (auto i = 0; i < 5; ++i) {
+    golA.Update();
+  }
+
+  EXPECT_EQ(false, golA == golB);
+  EXPECT_EQ(true, golA != golB);
+
+  golA.Clear();
+  golB.Clear();
+
+  EXPECT_EQ(0, golA.GetLivingCells());
+  EXPECT_EQ(0, golB.GetLivingCells());
+}
+
+TEST(gol_cpp, huge2)
+{
+  const auto width = 1024;
+  const auto height = 384;
+
+  auto golA = benlib::Gol(width, height);
+
+  golA.RandomFill();
+  auto golB = golA;
+
+  for (auto i = 0; i < 5; ++i) {
+    golA.Update();
+  }
+
+  EXPECT_EQ(false, golA == golB);
+  EXPECT_EQ(true, golA != golB);
+
+  golA.Clear();
+  golB.Clear();
+
+  EXPECT_EQ(0, golA.GetLivingCells());
+  EXPECT_EQ(0, golB.GetLivingCells());
+}
+
+TEST(gol_cpp, huge3)
+{
+  const auto width = 384;
+  const auto height = 1024;
+
+  auto golA = benlib::Gol(width, height);
+
+  golA.RandomFill();
+  auto golB = golA;
+
+  for (auto i = 0; i < 5; ++i) {
+    golA.Update();
+  }
+
+  EXPECT_EQ(false, golA == golB);
+  EXPECT_EQ(true, golA != golB);
+
+  golA.Clear();
+  golB.Clear();
+
+  EXPECT_EQ(0, golA.GetLivingCells());
+  EXPECT_EQ(0, golB.GetLivingCells());
+}
+
 TEST(gol_c, basic1)
 {
   const auto width = 3;

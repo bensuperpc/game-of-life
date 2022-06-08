@@ -66,9 +66,9 @@ std::vector<std::vector<bool>> benlib::Gol::GetGrid() const
   return grid;
 }
 
-void benlib::Gol::SetGrid(const std::vector<std::vector<bool>>& grid)
+void benlib::Gol::SetGrid(const std::vector<std::vector<bool>>& _grid)
 {
-  this->grid = grid;
+  this->grid = _grid;
   // this->grid.clear();
   // this->grid.shrink_to_fit();
   // this->grid.insert(this->grid.end(), grid.begin(), grid.end());
@@ -107,23 +107,36 @@ void benlib::Gol::Update()
 
   std::vector<std::vector<bool>> gridB {};
 
+  gridB = grid;
+
   // Copy grid to gridB
-  gridB.insert(gridB.end(), grid.begin(), grid.end());
+  // gridB.insert(gridB.end(), grid.begin(), grid.end());
 
   for (uint64_t x = 0; x < grid.size(); x++) {
     for (uint64_t y = 0; y < grid[0].size(); y++) {
+      
       // Count living neighbors
       uint64_t aliveCell = 0;
       for (int8_t i = -1; i < 2; i++) {
         for (int8_t j = -1; j < 2; j++) {
+
           // If is not the center cell
-          if (!(i == 0 && j == 0)) {
-            // Avoid out of bounds error on border
-            if (x + i >= 0 && x + i < grid.size() && y + j >= 0 && y + j < grid[0].size()) {
-              if (gridB[x + i][y + j]) {
-                ++aliveCell;
-              }
-            }
+          if (i == 0 && j == 0) {
+            continue;
+          }
+
+          // Avoid underflow of the grid
+          if ((x == 0 && i == -1) || (y == 0 && j == -1)) {
+            continue;
+          }
+
+          // Avoid overflow of grid
+          if(x + i >= grid.size() || y + j >= grid[0].size()) {
+            continue;
+          }
+
+          if (gridB[x + i][y + j]) {
+            ++aliveCell;
           }
         }
       }
@@ -192,4 +205,27 @@ void benlib::Gol::Fill(const bool value)
       grid[x][y] = value;
     }
   }
+}
+
+bool benlib::Gol::operator==(const benlib::Gol& other) const
+{
+  return grid == other.grid;
+}
+
+bool benlib::Gol::operator!=(const benlib::Gol& other) const
+{
+  return grid != other.grid;
+}
+
+benlib::Gol& benlib::Gol::operator=(const benlib::Gol& other)
+{
+  // if (this == &other)
+  //     return *this;
+  grid = other.grid;
+  return *this;
+}
+
+bool benlib::Gol::operator()(const uint64_t x, const uint64_t y) const
+{
+  return grid[x][y];
 }

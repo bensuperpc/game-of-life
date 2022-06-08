@@ -141,8 +141,8 @@ int main()
     BeginMode2D(camera);
 
     // Drawing world
-    for (int x = 0; x < cols; x++) {
-      for (int y = 0; y < rows; y++) {
+    for (uint64_t x = 0; x < cols; x++) {
+      for (uint64_t y = 0; y < rows; y++) {
         if (grid[x][y]) {
           DrawRectangle(x * cellXSize, y * cellYSize, cellXSize, cellYSize, BLACK);
         } else {

@@ -66,14 +66,24 @@ void UpdateGrid(bool** grid, uint64_t rows, uint64_t cols)
       uint64_t aliveCell = 0;
       for (int8_t i = -1; i < 2; i++) {
         for (int8_t j = -1; j < 2; j++) {
+
           // If is not the center cell
-          if (!(i == 0 && j == 0)) {
-            // Avoid out of bounds error on border
-            if (x + i >= 0 && x + i < rows && y + j >= 0 && y + j < cols) {
-              if (gridB[x + i][y + j]) {
-                ++aliveCell;
-              }
-            }
+          if (i == 0 && j == 0) {
+            continue;
+          }
+
+          // Avoid underflow of the grid
+          if ((x == 0 && i == -1) || (y == 0 && j == -1)) {
+            continue;
+          }
+
+          // Avoid overflow of grid
+          if(x + i >= rows || y + j >= cols) {
+            continue;
+          }
+
+          if (gridB[x + i][y + j]) {
+            ++aliveCell;
           }
         }
       }
