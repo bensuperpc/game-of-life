@@ -114,12 +114,10 @@ void benlib::Gol::Update()
 
   for (uint64_t x = 0; x < grid.size(); x++) {
     for (uint64_t y = 0; y < grid[0].size(); y++) {
-      
       // Count living neighbors
       uint64_t aliveCell = 0;
       for (int8_t i = -1; i < 2; i++) {
         for (int8_t j = -1; j < 2; j++) {
-
           // If is not the center cell
           if (i == 0 && j == 0) {
             continue;
@@ -131,7 +129,7 @@ void benlib::Gol::Update()
           }
 
           // Avoid overflow of grid
-          if(x + i >= grid.size() || y + j >= grid[0].size()) {
+          if (x + i >= grid.size() || y + j >= grid[0].size()) {
             continue;
           }
 

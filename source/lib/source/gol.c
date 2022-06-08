@@ -66,7 +66,6 @@ void UpdateGrid(bool** grid, uint64_t rows, uint64_t cols)
       uint64_t aliveCell = 0;
       for (int8_t i = -1; i < 2; i++) {
         for (int8_t j = -1; j < 2; j++) {
-
           // If is not the center cell
           if (i == 0 && j == 0) {
             continue;
@@ -78,7 +77,7 @@ void UpdateGrid(bool** grid, uint64_t rows, uint64_t cols)
           }
 
           // Avoid overflow of grid
-          if(x + i >= rows || y + j >= cols) {
+          if (x + i >= rows || y + j >= cols) {
             continue;
           }
 
