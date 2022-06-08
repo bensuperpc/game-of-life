@@ -3,8 +3,14 @@
 bool** CreateGrid(uint64_t rows, uint64_t cols)
 {
   bool** grid = malloc(rows * sizeof(bool*));
+  if (grid == NULL) {
+    return NULL;
+  }
   for (uint64_t i = 0; i < rows; i++) {
     grid[i] = malloc(cols * sizeof(bool));
+    if (grid[i] == NULL) {
+      return NULL;
+    }
   }
   ResetGrid(grid, rows, cols);
   return grid;
@@ -58,6 +64,10 @@ void RandomFill(bool** grid, uint64_t rows, uint64_t cols)
 void UpdateGrid(bool** grid, uint64_t rows, uint64_t cols)
 {
   bool** gridB = CreateGrid(rows, cols);
+  if (gridB == NULL) {
+    return;
+  }
+
   CopyGrid(grid, gridB, rows, cols);
 
   for (uint64_t x = 0; x < rows; x++) {
