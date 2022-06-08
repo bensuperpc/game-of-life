@@ -61,6 +61,11 @@ uint64_t benlib::Gol::GetGenerations() const
   return generations;
 }
 
+void benlib::Gol::SetGenerations(const uint64_t generations)
+{
+  this->generations = generations;
+}
+
 std::vector<std::vector<bool>> benlib::Gol::GetGrid() const
 {
   return grid;

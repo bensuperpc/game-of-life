@@ -28,6 +28,8 @@ public:
   uint64_t GetCells() const;
   // Get the number of generations.
   uint64_t GetGenerations() const;
+  // Set the number of generations.
+  void SetGenerations(const uint64_t generations);
   // Set the cell at the given coordinates to be alive.
   void SetCell(const uint64_t x, const uint64_t y, const bool alive);
   // Get the cell at the given coordinates.
