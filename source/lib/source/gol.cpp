@@ -232,3 +232,54 @@ bool benlib::Gol::operator()(const uint64_t x, const uint64_t y) const
 {
   return grid[x][y];
 }
+
+void benlib::Gol::Deserialize(const std::string& filename)
+{
+  std::ifstream file(filename);
+  if (!file.is_open()) {
+    std::cout << "Could not open file " << filename << std::endl;
+    return;
+  }
+
+  std::string line;
+  std::vector<std::vector<bool>> grid {};
+  while (std::getline(file, line)) {
+    // std::cout << line << std::endl;
+    std::vector<bool> row {};
+    for (char c : line) {
+      if (c == '0') {
+        row.push_back(true);
+      } else if (c == '.') {
+        row.push_back(false);
+      } else if (c == '\n') {
+      } else {
+        // std::cout << "Unknown character: " << c << std::endl;
+      }
+    }
+    grid.push_back(row);
+  }
+  file.close();
+  this->Clear();
+  this->grid = grid;
+}
+
+void benlib::Gol::Serialize(const std::string& filename)
+{
+  std::ofstream file(filename);
+  if (!file.is_open()) {
+    std::cout << "Could not open file " << filename << std::endl;
+    return;
+  }
+
+  for (uint64_t x = 0; x < grid.size(); x++) {
+    for (uint64_t y = 0; y < grid[0].size(); y++) {
+      if (grid[x][y]) {
+        file << "0";
+      } else {
+        file << ".";
+      }
+    }
+    file << "\n";
+  }
+  file.close();
+}

@@ -27,7 +27,7 @@ void ResetGrid(bool** grid, uint64_t rows, uint64_t cols)
 
 void FreeGrid(bool** grid, uint64_t rows)
 {
-  for (uint64_t i = 0; i < rows; i++) {
+  for (uint64_t i = 0; i < rows - 1; i++) {
     free(grid[i]);
   }
   free(grid);
@@ -37,7 +37,11 @@ void PrintGrid(bool** grid, uint64_t rows, uint64_t cols)
 {
   for (uint64_t i = 0; i < rows; i++) {
     for (uint64_t j = 0; j < cols; j++) {
-      printf("%d", grid[i][j]);
+      if (grid[i][j]) {
+        printf("%c", '0');
+      } else {
+        printf("%c", '.');
+      }
     }
     printf("\n");
   }
@@ -50,6 +54,18 @@ void CopyGrid(bool** src, bool** dest, uint64_t rows, uint64_t cols)
       dest[i][j] = src[i][j];
     }
   }
+}
+
+bool IsEqualGrid(bool** src, bool** dest, uint64_t rows, uint64_t cols)
+{
+  for (uint64_t i = 0; i < rows; i++) {
+    for (uint64_t j = 0; j < cols; j++) {
+      if (src[i][j] != dest[i][j]) {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 void RandomFill(bool** grid, uint64_t rows, uint64_t cols)
@@ -145,4 +161,62 @@ uint64_t GetDeadCells(bool** grid, uint64_t rows, uint64_t cols)
     }
   }
   return deadCells;
+}
+
+void Serialize(bool** grid, uint64_t rows, uint64_t cols, const char* filename)
+{
+  FILE* file = fopen(filename, "w");
+  if (file == NULL) {
+    return;
+  }
+
+  for (uint64_t i = 0; i < rows; i++) {
+    for (uint64_t j = 0; j < cols; j++) {
+      if (grid[i][j]) {
+        fputc('0', file);
+      } else {
+        fputc('.', file);
+      }
+    }
+    fputc('\n', file);
+  }
+
+  fclose(file);
+}
+
+void Deserialize(bool** grid, uint64_t rows, uint64_t cols, const char* filename)
+{
+  FILE* file = fopen(filename, "r");
+  if (file == NULL) {
+    return;
+  }
+  // printf("%d rows, %d cols\n", rows, cols);
+
+  // Read the file, fgets add a \n before nul char.
+  uint64_t bufferLength = rows + 2;
+
+  char buffer[bufferLength];
+  for (uint64_t i = 0; i < bufferLength; i++) {
+    buffer[i] = '\0';
+  }
+
+  for (uint64_t i = 0; i < cols; i++) {
+    fgets(buffer, bufferLength, file);
+    // buffer[strcspn(buffer, "\n")] = 0;
+    // printf("%d line:\n", i);
+    // printf("%s\n", buffer);
+    for (uint64_t j = 0; j < rows; j++) {
+      if (buffer[j] == '0') {
+        grid[i][j] = true;
+      } else if (buffer[j] == '.') {
+        grid[i][j] = false;
+      } else if (buffer[j] == '\n') {
+      } else {
+        // printf("Unknown character: %c\n", buff[j]);
+      }
+    }
+    // grid[i][rows] = '\0';
+  }
+
+  fclose(file);
 }

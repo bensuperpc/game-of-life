@@ -72,6 +72,16 @@ int main()
       }
     }
 
+    if (IsKeyPressed(KEY_U)) {
+      char* fileName = "gol.txt";
+      Serialize(grid, rows, cols, fileName);
+    }
+
+    if (IsKeyPressed(KEY_L)) {
+      char* fileName = "gol.txt";
+      Deserialize(grid, rows, cols, fileName);
+    }
+
     if (IsKeyPressed(KEY_G)) {
       displayGrid = !displayGrid;
     }
@@ -171,8 +181,8 @@ int main()
       DrawText("- A / S to Rotate", 40, 80, 10, DARKGRAY);
       DrawText("- B to reset Zoom and Rotation", 40, 100, 10, DARKGRAY);
 
-      DrawRectangle(10, 123, 250, 133, Fade(SKYBLUE, 0.95f));
-      DrawRectangleLines(10, 123, 250, 133, BLUE);
+      DrawRectangle(10, 123, 250, 153, Fade(SKYBLUE, 0.95f));
+      DrawRectangleLines(10, 123, 250, 153, BLUE);
 
       DrawText("Game of life controls:", 20, 133, 10, BLACK);
       DrawText("- R to random values", 40, 153, 10, DARKGRAY);
@@ -180,6 +190,7 @@ int main()
       DrawText("- Space to pause", 40, 193, 10, DARKGRAY);
       DrawText("- G to display grid", 40, 213, 10, DARKGRAY);
       DrawText("- H to display help", 40, 233, 10, DARKGRAY);
+      DrawText("- U to Serialize, L to Deserialize", 40, 253, 10, DARKGRAY);
     }
 
     EndDrawing();

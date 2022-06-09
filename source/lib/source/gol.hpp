@@ -1,6 +1,7 @@
 #ifndef BENLIB_GOL_HPP_
 #define BENLIB_GOL_HPP_
 
+#include <fstream>
 #include <iostream>
 #include <random>
 #include <string>
@@ -60,6 +61,11 @@ public:
   bool operator!=(const Gol& gol) const;
   // Overload operator(x, y) to get the cell at the given coordinates.
   bool operator()(const uint64_t x, const uint64_t y) const;
+
+  // Save the game of life to a file.
+  void Serialize(const std::string& filename);
+  // Load the game of life from a file.
+  void Deserialize(const std::string& filename);
 
 protected:
   // The number of generations.

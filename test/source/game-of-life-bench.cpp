@@ -7,9 +7,9 @@
 
 static void gol_cpp_bench_update(benchmark::State& state)
 {
-  const uint64_t width = state.range(0);
-  const uint64_t height = state.range(0);
-  const uint64_t cells = width * height;
+  const auto width = state.range(0);
+  const auto height = state.range(0);
+  const auto cells = width * height;
 
   auto grid = benlib::Gol(width, height);
   grid.RandomFill();
@@ -27,9 +27,9 @@ BENCHMARK(gol_cpp_bench_update)->Name("gol_cpp_bench_update")->RangeMultiplier(2
 
 static void gol_cpp_bench_random_fill(benchmark::State& state)
 {
-  const uint64_t width = state.range(0);
-  const uint64_t height = state.range(0);
-  const uint64_t cells = width * height;
+  const auto width = state.range(0);
+  const auto height = state.range(0);
+  const auto cells = width * height;
 
   auto grid = benlib::Gol(width, height);
   benchmark::DoNotOptimize(grid);
@@ -46,9 +46,9 @@ BENCHMARK(gol_cpp_bench_random_fill)->Name("gol_cpp_bench_random_fill")->RangeMu
 
 static void gol_c_bench_update(benchmark::State& state)
 {
-  const uint64_t width = state.range(0);
-  const uint64_t height = state.range(0);
-  const uint64_t cells = width * height;
+  const auto width = state.range(0);
+  const auto height = state.range(0);
+  const auto cells = width * height;
 
   bool** grid = CreateGrid(width, height);
   RandomFill(grid, width, height);
@@ -68,9 +68,9 @@ BENCHMARK(gol_c_bench_update)->Name("gol_c_bench_update")->RangeMultiplier(2)->R
 
 static void gol_c_bench_random_fill(benchmark::State& state)
 {
-  const uint64_t width = state.range(0);
-  const uint64_t height = state.range(0);
-  const uint64_t cells = width * height;
+  const auto width = state.range(0);
+  const auto height = state.range(0);
+  const auto cells = width * height;
 
   bool** grid = CreateGrid(width, height);
   benchmark::DoNotOptimize(grid);

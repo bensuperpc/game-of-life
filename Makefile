@@ -29,12 +29,12 @@ all: release debug minsizerel relwithdebinfo minsizerel relwithdebinfo release-c
 base:
 	cmake --preset=base
 	cmake --build build/$@
-	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
+	ctest --output-on-failure --verbose --parallel $(PARALLEL) --test-dir build/$@
 
 base-clang:
 	cmake --preset=base-clang
 	cmake --build build/$@
-	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
+	ctest --output-on-failure --verbose --parallel $(PARALLEL) --test-dir build/$@
 
 release:
 	cmake -B build/$@ -S . -G Ninja --preset=dev -DCMAKE_BUILD_TYPE=Release
