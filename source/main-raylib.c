@@ -74,12 +74,12 @@ int main()
 
     if (IsKeyPressed(KEY_U)) {
       char* fileName = "gol.txt";
-      Serialize(grid, rows, cols, fileName);
+      Serialize(grid, cols, rows, fileName);
     }
 
     if (IsKeyPressed(KEY_L)) {
       char* fileName = "gol.txt";
-      Deserialize(grid, rows, cols, fileName);
+      Deserialize(grid, cols, rows, fileName);
     }
 
     if (IsKeyPressed(KEY_G)) {
