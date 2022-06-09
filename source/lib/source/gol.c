@@ -1,42 +1,42 @@
 #include "gol.h"
 
-bool** CreateGrid(uint64_t rows, uint64_t cols)
+bool** CreateGrid(uint64_t x, uint64_t y)
 {
-  bool** grid = malloc(rows * sizeof(bool*));
+  bool** grid = malloc(x * sizeof(bool*));
   if (grid == NULL) {
     return NULL;
   }
-  for (uint64_t i = 0; i < rows; i++) {
-    grid[i] = malloc(cols * sizeof(bool));
+  for (uint64_t i = 0; i < x; i++) {
+    grid[i] = malloc(y * sizeof(bool));
     if (grid[i] == NULL) {
       return NULL;
     }
   }
-  ResetGrid(grid, rows, cols);
+  ResetGrid(grid, x, y);
   return grid;
 }
 
-void ResetGrid(bool** grid, uint64_t rows, uint64_t cols)
+void ResetGrid(bool** grid, uint64_t x, uint64_t y)
 {
-  for (uint64_t i = 0; i < rows; i++) {
-    for (uint64_t j = 0; j < cols; j++) {
+  for (uint64_t i = 0; i < x; i++) {
+    for (uint64_t j = 0; j < y; j++) {
       grid[i][j] = false;
     }
   }
 }
 
-void FreeGrid(bool** grid, uint64_t rows)
+void FreeGrid(bool** grid, uint64_t x)
 {
-  for (uint64_t i = 0; i < rows - 1; i++) {
+  for (uint64_t i = 0; i < x - 1; i++) {
     free(grid[i]);
   }
   free(grid);
 }
 
-void PrintGrid(bool** grid, uint64_t rows, uint64_t cols)
+void PrintGrid(bool** grid, uint64_t x, uint64_t y)
 {
-  for (uint64_t i = 0; i < rows; i++) {
-    for (uint64_t j = 0; j < cols; j++) {
+  for (uint64_t i = 0; i < x; i++) {
+    for (uint64_t j = 0; j < y; j++) {
       if (grid[i][j]) {
         printf("%c", '0');
       } else {
@@ -47,19 +47,19 @@ void PrintGrid(bool** grid, uint64_t rows, uint64_t cols)
   }
 }
 
-void CopyGrid(bool** src, bool** dest, uint64_t rows, uint64_t cols)
+void CopyGrid(bool** src, bool** dest, uint64_t x, uint64_t y)
 {
-  for (uint64_t i = 0; i < rows; i++) {
-    for (uint64_t j = 0; j < cols; j++) {
+  for (uint64_t i = 0; i < x; i++) {
+    for (uint64_t j = 0; j < y; j++) {
       dest[i][j] = src[i][j];
     }
   }
 }
 
-bool IsEqualGrid(bool** src, bool** dest, uint64_t rows, uint64_t cols)
+bool IsEqualGrid(bool** src, bool** dest, uint64_t x, uint64_t y)
 {
-  for (uint64_t i = 0; i < rows; i++) {
-    for (uint64_t j = 0; j < cols; j++) {
+  for (uint64_t i = 0; i < x; i++) {
+    for (uint64_t j = 0; j < y; j++) {
       if (src[i][j] != dest[i][j]) {
         return false;
       }
@@ -68,10 +68,10 @@ bool IsEqualGrid(bool** src, bool** dest, uint64_t rows, uint64_t cols)
   return true;
 }
 
-void RandomFill(bool** grid, uint64_t rows, uint64_t cols)
+void RandomFill(bool** grid, uint64_t x, uint64_t y)
 {
-  for (uint64_t i = 0; i < rows; i++) {
-    for (uint64_t j = 0; j < cols; j++) {
+  for (uint64_t i = 0; i < x; i++) {
+    for (uint64_t j = 0; j < y; j++) {
       grid[i][j] = rand() % 2;
     }
   }
@@ -128,20 +128,20 @@ void UpdateGrid(bool** grid, uint64_t rows, uint64_t cols)
   FreeGrid(gridB, rows);
 }
 
-void FillGrid(bool** grid, uint64_t rows, uint64_t cols, bool value)
+void FillGrid(bool** grid, uint64_t x, uint64_t y, bool value)
 {
-  for (uint64_t i = 0; i < rows; i++) {
-    for (uint64_t j = 0; j < cols; j++) {
+  for (uint64_t i = 0; i < x; i++) {
+    for (uint64_t j = 0; j < y; j++) {
       grid[i][j] = value;
     }
   }
 }
 
-uint64_t GetLivingCells(bool** grid, uint64_t rows, uint64_t cols)
+uint64_t GetLivingCells(bool** grid, uint64_t x, uint64_t y)
 {
   uint64_t aliveCells = 0;
-  for (uint64_t i = 0; i < rows; i++) {
-    for (uint64_t j = 0; j < cols; j++) {
+  for (uint64_t i = 0; i < x; i++) {
+    for (uint64_t j = 0; j < y; j++) {
       if (grid[i][j]) {
         ++aliveCells;
       }
@@ -150,11 +150,11 @@ uint64_t GetLivingCells(bool** grid, uint64_t rows, uint64_t cols)
   return aliveCells;
 }
 
-uint64_t GetDeadCells(bool** grid, uint64_t rows, uint64_t cols)
+uint64_t GetDeadCells(bool** grid, uint64_t x, uint64_t y)
 {
   uint64_t deadCells = 0;
-  for (uint64_t i = 0; i < rows; i++) {
-    for (uint64_t j = 0; j < cols; j++) {
+  for (uint64_t i = 0; i < x; i++) {
+    for (uint64_t j = 0; j < y; j++) {
       if (!grid[i][j]) {
         ++deadCells;
       }
@@ -163,15 +163,15 @@ uint64_t GetDeadCells(bool** grid, uint64_t rows, uint64_t cols)
   return deadCells;
 }
 
-void Serialize(bool** grid, uint64_t rows, uint64_t cols, const char* filename)
+void Serialize(bool** grid, uint64_t x, uint64_t y, const char* filename)
 {
   FILE* file = fopen(filename, "w");
   if (file == NULL) {
     return;
   }
 
-  for (uint64_t i = 0; i < cols; i++) {
-    for (uint64_t j = 0; j < rows; j++) {
+  for (uint64_t i = 0; i < y; i++) {
+    for (uint64_t j = 0; j < x; j++) {
       if (grid[j][i]) {
         fputc('0', file);
       } else {
@@ -184,23 +184,23 @@ void Serialize(bool** grid, uint64_t rows, uint64_t cols, const char* filename)
   fclose(file);
 }
 
-void Deserialize(bool** grid, uint64_t rows, uint64_t cols, const char* filename)
+void Deserialize(bool** grid, uint64_t x, uint64_t y, const char* filename)
 {
   FILE* file = fopen(filename, "r");
   if (file == NULL) {
     return;
   }
   // Read the file, fgets add a \n before nul char.
-  uint64_t bufferLength = rows + 2;
+  uint64_t bufferLength = x + 2;
 
   char buffer[bufferLength];
   for (uint64_t i = 0; i < bufferLength; i++) {
     buffer[i] = '\0';
   }
 
-  for (uint64_t i = 0; i < cols; i++) {
+  for (uint64_t i = 0; i < y; i++) {
     fgets(buffer, bufferLength, file);
-    for (uint64_t j = 0; j < rows; j++) {
+    for (uint64_t j = 0; j < x; j++) {
       if (buffer[j] == '0') {
         grid[j][i] = true;
       } else if (buffer[j] == '.') {
