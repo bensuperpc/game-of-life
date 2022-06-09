@@ -659,7 +659,7 @@ TEST(gol_c, serialization_empty1)
 
   Serialize(golA, width, height, fileName);
 
-  // Deserialize(golB, width, height, fileName);
+  Deserialize(golB, width, height, fileName);
 
   EXPECT_EQ(true, IsEqualGrid(golA, golB, width, height));
 
@@ -680,7 +680,7 @@ TEST(gol_c, serialization_empty2)
 
   Serialize(golA, width, height, fileName);
 
-  // // Deserialize(golB, width, height, fileName);
+  Deserialize(golB, width, height, fileName);
   EXPECT_EQ(true, IsEqualGrid(golA, golB, width, height));
 
   FreeGrid(golA, width);
@@ -700,7 +700,7 @@ TEST(gol_c, serialization_empty3)
 
   Serialize(golA, width, height, fileName);
 
-  // Deserialize(golB, width, height, fileName);
+  Deserialize(golB, width, height, fileName);
   EXPECT_EQ(true, IsEqualGrid(golA, golB, width, height));
 
   FreeGrid(golA, width);
@@ -722,7 +722,7 @@ TEST(gol_c, serialization1)
   const char* fileName = str.data();
 
   Serialize(golA, width, height, fileName);
-  // Deserialize(golB, width, height, fileName);
+  Deserialize(golB, width, height, fileName);
 
   EXPECT_EQ(true, IsEqualGrid(golA, golB, width, height));
 
@@ -745,7 +745,7 @@ TEST(gol_c, serialization2)
   const char* fileName = str.data();
 
   Serialize(golA, width, height, fileName);
-  // Deserialize(golB, width, height, fileName);
+  Deserialize(golB, width, height, fileName);
 
   EXPECT_EQ(true, IsEqualGrid(golA, golB, width, height));
 
@@ -760,47 +760,39 @@ TEST(gol_c, serialization3)
 
   bool** golA = CreateGrid(width, height);
   bool** golB = CreateGrid(width, height);
-  /*
+
   RandomFill(golA, width, height);
   EXPECT_EQ(false, IsEqualGrid(golA, golB, width, height));
 
   std::string str = "serialization3_c.txt";
-  const char *fileName = str.data();
+  const char* fileName = str.data();
+
   Serialize(golA, width, height, fileName);
-
-  // Deserialize(golB, width, height, fileName);
-
-
+  Deserialize(golB, width, height, fileName);
   EXPECT_EQ(true, IsEqualGrid(golA, golB, width, height));
-
 
   FreeGrid(golA, width);
   FreeGrid(golB, width);
-  */
 }
 
 TEST(gol_c, serialization4)
 {
-  const auto width = 128;
-  const auto height = 384;
+  const auto width = 384;
+  const auto height = 128;
 
   bool** golA = CreateGrid(width, height);
   bool** golB = CreateGrid(width, height);
-  /*
+
   RandomFill(golA, width, height);
   EXPECT_EQ(false, IsEqualGrid(golA, golB, width, height));
 
-  std::string str = "serialization3_c.txt";
-  const char *fileName = str.data();
+  std::string str = "serialization4_c.txt";
+  const char* fileName = str.data();
   Serialize(golA, width, height, fileName);
-
-  // Deserialize(golB, width, height, fileName);
-
+  Deserialize(golB, width, height, fileName);
 
   EXPECT_EQ(true, IsEqualGrid(golA, golB, width, height));
 
-
   FreeGrid(golA, width);
   FreeGrid(golB, width);
-  */
 }

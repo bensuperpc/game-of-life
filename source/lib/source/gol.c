@@ -170,9 +170,6 @@ void Serialize(bool** grid, uint64_t rows, uint64_t cols, const char* filename)
     return;
   }
 
-  // rows = 64
-  // cols = 255
-
   for (uint64_t i = 0; i < cols; i++) {
     for (uint64_t j = 0; j < rows; j++) {
       if (grid[j][i]) {
@@ -196,23 +193,20 @@ void Deserialize(bool** grid, uint64_t rows, uint64_t cols, const char* filename
   // printf("%d rows, %d cols\n", rows, cols);
 
   // Read the file, fgets add a \n before nul char.
-  uint64_t bufferLength = (rows >= cols ? rows : cols) + 3;
+  uint64_t bufferLength = rows + 2;
 
   char buffer[bufferLength];
   for (uint64_t i = 0; i < bufferLength; i++) {
     buffer[i] = '\0';
   }
 
-  for (uint64_t i = 0; i < (rows >= cols ? rows : cols); i++) {
+  for (uint64_t i = 0; i < cols; i++) {
     fgets(buffer, bufferLength, file);
-    // buffer[strcspn(buffer, "\n")] = 0;
-    // printf("%d line:\n", i);
-    // printf("%s\n", buffer);
-    for (uint64_t j = 0; j < (rows >= cols ? cols : rows); j++) {
+    for (uint64_t j = 0; j < rows; j++) {
       if (buffer[j] == '0') {
-        grid[i][j] = true;
+        grid[j][i] = true;
       } else if (buffer[j] == '.') {
-        grid[i][j] = false;
+        grid[j][i] = false;
       } else if (buffer[j] == '\n') {
       } else {
         // printf("Unknown character: %c\n", buff[j]);
