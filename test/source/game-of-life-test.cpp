@@ -382,6 +382,23 @@ TEST(gol_cpp, serialization2)
   EXPECT_EQ(golA, golB);
 }
 
+TEST(gol_cpp, serialization3)
+{
+  const auto width = 512;
+  const auto height = 128;
+
+  auto golA = benlib::Gol(width, height);
+  golA.RandomFill();
+
+  auto golB = benlib::Gol(width, height);
+  golB.RandomFill();
+
+  golA.Serialize("serialization3_cpp.txt");
+  golB.Deserialize("serialization3_cpp.txt");
+
+  EXPECT_EQ(golA, golB);
+}
+
 TEST(gol_c, basic1)
 {
   const auto width = 3;

@@ -190,8 +190,6 @@ void Deserialize(bool** grid, uint64_t rows, uint64_t cols, const char* filename
   if (file == NULL) {
     return;
   }
-  // printf("%d rows, %d cols\n", rows, cols);
-
   // Read the file, fgets add a \n before nul char.
   uint64_t bufferLength = rows + 2;
 
@@ -212,7 +210,6 @@ void Deserialize(bool** grid, uint64_t rows, uint64_t cols, const char* filename
         // printf("Unknown character: %c\n", buff[j]);
       }
     }
-    // grid[i][rows] = '\0';
   }
 
   fclose(file);
