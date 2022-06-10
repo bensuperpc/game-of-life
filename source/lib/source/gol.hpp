@@ -45,6 +45,8 @@ public:
   void Print();
   // Clear the game of life.
   void Clear();
+  // Resize the game of life.
+  void Resize(const uint64_t width, const uint64_t height);
 
   // Randomly populate the game of life.
   void RandomFill();

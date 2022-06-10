@@ -13,6 +13,7 @@ extern "C" {
 bool** CreateGrid(uint64_t rows, uint64_t cols);
 void ResetGrid(bool** grid, uint64_t rows, uint64_t cols);
 void FreeGrid(bool** grid, uint64_t rows);
+bool** ResizeGrid(bool** A, uint64_t rows, uint64_t cols, uint64_t new_rows, uint64_t new_cols);
 void PrintGrid(bool** grid, uint64_t rows, uint64_t cols);
 void CopyGrid(bool** src, bool** dest, uint64_t rows, uint64_t cols);
 bool IsEqualGrid(bool** src, bool** dest, uint64_t rows, uint64_t cols);

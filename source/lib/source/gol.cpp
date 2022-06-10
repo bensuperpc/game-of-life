@@ -2,15 +2,8 @@
 
 benlib::Gol::Gol(const uint64_t width, const uint64_t height)
 {
-  grid.reserve(width);
-  for (uint64_t x = 0; x < width; x++) {
-    std::vector<bool> row;
-    row.reserve(height);
-    for (uint64_t y = 0; y < height; y++) {
-      row.push_back(false);
-    }
-    grid.push_back(row);
-  }
+  std::vector<std::vector<bool>> new_grid(width, std::vector<bool>(height, false));
+  grid = new_grid;
 }
 
 benlib::Gol::~Gol() {}
@@ -23,6 +16,22 @@ uint64_t benlib::Gol::GetWidth() const
 uint64_t benlib::Gol::GetHeight() const
 {
   return grid[0].size();
+}
+
+void benlib::Gol::Resize(const uint64_t width, const uint64_t height)
+{
+  std::vector<std::vector<bool>> new_grid(width, std::vector<bool>(height, false));
+  for (uint64_t i = 0; i < width; i++) {
+    for (uint64_t j = 0; j < height; j++) {
+      if (i < grid.size() && j < grid[0].size()) {
+        new_grid[i][j] = grid[i][j];
+      } else {
+        new_grid[i][j] = false;
+      }
+    }
+  }
+  Clear();
+  grid = new_grid;
 }
 
 uint64_t benlib::Gol::GetLivingCells() const
