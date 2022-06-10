@@ -34,8 +34,8 @@ bool** ResizeGrid(bool** A, uint64_t rows, uint64_t cols, uint64_t newRow, uint6
 
   // If new size is smaller than old size, free the extra memory
   if (rows > newRow) {
-    for (uint64_t y = newRow; y < rows; y++) {
-      free(A[y]);
+    for (uint64_t i = newRow; i < rows; i++) {
+      free(A[i]);
     }
   }
 
@@ -44,21 +44,22 @@ bool** ResizeGrid(bool** A, uint64_t rows, uint64_t cols, uint64_t newRow, uint6
     return NULL;
   }
 
-  for (uint64_t y = 0; y < newRow; y++) {
-    if (rows > y) {
-      A[y] = realloc(A[y], sizeof(bool) * newCol);
+  for (uint64_t i = 0; i < newRow; i++) {
+    // Reallocate memory only on already allocated rows
+    if (rows > i) {
+      A[i] = realloc(A[i], sizeof(bool) * newCol);
 
-      if (A[y] == NULL) {
+      if (A[i] == NULL) {
         return NULL;
       }
     } else {
-      A[y] = malloc(sizeof(bool) * newCol);
-      if (A[y] == NULL) {
+      A[i] = malloc(sizeof(bool) * newCol);
+      if (A[i] == NULL) {
         return NULL;
       }
     }
 
-    if (A[y] == NULL) {
+    if (A[i] == NULL) {
       exit(1);
     }
   }
