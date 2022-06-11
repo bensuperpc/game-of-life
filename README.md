@@ -2,7 +2,7 @@
 
 My game of life with raylib and raylib-cpp (C and C++ version).
 
-[![Build and tests](https://github.com/bensuperpc/game-of-life/actions/workflows/linux.yml/badge.svg)](https://github.com/bensuperpc/game-of-life/actions/workflows/linux.yml)
+[![Build and tests](https://github.com/bensuperpc/game-of-life/actions/workflows/linux.yml/badge.svg)](https://github.com/bensuperpc/game-of-life/actions/workflows/linux.yml) [![Continuous Integration](https://github.com/bensuperpc/game-of-life/actions/workflows/ci.yml/badge.svg)](https://github.com/bensuperpc/game-of-life/actions/workflows/ci.yml)
 
 # Features
 
