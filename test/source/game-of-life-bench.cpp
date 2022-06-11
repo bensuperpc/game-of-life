@@ -51,6 +51,7 @@ static void gol_c_bench_update(benchmark::State& state)
   const auto cells = width * height;
 
   bool** grid = CreateGrid(width, height);
+  ResetGrid(grid, width, height);
   RandomFill(grid, width, height);
 
   benchmark::DoNotOptimize(grid);
@@ -73,6 +74,8 @@ static void gol_c_bench_random_fill(benchmark::State& state)
   const auto cells = width * height;
 
   bool** grid = CreateGrid(width, height);
+  ResetGrid(grid, width, height);
+
   benchmark::DoNotOptimize(grid);
 
   for (auto _ : state) {
