@@ -17,7 +17,6 @@ My game of life with raylib and raylib-cpp (C and C++ version).
 |Change GOL size in game|&cross;|-|
 |Multi-thread|&cross;|-|
 |GPU/CUDA|&cross;|-|
-|OpenCL/CUDA|&cross;|-|
 
 
 # Screenshot
