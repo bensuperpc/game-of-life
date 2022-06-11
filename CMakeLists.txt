@@ -18,7 +18,7 @@ include(cmake/variables.cmake)
 # ---- Enable Utile ----
 include(cmake/utile/ccache.cmake)
 # include(cmake/utile/lto.cmake)
-include(cmake/utile/ninja_color.cmake)
+# include(cmake/utile/ninja_color.cmake)
 
 # ---- Download and install dependencies
 set(FETCHCONTENT_BASE_DIR "${CMAKE_BINARY_DIR}/3rd-party" CACHE BOOL "" FORCE)
