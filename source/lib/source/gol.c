@@ -7,10 +7,10 @@ bool** CreateGrid(uint64_t x, uint64_t y)
     return NULL;
   }
   for (uint64_t i = 0; i < x; i++) {
-    grid[i] = malloc(y * sizeof(bool));
-    if (grid[i] == NULL) {
-      return NULL;
-    }
+    grid[i] = (bool*)malloc(y * sizeof(bool));
+    // if (grid[i] == NULL) {
+    //   return NULL;
+    // }
   }
   ResetGrid(grid, x, y);
   return grid;
@@ -47,20 +47,20 @@ bool** ResizeGrid(bool** A, uint64_t rows, uint64_t cols, uint64_t newRow, uint6
   for (uint64_t i = 0; i < newRow; i++) {
     // Reallocate memory only on already allocated rows
     if (rows > i) {
-      A[i] = realloc(A[i], sizeof(bool) * newCol);
+      A[i] = (bool*)realloc(A[i], sizeof(bool) * newCol);
     } else {
-      A[i] = malloc(sizeof(bool) * newCol);
+      A[i] = (bool*)malloc(sizeof(bool) * newCol);
     }
-    if (A[i] == NULL) {
-      return NULL;
-    }
+    // if (A[i] == NULL) {
+    //   return NULL;
+    // }
   }
   return A;
 }
 
 void FreeGrid(bool** grid, uint64_t x)
 {
-  for (uint64_t i = 0; i < x - 1; i++) {
+  for (uint64_t i = 0; i < x; i++) {
     free(grid[i]);
   }
   free(grid);

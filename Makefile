@@ -64,6 +64,11 @@ coverage:
 	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
 	ninja -C build/$@ coverage
 
+sanitize:
+	cmake -B build/$@ -S . -G Ninja --preset=ci-sanitize
+	ninja -C build/$@
+	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
+
 minsizerel:
 	cmake -B build/$@ -S . -G Ninja --preset=dev -DCMAKE_BUILD_TYPE=MinSizeRel
 	ninja -C build/$@
