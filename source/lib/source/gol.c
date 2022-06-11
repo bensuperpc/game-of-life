@@ -27,11 +27,6 @@ void ResetGrid(bool** grid, uint64_t x, uint64_t y)
 
 bool** ResizeGrid(bool** A, uint64_t rows, uint64_t cols, uint64_t newRow, uint64_t newCol)
 {
-  // If old size is same as new size, return the same grid
-  if (newRow == rows && newCol == cols) {
-    return A;
-  }
-
   // If new size is smaller than old size, free the extra memory
   if (rows > newRow) {
     for (uint64_t i = newRow; i < rows; i++) {
@@ -48,19 +43,11 @@ bool** ResizeGrid(bool** A, uint64_t rows, uint64_t cols, uint64_t newRow, uint6
     // Reallocate memory only on already allocated rows
     if (rows > i) {
       A[i] = realloc(A[i], sizeof(bool) * newCol);
-
-      if (A[i] == NULL) {
-        return NULL;
-      }
     } else {
       A[i] = malloc(sizeof(bool) * newCol);
-      if (A[i] == NULL) {
-        return NULL;
-      }
     }
-
     if (A[i] == NULL) {
-      exit(1);
+        return NULL;
     }
   }
   return A;
