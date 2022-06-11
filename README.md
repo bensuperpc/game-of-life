@@ -4,11 +4,16 @@ This is the game-of-life project.
 
 [![Build and tests](https://github.com/bensuperpc/game-of-life/actions/workflows/linux.yml/badge.svg)](https://github.com/bensuperpc/game-of-life/actions/workflows/linux.yml)
 
+# Screenshot
+
+![Screenshot_20220611_215823](https://user-images.githubusercontent.com/28039927/173203062-fb67b72f-edd9-4de3-9413-ee7a7aa15bf7.png)
+
+# Contributing
+
 # Building and installing
 
 See the [BUILDING](BUILDING.md) document.
 
-# Contributing
 
 See the [CONTRIBUTING](CONTRIBUTING.md) document.
 
