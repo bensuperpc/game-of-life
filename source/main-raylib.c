@@ -20,7 +20,9 @@ int main()
   uint64_t cols = screenWidth / 10;
   uint64_t rows = screenHeight / 10;
 
-  bool** grid = CreateGrid(screenWidth / 10, screenHeight / 10);
+  bool** grid = CreateGrid(cols, rows);
+
+  ResetGrid(grid, cols, rows);
 
   uint64_t cellXSize = screenWidth / cols;
   uint64_t cellYSize = screenHeight / rows;

@@ -12,7 +12,6 @@ bool** CreateGrid(uint64_t x, uint64_t y)
     //   return NULL;
     // }
   }
-  ResetGrid(grid, x, y);
   return grid;
 }
 

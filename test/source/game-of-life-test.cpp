@@ -11,6 +11,8 @@ TEST(gol_c, basic1)
 
   bool** gol = CreateGrid(width, height);
 
+  ResetGrid(gol, width, height);
+
   FillGrid(gol, width, height, true);
 
   EXPECT_EQ(cells, GetLivingCells(gol, width, height));
@@ -63,6 +65,8 @@ TEST(gol_c, basic2)
   const auto cells = width * height;
 
   bool** gol = CreateGrid(width, height);
+
+  ResetGrid(gol, width, height);
 
   FillGrid(gol, width, height, true);
 
@@ -117,6 +121,8 @@ TEST(gol_c, basic3)
 
   bool** gol = CreateGrid(width, height);
 
+  ResetGrid(gol, width, height);
+
   FillGrid(gol, width, height, true);
 
   EXPECT_EQ(cells, GetLivingCells(gol, width, height));
@@ -169,6 +175,8 @@ TEST(gol_c, basic4)
   const auto cells = width * height;
 
   bool** gol = CreateGrid(width, height);
+
+  ResetGrid(gol, width, height);
 
   FillGrid(gol, width, height, true);
 
@@ -223,6 +231,9 @@ TEST(gol_c, huge1)
   bool** golA = CreateGrid(width, height);
   bool** golB = CreateGrid(width, height);
 
+  ResetGrid(golA, width, height);
+  ResetGrid(golB, width, height);
+
   RandomFill(golA, width, height);
 
   CopyGrid(golA, golB, width, height);
@@ -248,6 +259,9 @@ TEST(gol_c, huge2)
 
   bool** golA = CreateGrid(width, height);
   bool** golB = CreateGrid(width, height);
+
+  ResetGrid(golA, width, height);
+  ResetGrid(golB, width, height);
 
   RandomFill(golA, width, height);
 
@@ -275,6 +289,9 @@ TEST(gol_c, serialization_empty1)
   bool** golA = CreateGrid(width, height);
   bool** golB = CreateGrid(width, height);
 
+  ResetGrid(golA, width, height);
+  ResetGrid(golB, width, height);
+
   std::string str = "serialization_empty1_c.txt";
   const char* fileName = str.data();
 
@@ -296,6 +313,9 @@ TEST(gol_c, serialization_empty2)
   bool** golA = CreateGrid(width, height);
   bool** golB = CreateGrid(width, height);
 
+  ResetGrid(golA, width, height);
+  ResetGrid(golB, width, height);
+
   std::string str = "serialization_empty2_c.txt";
   const char* fileName = str.data();
 
@@ -316,6 +336,9 @@ TEST(gol_c, serialization_empty3)
   bool** golA = CreateGrid(width, height);
   bool** golB = CreateGrid(width, height);
 
+  ResetGrid(golA, width, height);
+  ResetGrid(golB, width, height);
+
   std::string str = "serialization_empty3_c.txt";
   const char* fileName = str.data();
 
@@ -335,6 +358,9 @@ TEST(gol_c, serialization1)
 
   bool** golA = CreateGrid(width, height);
   bool** golB = CreateGrid(width, height);
+
+  ResetGrid(golA, width, height);
+  ResetGrid(golB, width, height);
 
   RandomFill(golA, width, height);
   EXPECT_EQ(false, IsEqualGrid(golA, golB, width, height));
@@ -359,6 +385,9 @@ TEST(gol_c, serialization2)
   bool** golA = CreateGrid(width, height);
   bool** golB = CreateGrid(width, height);
 
+  ResetGrid(golA, width, height);
+  ResetGrid(golB, width, height);
+
   RandomFill(golA, width, height);
   EXPECT_EQ(false, IsEqualGrid(golA, golB, width, height));
 
@@ -382,6 +411,9 @@ TEST(gol_c, serialization3)
   bool** golA = CreateGrid(width, height);
   bool** golB = CreateGrid(width, height);
 
+  ResetGrid(golA, width, height);
+  ResetGrid(golB, width, height);
+
   RandomFill(golA, width, height);
   EXPECT_EQ(false, IsEqualGrid(golA, golB, width, height));
 
@@ -403,6 +435,9 @@ TEST(gol_c, serialization4)
 
   bool** golA = CreateGrid(width, height);
   bool** golB = CreateGrid(width, height);
+
+  ResetGrid(golA, width, height);
+  ResetGrid(golB, width, height);
 
   RandomFill(golA, width, height);
   EXPECT_EQ(false, IsEqualGrid(golA, golB, width, height));
@@ -428,9 +463,13 @@ TEST(gol_c, resizegrid_same1)
 
   bool** golA = CreateGrid(width, height);
 
+  ResetGrid(golA, width, height);
+
   RandomFill(golA, width, height);
 
   bool** golB = CreateGrid(newWidth, newHeight);
+
+  ResetGrid(golB, newWidth, newHeight);
 
   CopyGrid(golA, golB, (width < newWidth) ? width : newWidth, (height < newHeight) ? height : newHeight);
 
@@ -452,9 +491,13 @@ TEST(gol_c, resizegrid_increase1)
 
   bool** golA = CreateGrid(width, height);
 
+  ResetGrid(golA, width, height);
+
   RandomFill(golA, width, height);
 
   bool** golB = CreateGrid(newWidth, newHeight);
+
+  ResetGrid(golB, newWidth, newHeight);
 
   CopyGrid(golA, golB, (width < newWidth) ? width : newWidth, (height < newHeight) ? height : newHeight);
 
@@ -476,9 +519,13 @@ TEST(gol_c, resizegrid_increase2)
 
   bool** golA = CreateGrid(width, height);
 
+  ResetGrid(golA, width, height);
+
   RandomFill(golA, width, height);
 
   bool** golB = CreateGrid(newWidth, newHeight);
+
+  ResetGrid(golB, newWidth, newHeight);
 
   CopyGrid(golA, golB, (width < newWidth) ? width : newWidth, (height < newHeight) ? height : newHeight);
 
@@ -500,9 +547,13 @@ TEST(gol_c, resizegrid_reduce1)
 
   bool** golA = CreateGrid(width, height);
 
+  ResetGrid(golA, width, height);
+
   RandomFill(golA, width, height);
 
   bool** golB = CreateGrid(newWidth, newHeight);
+
+  ResetGrid(golB, newWidth, newHeight);
 
   CopyGrid(golA, golB, (width < newWidth) ? width : newWidth, (height < newHeight) ? height : newHeight);
 
@@ -524,9 +575,13 @@ TEST(gol_c, resizegrid_reduce2)
 
   bool** golA = CreateGrid(width, height);
 
+  ResetGrid(golA, width, height);
+
   RandomFill(golA, width, height);
 
   bool** golB = CreateGrid(newWidth, newHeight);
+
+  ResetGrid(golB, newWidth, newHeight);
 
   CopyGrid(golA, golB, (width < newWidth) ? width : newWidth, (height < newHeight) ? height : newHeight);
 
