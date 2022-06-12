@@ -34,6 +34,11 @@ void benlib::Gol::Resize(const uint64_t width, const uint64_t height)
   grid = new_grid;
 }
 
+void benlib::Gol::Reset()
+{
+  Fill(false);
+}
+
 uint64_t benlib::Gol::GetLivingCells() const
 {
   uint64_t livingCell = 0;
@@ -169,11 +174,8 @@ void benlib::Gol::Update()
 
 void benlib::Gol::Clear()
 {
-  for (uint64_t x = 0; x < grid.size(); x++) {
-    for (uint64_t y = 0; y < grid[0].size(); y++) {
-      grid[x][y] = false;
-    }
-  }
+  grid.clear();
+  grid.shrink_to_fit();
 }
 
 void benlib::Gol::RandomFill()
@@ -182,14 +184,20 @@ void benlib::Gol::RandomFill()
   std::random_device rnd_device;
   rng.seed(rnd_device());
   std::uniform_int_distribution<uint32_t> dist(0, 1000);
-  for (uint64_t x = 0; x < grid.size(); x++) {
-    for (uint64_t y = 0; y < grid[0].size(); y++) {
-      if (dist(rng) < 500) {
-        grid[x][y] = true;
-      } else {
-        grid[x][y] = false;
-      }
-    }
+  auto gen = [&dist, &rng]() { return dist(rng) < 500 ? true : false; };
+
+  for (auto& i : grid) {
+    std::generate(i.begin(), i.end(), gen);
+  }
+}
+
+void benlib::Gol::RandomFill(std::mt19937_64& rng)
+{
+  std::uniform_int_distribution<uint32_t> dist(0, 1000);
+  auto gen = [&dist, &rng]() { return dist(rng) < 500 ? true : false; };
+
+  for (auto& i : grid) {
+    std::generate(i.begin(), i.end(), gen);
   }
 }
 
@@ -199,23 +207,18 @@ void benlib::Gol::RandomFill(const float percentage)
   std::random_device rnd_device;
   rng.seed(rnd_device());
   std::uniform_real_distribution<float> dist(0.0f, 1.0f);
-  for (uint64_t x = 0; x < grid.size(); x++) {
-    for (uint64_t y = 0; y < grid[0].size(); y++) {
-      if (dist(rng) < percentage) {
-        grid[x][y] = true;
-      } else {
-        grid[x][y] = false;
-      }
-    }
+
+  auto gen = [&dist, &rng, &percentage]() { return dist(rng) < percentage ? true : false; };
+
+  for (auto& i : grid) {
+    std::generate(i.begin(), i.end(), gen);
   }
 }
 
 void benlib::Gol::Fill(const bool value)
 {
-  for (uint64_t x = 0; x < grid.size(); x++) {
-    for (uint64_t y = 0; y < grid[0].size(); y++) {
-      grid[x][y] = value;
-    }
+  for (auto& i : grid) {
+    std::fill(i.begin(), i.end(), value);
   }
 }
 

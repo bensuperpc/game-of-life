@@ -18,9 +18,7 @@ bool** CreateGrid(uint64_t x, uint64_t y)
 void ResetGrid(bool** grid, uint64_t x, uint64_t y)
 {
   for (uint64_t i = 0; i < x; i++) {
-    for (uint64_t j = 0; j < y; j++) {
-      grid[i][j] = false;
-    }
+    memset(grid[i], false, y * sizeof(bool));
   }
 }
 
@@ -82,9 +80,7 @@ void PrintGrid(bool** grid, uint64_t x, uint64_t y)
 void CopyGrid(bool** src, bool** dest, uint64_t x, uint64_t y)
 {
   for (uint64_t i = 0; i < x; i++) {
-    for (uint64_t j = 0; j < y; j++) {
-      dest[i][j] = src[i][j];
-    }
+    memcpy(dest[i], src[i], y * sizeof(bool));
   }
 }
 
@@ -160,12 +156,10 @@ void UpdateGrid(bool** grid, uint64_t rows, uint64_t cols)
   FreeGrid(gridB, rows);
 }
 
-void FillGrid(bool** grid, uint64_t x, uint64_t y, bool value)
+void FillGrid(bool** grid, const uint64_t x, const uint64_t y, const bool value)
 {
   for (uint64_t i = 0; i < x; i++) {
-    for (uint64_t j = 0; j < y; j++) {
-      grid[i][j] = value;
-    }
+    memset(grid[i], value, y * sizeof(bool));
   }
 }
 
@@ -231,7 +225,7 @@ void Deserialize(bool** grid, uint64_t x, uint64_t y, const char* filename)
   }
 
   for (uint64_t i = 0; i < y; i++) {
-    fgets(buffer, bufferLength, file);
+    fgets(buffer, (int)bufferLength, file);
     for (uint64_t j = 0; j < x; j++) {
       if (buffer[j] == '0') {
         grid[j][i] = true;

@@ -1,11 +1,12 @@
 #ifndef BENLIB_GOL_HPP_
 #define BENLIB_GOL_HPP_
 
-#include <fstream>
-#include <iostream>
-#include <random>
-#include <string>
-#include <vector>
+#include <algorithm>  // std::fill, std::generate
+#include <fstream>  // std::ifstream, std::ofstream
+#include <iostream>  // std::cout, std::endl
+#include <random>  // std::mt19937, std::uniform_int_distribution
+#include <string>  // std::string
+#include <vector>  // std::vector
 
 namespace benlib
 {
@@ -50,10 +51,14 @@ public:
 
   // Randomly populate the game of life.
   void RandomFill();
+  // Randomly populate the game of life with rng.
+  void RandomFill(std::mt19937_64& rng);
   // Randomly populate the game of life with a given percentage of life.
   void RandomFill(const float percentage);
   // Populate the game of life with value in boolean
   void Fill(const bool value);
+  // Reset the game of life.
+  void Reset();
 
   // Overload operator== to compare a game of life.
   bool operator==(const Gol& gol) const;

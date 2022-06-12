@@ -5,10 +5,11 @@
 extern "C" {
 #endif
 
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h>  // bool
+#include <stdint.h>  // uint64_t
+#include <stdio.h>  // printf
+#include <stdlib.h>  // malloc, realloc, free
+#include <string.h>  // memset, memcpy
 
 bool** CreateGrid(uint64_t rows, uint64_t cols);
 void ResetGrid(bool** grid, uint64_t rows, uint64_t cols);
@@ -19,7 +20,7 @@ void CopyGrid(bool** src, bool** dest, uint64_t rows, uint64_t cols);
 bool IsEqualGrid(bool** src, bool** dest, uint64_t rows, uint64_t cols);
 void RandomFill(bool** grid, uint64_t rows, uint64_t cols);
 void UpdateGrid(bool** grid, uint64_t rows, uint64_t cols);
-void FillGrid(bool** grid, uint64_t rows, uint64_t cols, bool value);
+void FillGrid(bool** grid, const uint64_t rows, const uint64_t cols, const bool value);
 uint64_t GetLivingCells(bool** grid, uint64_t rows, uint64_t cols);
 uint64_t GetDeadCells(bool** grid, uint64_t rows, uint64_t cols);
 

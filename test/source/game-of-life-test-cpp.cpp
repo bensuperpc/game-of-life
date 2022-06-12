@@ -30,7 +30,7 @@ TEST(gol_cpp, basic1)
   EXPECT_EQ(cells, gol.GetLivingCells());
   EXPECT_EQ(0, gol.GetDeadCells());
 
-  gol.Clear();
+  gol.Reset();
 
   EXPECT_EQ(0, gol.GetLivingCells());
   EXPECT_EQ(cells, gol.GetDeadCells());
@@ -87,7 +87,7 @@ TEST(gol_cpp, basic2)
   EXPECT_EQ(cells, gol.GetLivingCells());
   EXPECT_EQ(0, gol.GetDeadCells());
 
-  gol.Clear();
+  gol.Reset();
 
   EXPECT_EQ(0, gol.GetLivingCells());
   EXPECT_EQ(cells, gol.GetDeadCells());
@@ -144,7 +144,7 @@ TEST(gol_cpp, basic3)
   EXPECT_EQ(cells, gol.GetLivingCells());
   EXPECT_EQ(0, gol.GetDeadCells());
 
-  gol.Clear();
+  gol.Reset();
 
   EXPECT_EQ(0, gol.GetLivingCells());
   EXPECT_EQ(cells, gol.GetDeadCells());
@@ -201,7 +201,7 @@ TEST(gol_cpp, basic4)
   EXPECT_EQ(cells, gol.GetLivingCells());
   EXPECT_EQ(0, gol.GetDeadCells());
 
-  gol.Clear();
+  gol.Reset();
 
   EXPECT_EQ(0, gol.GetLivingCells());
   EXPECT_EQ(cells, gol.GetDeadCells());
@@ -292,8 +292,8 @@ TEST(gol_cpp, huge1)
   EXPECT_EQ(false, golA == golB);
   EXPECT_EQ(true, golA != golB);
 
-  golA.Clear();
-  golB.Clear();
+  golA.Reset();
+  golB.Reset();
 
   EXPECT_EQ(0, golA.GetLivingCells());
   EXPECT_EQ(0, golB.GetLivingCells());
@@ -316,8 +316,8 @@ TEST(gol_cpp, huge2)
   EXPECT_EQ(false, golA == golB);
   EXPECT_EQ(true, golA != golB);
 
-  golA.Clear();
-  golB.Clear();
+  golA.Reset();
+  golB.Reset();
 
   EXPECT_EQ(0, golA.GetLivingCells());
   EXPECT_EQ(0, golB.GetLivingCells());
@@ -340,8 +340,8 @@ TEST(gol_cpp, huge3)
   EXPECT_EQ(false, golA == golB);
   EXPECT_EQ(true, golA != golB);
 
-  golA.Clear();
-  golB.Clear();
+  golA.Reset();
+  golB.Reset();
 
   EXPECT_EQ(0, golA.GetLivingCells());
   EXPECT_EQ(0, golB.GetLivingCells());

@@ -103,7 +103,7 @@ auto main() -> int
     }
 
     if (IsKeyPressed(KEY_C)) {
-      gol.Clear();
+      gol.Reset();
     }
 
     if (IsKeyPressed(KEY_R)) {
