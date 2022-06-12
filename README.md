@@ -18,10 +18,15 @@ My game of life with raylib and raylib-cpp (C and C++ version).
 |Multi-thread|&cross;|-|
 |GPU/CUDA|&cross;|-|
 
+# Media
 
-# Screenshot
+## Screenshot
 
 ![Screenshot_20220611_215823](https://user-images.githubusercontent.com/28039927/173203062-fb67b72f-edd9-4de3-9413-ee7a7aa15bf7.png)
+
+## Video
+
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/Cz5g93VWxMM/0.jpg)](http://www.youtube.com/watch?v=Cz5g93VWxMM "Game of life with raylib (C and C++)")
 
 # Contributing
 
