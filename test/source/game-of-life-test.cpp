@@ -481,6 +481,63 @@ TEST(gol_c, resizegrid_same1)
   FreeGrid(golB, newWidth);
 }
 
+TEST(gol_c, resizegrid_same2)
+{
+  const auto width = 256;
+  const auto height = 128;
+
+  const auto newWidth = 256;
+  const auto newHeight = 128;
+
+  bool** golA = CreateGrid(width, height);
+
+  ResetGrid(golA, width, height);
+
+  RandomFill(golA, width, height);
+
+  bool** golB = CreateGrid(newWidth, newHeight);
+
+  ResetGrid(golB, newWidth, newHeight);
+
+  CopyGrid(golA, golB, (width < newWidth) ? width : newWidth, (height < newHeight) ? height : newHeight);
+
+  golA = ResizeGrid(golA, width, height, newWidth, newHeight);
+
+  EXPECT_EQ(true, IsEqualGrid(golA, golB, newWidth, newHeight));
+
+  FreeGrid(golA, newWidth);
+  FreeGrid(golB, newWidth);
+}
+
+TEST(gol_c, resizegrid_same3)
+{
+  const auto width = 128;
+  const auto height = 256;
+
+  const auto newWidth = 128;
+  const auto newHeight = 256;
+
+  bool** golA = CreateGrid(width, height);
+
+  ResetGrid(golA, width, height);
+
+  RandomFill(golA, width, height);
+
+  bool** golB = CreateGrid(newWidth, newHeight);
+
+  ResetGrid(golB, newWidth, newHeight);
+
+  CopyGrid(golA, golB, (width < newWidth) ? width : newWidth, (height < newHeight) ? height : newHeight);
+
+  golA = ResizeGrid(golA, width, height, newWidth, newHeight);
+
+  EXPECT_EQ(true, IsEqualGrid(golA, golB, newWidth, newHeight));
+
+  FreeGrid(golA, newWidth);
+  FreeGrid(golB, newWidth);
+}
+
+
 TEST(gol_c, resizegrid_increase1)
 {
   const auto width = 32;
