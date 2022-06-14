@@ -44,6 +44,7 @@ bool** ResizeGrid(bool** A, uint64_t rows, uint64_t cols, uint64_t newRow, uint6
     for (uint64_t i = newRow; i < rows; i++) {
       free(A[i]);
     }
+    return A;
   }
 
   A = (bool**)realloc(A, sizeof(bool*) * newRow);

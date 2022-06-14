@@ -503,13 +503,41 @@ TEST(gol_c, resizegrid_increase1)
 
   golA = ResizeGrid(golA, width, height, newWidth, newHeight);
 
-  EXPECT_EQ(false, IsEqualGrid(golA, golB, newWidth, newHeight));
+  EXPECT_EQ(true, IsEqualGrid(golA, golB, width, height));
 
   FreeGrid(golA, newWidth);
   FreeGrid(golB, newWidth);
 }
 
 TEST(gol_c, resizegrid_increase2)
+{
+  const auto width = 64;
+  const auto height = 128;
+
+  const auto newWidth = 128;
+  const auto newHeight = 256;
+
+  bool** golA = CreateGrid(width, height);
+
+  ResetGrid(golA, width, height);
+
+  RandomFill(golA, width, height);
+
+  bool** golB = CreateGrid(newWidth, newHeight);
+
+  ResetGrid(golB, newWidth, newHeight);
+
+  CopyGrid(golA, golB, (width < newWidth) ? width : newWidth, (height < newHeight) ? height : newHeight);
+
+  golA = ResizeGrid(golA, width, height, newWidth, newHeight);
+
+  EXPECT_EQ(true, IsEqualGrid(golA, golB, width, height));
+
+  FreeGrid(golA, newWidth);
+  FreeGrid(golB, newWidth);
+}
+
+TEST(gol_c, resizegrid_increase3)
 {
   const auto width = 128;
   const auto height = 32;
@@ -531,7 +559,7 @@ TEST(gol_c, resizegrid_increase2)
 
   golA = ResizeGrid(golA, width, height, newWidth, newHeight);
 
-  EXPECT_EQ(false, IsEqualGrid(golA, golB, newWidth, newHeight));
+  EXPECT_EQ(true, IsEqualGrid(golA, golB, newWidth, height));
 
   FreeGrid(golA, newWidth);
   FreeGrid(golB, newWidth);
@@ -566,6 +594,34 @@ TEST(gol_c, resizegrid_reduce1)
 }
 
 TEST(gol_c, resizegrid_reduce2)
+{
+  const auto width = 256;
+  const auto height = 128;
+
+  const auto newWidth = 128;
+  const auto newHeight = 64;
+
+  bool** golA = CreateGrid(width, height);
+
+  ResetGrid(golA, width, height);
+
+  RandomFill(golA, width, height);
+
+  bool** golB = CreateGrid(newWidth, newHeight);
+
+  ResetGrid(golB, newWidth, newHeight);
+
+  CopyGrid(golA, golB, (width < newWidth) ? width : newWidth, (height < newHeight) ? height : newHeight);
+
+  golA = ResizeGrid(golA, width, height, newWidth, newHeight);
+
+  EXPECT_EQ(true, IsEqualGrid(golA, golB, newWidth, newHeight));
+
+  FreeGrid(golA, newWidth);
+  FreeGrid(golB, newWidth);
+}
+
+TEST(gol_c, resizegrid_reduce3)
 {
   const auto width = 64;
   const auto height = 128;
