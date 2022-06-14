@@ -20,71 +20,90 @@
 
 PARALLEL := 4
 
-.PHONY: all release debug coverage minsizerel relwithdebinfo minsizerel relwithdebinfo release-clang debug-clang lint format
-
+.PHONY: build
 build: base
 
-all: release debug minsizerel relwithdebinfo minsizerel relwithdebinfo release-clang debug-clang base base-clang
+.PHONY: all
+all: release debug minsizerel coverage relwithdebinfo minsizerel relwithdebinfo release-clang debug-clang base base-clang sanitize
 
+.PHONY: base
 base:
 	cmake --preset=base
 	cmake --build build/$@
 	ctest --output-on-failure --verbose --parallel $(PARALLEL) --test-dir build/$@
 
+.PHONY: base-clang
 base-clang:
 	cmake --preset=base-clang
 	cmake --build build/$@
 	ctest --output-on-failure --verbose --parallel $(PARALLEL) --test-dir build/$@
 
+.PHONY: release
 release:
 	cmake -B build/$@ -S . -G Ninja --preset=dev -DCMAKE_BUILD_TYPE=Release
 	ninja -C build/$@
 	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
 
+.PHONY: release-clang
 release-clang:
 	cmake -B build/$@ -S . -G Ninja --preset=dev -DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
 	ninja -C build/$@
 	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
 
+.PHONY: debug
 debug:
 	cmake -B build/$@ -S . -G Ninja --preset=dev -DCMAKE_BUILD_TYPE=Debug
 	ninja -C build/$@
 	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
 
+.PHONY: debug-clang
 debug-clang:
 	cmake -B build/$@ -S . -G Ninja --preset=dev -DCMAKE_BUILD_TYPE=Debug \
 	-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
 	ninja -C build/$@
 	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
 
+.PHONY: coverage
 coverage:
 	cmake -B build/$@ -S . -G Ninja --preset=dev-coverage -DCMAKE_BUILD_TYPE=Coverage
 	ninja -C build/$@
 	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
 	ninja -C build/$@ coverage
 
+.PHONY: sanitize
 sanitize:
 	cmake -B build/$@ -S . -G Ninja --preset=ci-sanitize
 	ninja -C build/$@
 	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
 
+sanitize-clang:
+	cmake -B build/$@ -S . -G Ninja --preset=ci-sanitize \
+	-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+	ninja -C build/$@
+	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
+
+.PHONY: minsizerel
 minsizerel:
 	cmake -B build/$@ -S . -G Ninja --preset=dev -DCMAKE_BUILD_TYPE=MinSizeRel
 	ninja -C build/$@
 	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
 
+.PHONY: relwithdebinfo
 relwithdebinfo:
 	cmake -B build/$@ -S . -G Ninja --preset=dev -DCMAKE_BUILD_TYPE=RelWithDebInfo
 	ninja -C build/$@
 	ctest --verbose --parallel $(PARALLEL) --test-dir build/$@
 
+.PHONY: lint
 lint:
 	cmake -D FORMAT_COMMAND=clang-format -P cmake/lint.cmake
 	cmake -P cmake/spell.cmake
 
+.PHONY: format
 format:
 	time find . -regex '.*\.\(cpp\|cxx\|hpp\|hxx\|c\|h\|cu\|cuh\|cuhpp\|tpp\)' -not -path '*/build/*' | parallel clang-format -style=file -i {} \;
 
+.PHONY: clean
 clean:
 	rm -rf build

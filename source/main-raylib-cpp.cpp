@@ -42,8 +42,8 @@ auto main() -> int
 
     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
       Vector2 vect = camera.GetScreenToWorld(mousePosition);
-      auto x = (int)(vect.x / cellXSize);
-      auto y = (int)(vect.y / cellYSize);
+      auto x = static_cast<int>(vect.x / cellXSize);
+      auto y = static_cast<int>(vect.y / cellYSize);
 
       if (x >= 0 && x < gol.GetWidth() && y >= 0 && y < gol.GetHeight()) {
         gol.SetCell(x, y, true);
@@ -52,8 +52,8 @@ auto main() -> int
 
     if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
       Vector2 vect = camera.GetScreenToWorld(mousePosition);
-      auto x = (int)(vect.x / cellXSize);
-      auto y = (int)(vect.y / cellYSize);
+      auto x = static_cast<int>(vect.x / cellXSize);
+      auto y = static_cast<int>(vect.y / cellYSize);
       if (x >= 0 && x < gol.GetWidth() && y >= 0 && y < gol.GetHeight()) {
         gol.SetCell(x, y, false);
       }
@@ -149,9 +149,17 @@ auto main() -> int
     for (uint64_t x = 0; x < gol.GetWidth(); x++) {
       for (uint64_t y = 0; y < gol.GetHeight(); y++) {
         if (gol.GetCell(x, y)) {
-          DrawRectangle(x * cellXSize, y * cellYSize, cellXSize, cellYSize, BLACK);
+          DrawRectangle(static_cast<int>(x * cellXSize),
+                        static_cast<int>(y * cellYSize),
+                        static_cast<int>(cellXSize),
+                        static_cast<int>(cellYSize),
+                        BLACK);
         } else {
-          DrawRectangle(x * cellXSize, y * cellYSize, cellXSize, cellYSize, LIGHTGRAY);
+          DrawRectangle(static_cast<int>(x * cellXSize),
+                        static_cast<int>(y * cellYSize),
+                        static_cast<int>(cellXSize),
+                        static_cast<int>(cellYSize),
+                        LIGHTGRAY);
         }
 
         if (displayGrid) {
