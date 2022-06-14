@@ -537,7 +537,6 @@ TEST(gol_c, resizegrid_same3)
   FreeGrid(golB, newWidth);
 }
 
-
 TEST(gol_c, resizegrid_increase1)
 {
   const auto width = 32;
