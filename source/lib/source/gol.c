@@ -46,7 +46,7 @@ bool** ResizeGrid(bool** A, uint64_t rows, uint64_t cols, uint64_t newRow, uint6
     }
   }
 
-  A = realloc(A, sizeof(bool*) * newRow);
+  A = (bool**)realloc(A, sizeof(bool*) * newRow);
   // Check if realloc fails
   if (A == NULL) {
     return NULL;
