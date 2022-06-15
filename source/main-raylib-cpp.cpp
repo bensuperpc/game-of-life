@@ -19,8 +19,8 @@ auto main() -> int
 
   auto gol = benlib::Gol(screenWidth / 10, screenHeight / 10);
 
-  auto cellXSize = screenWidth / gol.GetWidth();
-  auto cellYSize = screenHeight / gol.GetHeight();
+  float cellXSize = screenWidth / gol.GetWidth();
+  float cellYSize = screenHeight / gol.GetHeight();
 
   raylib::Camera2D camera = {};
   camera.target = (Vector2) {screenWidth / 2.0f, screenHeight / 2.0f};
@@ -37,13 +37,12 @@ auto main() -> int
   while (!WindowShouldClose()) {
     framesCounter++;
 
-    float frameTime = GetFrameTime();
     Vector2 mousePosition = GetMousePosition();
 
     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
       Vector2 vect = camera.GetScreenToWorld(mousePosition);
-      auto x = static_cast<int>(vect.x / cellXSize);
-      auto y = static_cast<int>(vect.y / cellYSize);
+      auto x = static_cast<int64_t>(vect.x / cellXSize);
+      auto y = static_cast<int64_t>(vect.y / cellYSize);
 
       if (x >= 0 && x < gol.GetWidth() && y >= 0 && y < gol.GetHeight()) {
         gol.SetCell(x, y, true);
@@ -52,8 +51,8 @@ auto main() -> int
 
     if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
       Vector2 vect = camera.GetScreenToWorld(mousePosition);
-      auto x = static_cast<int>(vect.x / cellXSize);
-      auto y = static_cast<int>(vect.y / cellYSize);
+      auto x = static_cast<int64_t>(vect.x / cellXSize);
+      auto y = static_cast<int64_t>(vect.y / cellYSize);
       if (x >= 0 && x < gol.GetWidth() && y >= 0 && y < gol.GetHeight()) {
         gol.SetCell(x, y, false);
       }
@@ -90,16 +89,16 @@ auto main() -> int
     }
 
     if (IsKeyDown(KEY_LEFT)) {
-      camera.target.x -= 50.0f * frameTime;
+      camera.target.x -= 5.0f;
     }
     if (IsKeyDown(KEY_RIGHT)) {
-      camera.target.x += 50.0f * frameTime;
+      camera.target.x += 5.0f;
     }
     if (IsKeyDown(KEY_UP)) {
-      camera.target.y -= 50.0f * frameTime;
+      camera.target.y -= 5.0f;
     }
     if (IsKeyDown(KEY_DOWN)) {
-      camera.target.y += 50.0f * frameTime;
+      camera.target.y += 5.0f;
     }
 
     if (IsKeyPressed(KEY_C)) {
@@ -149,12 +148,23 @@ auto main() -> int
     for (uint64_t x = 0; x < gol.GetWidth(); x++) {
       for (uint64_t y = 0; y < gol.GetHeight(); y++) {
         if (gol.GetCell(x, y)) {
+          Vector2 vect = camera.GetWorldToScreen((Vector2) {x * cellXSize, y * cellYSize});
+          // If cell is outside of screen, don't draw it
+          if (vect.x < -20.0f || vect.x > screenWidth + 20 || vect.y < -20.0f || vect.y > screenHeight + 20) {
+            continue;
+          }
+
           DrawRectangle(static_cast<int>(x * cellXSize),
                         static_cast<int>(y * cellYSize),
                         static_cast<int>(cellXSize),
                         static_cast<int>(cellYSize),
                         BLACK);
         } else {
+          Vector2 vect = camera.GetWorldToScreen((Vector2) {x * cellXSize, y * cellYSize});
+          // If cell is outside of screen, don't draw it
+          if (vect.x < -20.0f || vect.x > screenWidth + 20 || vect.y < -20.0f || vect.y > screenHeight + 20) {
+            continue;
+          }
           DrawRectangle(static_cast<int>(x * cellXSize),
                         static_cast<int>(y * cellYSize),
                         static_cast<int>(cellXSize),
@@ -197,6 +207,10 @@ auto main() -> int
       DrawText("- H to display help", 40, 233, 10, DARKGRAY);
       DrawText("- U to Serialize, L to Deserialize", 40, 253, 10, DARKGRAY);
     }
+
+    // display FPS
+    DrawRectangle(screenWidth - 90, 10, 80, 20, Fade(SKYBLUE, 0.95f));
+    DrawText(TextFormat("FPS: %02d", GetFPS()), screenWidth - 80, 15, 15, DARKGRAY);
 
     EndDrawing();
   }

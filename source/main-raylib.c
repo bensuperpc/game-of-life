@@ -24,8 +24,8 @@ int main()
 
   ResetGrid(grid, cols, rows);
 
-  uint64_t cellXSize = screenWidth / cols;
-  uint64_t cellYSize = screenHeight / rows;
+  float cellXSize = screenWidth / cols;
+  float cellYSize = screenHeight / rows;
 
   Camera2D camera = {};
   camera.target = (Vector2) {screenWidth / 2.0f, screenHeight / 2.0f};
@@ -41,8 +41,6 @@ int main()
 
   while (!WindowShouldClose()) {
     framesCounter++;
-
-    float frameTime = GetFrameTime();
 
     Vector2 mousePosition = GetMousePosition();
 
@@ -97,16 +95,16 @@ int main()
     }
 
     if (IsKeyDown(KEY_LEFT)) {
-      camera.target.x -= 50.0f * frameTime;
+      camera.target.x -= 5.0f;
     }
     if (IsKeyDown(KEY_RIGHT)) {
-      camera.target.x += 50.0f * frameTime;
+      camera.target.x += 5.0f;
     }
     if (IsKeyDown(KEY_UP)) {
-      camera.target.y -= 50.0f * frameTime;
+      camera.target.y -= 5.0f;
     }
     if (IsKeyDown(KEY_DOWN)) {
-      camera.target.y += 50.0f * frameTime;
+      camera.target.y += 5.0f;
     }
 
     if (IsKeyPressed(KEY_C)) {
@@ -156,8 +154,20 @@ int main()
     for (uint64_t x = 0; x < cols; x++) {
       for (uint64_t y = 0; y < rows; y++) {
         if (grid[x][y]) {
+          Vector2 position = (Vector2) {x * cellXSize, y * cellYSize};
+          Vector2 vect = GetWorldToScreen2D(position, camera);
+          // If cell is outside of screen, don't draw it
+          if (vect.x < -20.0f || vect.x > screenWidth + 20 || vect.y < -20.0f || vect.y > screenHeight + 20) {
+            continue;
+          }
           DrawRectangle(x * cellXSize, y * cellYSize, cellXSize, cellYSize, BLACK);
         } else {
+          Vector2 position = (Vector2) {x * cellXSize, y * cellYSize};
+          Vector2 vect = GetWorldToScreen2D(position, camera);
+          // If cell is outside of screen, don't draw it
+          if (vect.x < -20.0f || vect.x > screenWidth + 20 || vect.y < -20.0f || vect.y > screenHeight + 20) {
+            continue;
+          }
           DrawRectangle(x * cellXSize, y * cellYSize, cellXSize, cellYSize, LIGHTGRAY);
         }
 
@@ -194,6 +204,10 @@ int main()
       DrawText("- H to display help", 40, 233, 10, DARKGRAY);
       DrawText("- U to Serialize, L to Deserialize", 40, 253, 10, DARKGRAY);
     }
+
+    // display FPS
+    DrawRectangle(screenWidth - 90, 10, 80, 20, Fade(SKYBLUE, 0.95f));
+    DrawText(TextFormat("FPS: %02d", GetFPS()), screenWidth - 80, 15, 15, DARKGRAY);
 
     EndDrawing();
   }
