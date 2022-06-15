@@ -29,6 +29,7 @@ project(
 
 find_package(raylib QUIET)
 find_package(raylib_cpp QUIET)
+find_package(OpenMP 3.0 QUIET)
 
 set(SRCS
     source/gol.cpp
@@ -49,3 +50,7 @@ target_include_directories(
 )
 
 target_link_libraries(game-of-life-lib PRIVATE raylib raylib_cpp)
+
+if (OpenMP_FOUND OR OpenMP_CXX_FOUND)
+  target_link_libraries(game-of-life-lib PRIVATE OpenMP::OpenMP_CXX)
+endif()

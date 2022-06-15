@@ -23,7 +23,7 @@ static void gol_cpp_bench_update(benchmark::State& state)
   state.SetItemsProcessed(state.iterations() * cells);
   state.SetBytesProcessed(state.iterations() * cells * sizeof(bool));
 }
-BENCHMARK(gol_cpp_bench_update)->Name("gol_cpp_bench_update")->RangeMultiplier(2)->Range(16, 64);
+BENCHMARK(gol_cpp_bench_update)->Name("gol_cpp_bench_update")->RangeMultiplier(8)->Range(8, 4096);
 
 static void gol_cpp_bench_random_fill(benchmark::State& state)
 {
@@ -108,7 +108,7 @@ static void gol_c_bench_update(benchmark::State& state)
   state.SetItemsProcessed(state.iterations() * cells);
   state.SetBytesProcessed(state.iterations() * cells * sizeof(bool));
 }
-BENCHMARK(gol_c_bench_update)->Name("gol_c_bench_update")->RangeMultiplier(2)->Range(16, 64);
+BENCHMARK(gol_c_bench_update)->Name("gol_c_bench_update")->RangeMultiplier(8)->Range(8, 4096);
 
 static void gol_c_bench_random_fill(benchmark::State& state)
 {

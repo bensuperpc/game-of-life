@@ -21,6 +21,9 @@ include(cmake/utile/ccache.cmake)
 # include(cmake/utile/ninja_color.cmake)
 
 # ---- Download and install dependencies
+
+find_package(OpenMP 3.0)
+
 set(FETCHCONTENT_BASE_DIR "${CMAKE_BINARY_DIR}/3rd-party" CACHE BOOL "" FORCE)
 set(FETCHCONTENT_QUIET FALSE CACHE BOOL "" FORCE)
 
@@ -97,6 +100,10 @@ target_link_libraries(game-of-life-cpp-exe PRIVATE game-of-life-lib)
 
 target_link_libraries(game-of-life-cpp-exe PRIVATE raylib raylib_cpp)
 
+if (OpenMP_FOUND OR OpenMP_CXX_FOUND)
+  target_link_libraries(game-of-life-cpp-exe PRIVATE OpenMP::OpenMP_CXX)
+endif()
+
 # ---- Declare executable raylib ----
 
 add_executable(game-of-life-exe source/main-raylib.c)
@@ -113,6 +120,10 @@ set_target_properties(
 target_link_libraries(game-of-life-exe PRIVATE game-of-life-lib)
 
 target_link_libraries(game-of-life-exe PRIVATE raylib)
+
+#if (OpenMP_FOUND OR OpenMP_CXX_FOUND)
+#  target_link_libraries(game-of-life-exe PRIVATE OpenMP::OpenMP_CXX)
+#endif()
 
 
 # ---- Install rules ----

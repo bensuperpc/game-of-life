@@ -8,6 +8,18 @@
 #include <string>  // std::string
 #include <vector>  // std::vector
 
+#if ((defined(_MSVC_LANG) && _MSVC_LANG >= 201703L) || __cplusplus >= 201703L)
+#  if __has_include("omp.h")
+#    include <omp.h>
+#  else
+#    if _MSC_VER && !__INTEL_COMPILER
+#      pragma message("Can t find omp.h, please install OpenMP")
+#    else
+#      warning Can t find omp.h, please install OpenMP.
+#    endif
+#  endif
+#endif
+
 namespace benlib
 {
 // A class for representing a game of life.

@@ -397,3 +397,129 @@ TEST(gol_cpp, serialization3)
 
   EXPECT_EQ(golA, golB);
 }
+
+TEST(gol_cpp, resize_inscrease1)
+{
+  const auto width = 32;
+  const auto height = 32;
+
+  const auto NewWidth = 64;
+  const auto NewHeight = 64;
+
+  auto gol = benlib::Gol(width, height);
+  gol.RandomFill();
+
+  EXPECT_EQ(width, gol.GetWidth());
+  EXPECT_EQ(height, gol.GetHeight());
+
+  gol.Resize(NewWidth, NewHeight);
+  gol.RandomFill();
+
+  EXPECT_EQ(NewWidth, gol.GetWidth());
+  EXPECT_EQ(NewHeight, gol.GetHeight());
+}
+
+TEST(gol_cpp, resize_inscrease2)
+{
+  const auto width = 6;
+  const auto height = 32;
+
+  const auto NewWidth = 128;
+  const auto NewHeight = 64;
+
+  auto gol = benlib::Gol(width, height);
+  gol.RandomFill();
+
+  EXPECT_EQ(width, gol.GetWidth());
+  EXPECT_EQ(height, gol.GetHeight());
+
+  gol.Resize(NewWidth, NewHeight);
+  gol.RandomFill();
+
+  EXPECT_EQ(NewWidth, gol.GetWidth());
+  EXPECT_EQ(NewHeight, gol.GetHeight());
+}
+
+TEST(gol_cpp, resize_inscrease3)
+{
+  const auto width = 16;
+  const auto height = 32;
+
+  const auto NewWidth = 128;
+  const auto NewHeight = 64;
+
+  auto gol = benlib::Gol(width, height);
+  gol.RandomFill();
+
+  EXPECT_EQ(width, gol.GetWidth());
+  EXPECT_EQ(height, gol.GetHeight());
+
+  gol.Resize(NewWidth, NewHeight);
+  gol.RandomFill();
+
+  EXPECT_EQ(NewWidth, gol.GetWidth());
+  EXPECT_EQ(NewHeight, gol.GetHeight());
+}
+
+TEST(gol_cpp, resize_decrease1)
+{
+  const auto width = 64;
+  const auto height = 64;
+
+  const auto NewWidth = 32;
+  const auto NewHeight = 32;
+
+  auto gol = benlib::Gol(width, height);
+  gol.RandomFill();
+
+  EXPECT_EQ(width, gol.GetWidth());
+  EXPECT_EQ(height, gol.GetHeight());
+
+  gol.Resize(NewWidth, NewHeight);
+  gol.RandomFill();
+
+  EXPECT_EQ(NewWidth, gol.GetWidth());
+  EXPECT_EQ(NewHeight, gol.GetHeight());
+}
+
+TEST(gol_cpp, resize_decrease2)
+{
+  const auto width = 32;
+  const auto height = 64;
+
+  const auto NewWidth = 32;
+  const auto NewHeight = 64;
+
+  auto gol = benlib::Gol(width, height);
+  gol.RandomFill();
+
+  EXPECT_EQ(width, gol.GetWidth());
+  EXPECT_EQ(height, gol.GetHeight());
+
+  gol.Resize(NewWidth, NewHeight);
+  gol.RandomFill();
+
+  EXPECT_EQ(NewWidth, gol.GetWidth());
+  EXPECT_EQ(NewHeight, gol.GetHeight());
+}
+
+TEST(gol_cpp, resize_decrease3)
+{
+  const auto width = 64;
+  const auto height = 32;
+
+  const auto NewWidth = 64;
+  const auto NewHeight = 32;
+
+  auto gol = benlib::Gol(width, height);
+  gol.RandomFill();
+
+  EXPECT_EQ(width, gol.GetWidth());
+  EXPECT_EQ(height, gol.GetHeight());
+
+  gol.Resize(NewWidth, NewHeight);
+  gol.RandomFill();
+
+  EXPECT_EQ(NewWidth, gol.GetWidth());
+  EXPECT_EQ(NewHeight, gol.GetHeight());
+}

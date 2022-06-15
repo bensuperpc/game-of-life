@@ -20,6 +20,10 @@ uint64_t benlib::Gol::GetHeight() const
 
 void benlib::Gol::Resize(const uint64_t width, const uint64_t height)
 {
+  // If old grid is same size as new grid, do nothing
+  if (width == GetWidth() && height == GetHeight())
+    return;
+
   std::vector<std::vector<bool>> new_grid(width, std::vector<bool>(height, false));
   for (uint64_t i = 0; i < width; i++) {
     for (uint64_t j = 0; j < height; j++) {
@@ -42,9 +46,15 @@ void benlib::Gol::Reset()
 uint64_t benlib::Gol::GetLivingCells() const
 {
   uint64_t livingCell = 0;
+#if defined(_OPENMP)
+#  pragma omp parallel for collapse(2)
+#endif
   for (uint64_t x = 0; x < grid.size(); x++) {
     for (uint64_t y = 0; y < grid[0].size(); y++) {
       if (grid[x][y]) {
+#if defined(_OPENMP)
+#  pragma omp critical
+#endif
         ++livingCell;
       }
     }
@@ -55,9 +65,15 @@ uint64_t benlib::Gol::GetLivingCells() const
 uint64_t benlib::Gol::GetDeadCells() const
 {
   uint64_t deadCell = 0;
+#if defined(_OPENMP)
+#  pragma omp parallel for collapse(2)
+#endif
   for (uint64_t x = 0; x < grid.size(); x++) {
     for (uint64_t y = 0; y < grid[0].size(); y++) {
       if (!grid[x][y]) {
+#if defined(_OPENMP)
+#  pragma omp critical
+#endif
         ++deadCell;
       }
     }
@@ -128,9 +144,11 @@ void benlib::Gol::Update()
 
   gridB = grid;
 
-  // Copy grid to gridB
-  // gridB.insert(gridB.end(), grid.begin(), grid.end());
-
+// Copy grid to gridB
+// gridB.insert(gridB.end(), grid.begin(), grid.end());
+#if defined(_OPENMP)
+#  pragma omp parallel for collapse(2)
+#endif
   for (uint64_t x = 0; x < grid.size(); x++) {
     for (uint64_t y = 0; y < grid[0].size(); y++) {
       // Count living neighbors
@@ -151,13 +169,12 @@ void benlib::Gol::Update()
           if (x + i >= grid.size() || y + j >= grid[0].size()) {
             continue;
           }
-
+          // Count living neighbors
           if (gridB[x + i][y + j]) {
             ++aliveCell;
           }
         }
       }
-
       // Game of life rules
       if (grid[x][y]) {
         if (aliveCell < 2 || aliveCell > 3) {
