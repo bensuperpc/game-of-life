@@ -46,15 +46,9 @@ void benlib::Gol::Reset()
 uint64_t benlib::Gol::GetLivingCells() const
 {
   uint64_t livingCell = 0;
-#if defined(_OPENMP)
-#  pragma omp parallel for collapse(2)
-#endif
   for (uint64_t x = 0; x < grid.size(); x++) {
     for (uint64_t y = 0; y < grid[0].size(); y++) {
       if (grid[x][y]) {
-#if defined(_OPENMP)
-#  pragma omp critical
-#endif
         ++livingCell;
       }
     }
@@ -65,15 +59,9 @@ uint64_t benlib::Gol::GetLivingCells() const
 uint64_t benlib::Gol::GetDeadCells() const
 {
   uint64_t deadCell = 0;
-#if defined(_OPENMP)
-#  pragma omp parallel for collapse(2)
-#endif
   for (uint64_t x = 0; x < grid.size(); x++) {
     for (uint64_t y = 0; y < grid[0].size(); y++) {
       if (!grid[x][y]) {
-#if defined(_OPENMP)
-#  pragma omp critical
-#endif
         ++deadCell;
       }
     }
@@ -91,9 +79,9 @@ uint64_t benlib::Gol::GetGenerations() const
   return generations;
 }
 
-void benlib::Gol::SetGenerations(const uint64_t generations)
+void benlib::Gol::SetGenerations(const uint64_t _generations)
 {
-  this->generations = generations;
+  this->generations = _generations;
 }
 
 std::vector<std::vector<bool>> benlib::Gol::GetGrid() const
@@ -141,13 +129,10 @@ void benlib::Gol::Update()
   generations++;
 
   std::vector<std::vector<bool>> gridB {};
-
+  // Copy grid to gridB
   gridB = grid;
-
-// Copy grid to gridB
-// gridB.insert(gridB.end(), grid.begin(), grid.end());
 #if defined(_OPENMP)
-#  pragma omp parallel for collapse(2)
+#  pragma omp parallel for collapse(1) schedule(auto) 
 #endif
   for (uint64_t x = 0; x < grid.size(); x++) {
     for (uint64_t y = 0; y < grid[0].size(); y++) {
@@ -271,7 +256,7 @@ void benlib::Gol::Deserialize(const std::string& filename)
   }
 
   std::string line;
-  std::vector<std::vector<bool>> grid {};
+  std::vector<std::vector<bool>> _grid {};
   while (std::getline(file, line)) {
     // std::cout << line << std::endl;
     std::vector<bool> row {};
@@ -285,11 +270,11 @@ void benlib::Gol::Deserialize(const std::string& filename)
         // std::cout << "Unknown character: " << c << std::endl;
       }
     }
-    grid.push_back(row);
+    _grid.push_back(row);
   }
   file.close();
   this->Clear();
-  this->grid = grid;
+  this->grid = _grid;
 }
 
 void benlib::Gol::Serialize(const std::string& filename)

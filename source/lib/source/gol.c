@@ -132,7 +132,9 @@ void UpdateGrid(bool** grid, uint64_t rows, uint64_t cols)
   }
 
   CopyGrid(grid, gridB, rows, cols);
-
+#if defined(_OPENMP)
+#  pragma omp parallel for collapse(2) schedule(auto)
+#endif
   for (uint64_t x = 0; x < rows; x++) {
     for (uint64_t y = 0; y < cols; y++) {
       // Count living neighbors
