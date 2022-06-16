@@ -1,7 +1,7 @@
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h>  // bool
+#include <stdint.h>  // uint64_t
+#include <stdio.h>  // printf
+#include <stdlib.h>  // malloc, realloc, free
 
 #include "gol.h"
 #include "raylib.h"
@@ -163,6 +163,7 @@ int main()
     int64_t xEnd = (int64_t)(vectB.x / cellXSize) + 1;
     int64_t yEnd = (int64_t)(vectB.y / cellYSize) + 1;
 
+    // Avoid out of bounds of the grid
     if (xStart < 0) {
       xStart = 0;
     }
@@ -177,13 +178,16 @@ int main()
       yEnd = rows;
     }
 
+    // Draw grid
     for (uint64_t x = xStart; x < xEnd; x++) {
       for (uint64_t y = yStart; y < yEnd; y++) {
+        // If cell is alive
         if (grid[x][y]) {
           DrawRectangle((int)(x * cellXSize), (int)(y * cellYSize), (int)(cellXSize), (int)(cellYSize), BLACK);
         } else {
           DrawRectangle((int)(x * cellXSize), (int)(y * cellYSize), (int)(cellXSize), (int)(cellYSize), LIGHTGRAY);
         }
+
         if (displayGrid) {
           DrawRectangleLinesEx(
               (Rectangle) {(float)(x * cellXSize), (float)(y * cellYSize), (float)(cellXSize), (float)(cellYSize)},

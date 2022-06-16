@@ -10,6 +10,7 @@ extern "C" {
 #include <stdio.h>  // printf
 #include <stdlib.h>  // malloc, realloc, free
 #include <string.h>  // memset, memcpy
+// #include <omp.h> // openmp
 
 bool** CreateGrid(uint64_t rows, uint64_t cols);
 void ResetGrid(bool** grid, uint64_t rows, uint64_t cols);

@@ -1,6 +1,5 @@
-#include <iostream>
-#include <random>
-#include <vector>
+#include <iostream>  // std::cout, std::endl
+#include <vector>  // std::vector
 
 #include "gol.hpp"
 #include "raylib-cpp.hpp"
@@ -146,6 +145,7 @@ auto main() -> int
 
     BeginMode2D(camera);
     // Drawing world
+
     // Draw only on screen
     const Vector2 vectH = camera.GetScreenToWorld((Vector2) {0.0f, 0.0f});
     const Vector2 vectB =
@@ -157,6 +157,7 @@ auto main() -> int
     int64_t xEnd = static_cast<int64_t>(vectB.x / cellXSize) + 1;
     int64_t yEnd = static_cast<int64_t>(vectB.y / cellYSize) + 1;
 
+    // Avoid out of bounds of the grid
     if (xStart < 0) {
       xStart = 0;
     }
@@ -171,8 +172,10 @@ auto main() -> int
       yEnd = gol.GetHeight();
     }
 
+    // Draw grid
     for (uint64_t x = xStart; x < xEnd; x++) {
       for (uint64_t y = yStart; y < yEnd; y++) {
+        // If cell is alive
         if (gol.GetCell(x, y)) {
           DrawRectangle(static_cast<int>(x * cellXSize),
                         static_cast<int>(y * cellYSize),
@@ -186,6 +189,7 @@ auto main() -> int
                         static_cast<int>(cellYSize),
                         LIGHTGRAY);
         }
+
         if (displayGrid) {
           DrawRectangleLinesEx((Rectangle) {static_cast<float>(x * cellXSize),
                                             static_cast<float>(y * cellYSize),
