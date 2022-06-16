@@ -15,7 +15,7 @@ My game of life with raylib and raylib-cpp (C and C++ version).
 |Unit test|&check;|1.0.0|
 |Benchmark|&check;|1.0.0|
 |Change GOL size in game|&cross;|-|
-|Multi-thread|&cross;|-|
+|Multi-thread|&cross;|WIP|
 |GPU/CUDA|&cross;|-|
 
 # Media
