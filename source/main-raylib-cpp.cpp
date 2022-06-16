@@ -10,12 +10,14 @@ auto main() -> int
 {
   const int screenWidth = 1920;
   const int screenHeight = 1080;
+  const uint32_t targetFPS = 120;
+  const uint32_t gridUpdatePerSecond = 10;
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_MSAA_4X_HINT);
 
   raylib::Window window(screenWidth, screenHeight, "raylib-cpp game of life");
 
-  SetTargetFPS(600);
+  SetTargetFPS(targetFPS);
 
   auto gol = benlib::Gol(screenWidth, screenHeight);
 
@@ -84,7 +86,7 @@ auto main() -> int
       displayHelp = !displayHelp;
     }
 
-    if (framesCounter % 10 == 0 && !paused) {
+    if (framesCounter % (targetFPS / gridUpdatePerSecond) == 0 && !paused) {
       gol.Update();
     }
 
@@ -144,7 +146,6 @@ auto main() -> int
 
     BeginMode2D(camera);
     // Drawing world
-
     // Draw only on screen
     const Vector2 vectH = camera.GetScreenToWorld((Vector2) {0.0f, 0.0f});
     const Vector2 vectB =

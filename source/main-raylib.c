@@ -10,12 +10,14 @@ int main()
 {
   const int screenWidth = 1920;
   const int screenHeight = 1080;
+  const uint32_t targetFPS = 120;
+  const uint32_t gridUpdatePerSecond = 10;
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_MSAA_4X_HINT);
 
   InitWindow(screenWidth, screenHeight, "raylib game of life");
 
-  SetTargetFPS(600);
+  SetTargetFPS(targetFPS);
 
   uint64_t cols = screenWidth;
   uint64_t rows = screenHeight;
@@ -90,7 +92,7 @@ int main()
       displayHelp = !displayHelp;
     }
 
-    if (framesCounter % 10 == 0 && !paused) {
+    if (framesCounter % (targetFPS / gridUpdatePerSecond) == 0 && !paused) {
       UpdateGrid(grid, cols, rows);
     }
 
@@ -143,7 +145,6 @@ int main()
       camera.zoom = 5.0f;
     else if (camera.zoom < 0.01f)
       camera.zoom = 0.01f;
-
     BeginDrawing();
 
     ClearBackground(RAYWHITE);
