@@ -15,12 +15,12 @@ auto main() -> int
 
   raylib::Window window(screenWidth, screenHeight, "raylib-cpp game of life");
 
-  SetTargetFPS(60);
+  SetTargetFPS(600);
 
-  auto gol = benlib::Gol(screenWidth / 10, screenHeight / 10);
+  auto gol = benlib::Gol(screenWidth, screenHeight);
 
-  float cellXSize = screenWidth / gol.GetWidth();
-  float cellYSize = screenHeight / gol.GetHeight();
+  float cellXSize = 10.0f;
+  float cellYSize = 10.0f;
 
   raylib::Camera2D camera = {};
   camera.target = (Vector2) {screenWidth / 2.0f, screenHeight / 2.0f};
@@ -145,33 +145,46 @@ auto main() -> int
     BeginMode2D(camera);
     // Drawing world
 
-    for (uint64_t x = 0; x < gol.GetWidth(); x++) {
-      for (uint64_t y = 0; y < gol.GetHeight(); y++) {
-        if (gol.GetCell(x, y)) {
-          Vector2 vect = camera.GetWorldToScreen((Vector2) {x * cellXSize, y * cellYSize});
-          // If cell is outside of screen, don't draw it
-          if (vect.x < -20.0f || vect.x > screenWidth + 20 || vect.y < -20.0f || vect.y > screenHeight + 20) {
-            continue;
-          }
+    // Draw only on screen
+    const Vector2 vectH = camera.GetScreenToWorld((Vector2) {0.0f, 0.0f});
+    const Vector2 vectB =
+        camera.GetScreenToWorld((Vector2) {static_cast<float>(screenWidth), static_cast<float>(screenHeight)});
 
+    int64_t xStart = static_cast<int64_t>(vectH.x / cellXSize);
+    int64_t yStart = static_cast<int64_t>(vectH.y / cellYSize);
+
+    int64_t xEnd = static_cast<int64_t>(vectB.x / cellXSize) + 1;
+    int64_t yEnd = static_cast<int64_t>(vectB.y / cellYSize) + 1;
+
+    if (xStart < 0) {
+      xStart = 0;
+    }
+    if (yStart < 0) {
+      yStart = 0;
+    }
+
+    if (xEnd > gol.GetWidth()) {
+      xEnd = gol.GetWidth();
+    }
+    if (yEnd > gol.GetHeight()) {
+      yEnd = gol.GetHeight();
+    }
+
+    for (uint64_t x = xStart; x < xEnd; x++) {
+      for (uint64_t y = yStart; y < yEnd; y++) {
+        if (gol.GetCell(x, y)) {
           DrawRectangle(static_cast<int>(x * cellXSize),
                         static_cast<int>(y * cellYSize),
                         static_cast<int>(cellXSize),
                         static_cast<int>(cellYSize),
                         BLACK);
         } else {
-          Vector2 vect = camera.GetWorldToScreen((Vector2) {x * cellXSize, y * cellYSize});
-          // If cell is outside of screen, don't draw it
-          if (vect.x < -20.0f || vect.x > screenWidth + 20 || vect.y < -20.0f || vect.y > screenHeight + 20) {
-            continue;
-          }
           DrawRectangle(static_cast<int>(x * cellXSize),
                         static_cast<int>(y * cellYSize),
                         static_cast<int>(cellXSize),
                         static_cast<int>(cellYSize),
                         LIGHTGRAY);
         }
-
         if (displayGrid) {
           DrawRectangleLinesEx((Rectangle) {static_cast<float>(x * cellXSize),
                                             static_cast<float>(y * cellYSize),

@@ -15,17 +15,17 @@ int main()
 
   InitWindow(screenWidth, screenHeight, "raylib game of life");
 
-  SetTargetFPS(60);
+  SetTargetFPS(600);
 
-  uint64_t cols = screenWidth / 10;
-  uint64_t rows = screenHeight / 10;
+  uint64_t cols = screenWidth;
+  uint64_t rows = screenHeight;
 
   bool** grid = CreateGrid(cols, rows);
 
   ResetGrid(grid, cols, rows);
 
-  float cellXSize = screenWidth / cols;
-  float cellYSize = screenHeight / rows;
+  float cellXSize = 10.0f;
+  float cellYSize = 10.0f;
 
   Camera2D camera = {};
   camera.target = (Vector2) {screenWidth / 2.0f, screenHeight / 2.0f};
@@ -151,30 +151,42 @@ int main()
     BeginMode2D(camera);
 
     // Drawing world
-    for (uint64_t x = 0; x < cols; x++) {
-      for (uint64_t y = 0; y < rows; y++) {
-        if (grid[x][y]) {
-          Vector2 position = (Vector2) {x * cellXSize, y * cellYSize};
-          Vector2 vect = GetWorldToScreen2D(position, camera);
-          // If cell is outside of screen, don't draw it
-          if (vect.x < -20.0f || vect.x > screenWidth + 20 || vect.y < -20.0f || vect.y > screenHeight + 20) {
-            continue;
-          }
-          DrawRectangle(x * cellXSize, y * cellYSize, cellXSize, cellYSize, BLACK);
-        } else {
-          Vector2 position = (Vector2) {x * cellXSize, y * cellYSize};
-          Vector2 vect = GetWorldToScreen2D(position, camera);
-          // If cell is outside of screen, don't draw it
-          if (vect.x < -20.0f || vect.x > screenWidth + 20 || vect.y < -20.0f || vect.y > screenHeight + 20) {
-            continue;
-          }
-          DrawRectangle(x * cellXSize, y * cellYSize, cellXSize, cellYSize, LIGHTGRAY);
-        }
 
+    // Draw only on screen
+    const Vector2 vectH = GetScreenToWorld2D((Vector2) {0.0f, 0.0f}, camera);
+    const Vector2 vectB = GetScreenToWorld2D((Vector2) {(float)screenWidth, (float)screenHeight}, camera);
+
+    int64_t xStart = (int64_t)(vectH.x / cellXSize);
+    int64_t yStart = (int64_t)(vectH.y / cellYSize);
+
+    int64_t xEnd = (int64_t)(vectB.x / cellXSize) + 1;
+    int64_t yEnd = (int64_t)(vectB.y / cellYSize) + 1;
+
+    if (xStart < 0) {
+      xStart = 0;
+    }
+    if (yStart < 0) {
+      yStart = 0;
+    }
+
+    if (xEnd > cols) {
+      xEnd = cols;
+    }
+    if (yEnd > rows) {
+      yEnd = rows;
+    }
+
+    for (uint64_t x = xStart; x < xEnd; x++) {
+      for (uint64_t y = yStart; y < yEnd; y++) {
+        if (grid[x][y]) {
+          DrawRectangle((int)(x * cellXSize), (int)(y * cellYSize), (int)(cellXSize), (int)(cellYSize), BLACK);
+        } else {
+          DrawRectangle((int)(x * cellXSize), (int)(y * cellYSize), (int)(cellXSize), (int)(cellYSize), LIGHTGRAY);
+        }
         if (displayGrid) {
           DrawRectangleLinesEx(
               (Rectangle) {(float)(x * cellXSize), (float)(y * cellYSize), (float)(cellXSize), (float)(cellYSize)},
-              0.7,
+              0.7f,
               BLACK);
         }
       }
