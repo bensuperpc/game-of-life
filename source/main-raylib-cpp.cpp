@@ -12,6 +12,9 @@ auto main() -> int
   const uint32_t targetFPS = 120;
   const uint32_t gridUpdatePerSecond = 10;
 
+  const float gridOffsetX = 0.0f;
+  const float gridOffsetY = 0.0f;
+
   SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_MSAA_4X_HINT);
 
   raylib::Window window(screenWidth, screenHeight, "raylib-cpp game of life");
@@ -24,7 +27,7 @@ auto main() -> int
   float cellYSize = 10.0f;
 
   raylib::Camera2D camera = {};
-  camera.target = (Vector2) {screenWidth / 2.0f, screenHeight / 2.0f};
+  camera.target = (Vector2) {screenWidth / 2.0f + gridOffsetX, screenHeight / 2.0f + gridOffsetY};
   camera.offset = (Vector2) {screenWidth / 2.0f, screenHeight / 2.0f};
   camera.rotation = 0.0f;
   camera.zoom = 1.0f;
@@ -42,6 +45,11 @@ auto main() -> int
 
     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
       Vector2 vect = camera.GetScreenToWorld(mousePosition);
+
+      // Apply grid offset
+      vect.x -= gridOffsetX;
+      vect.y -= gridOffsetY;
+
       auto x = static_cast<int64_t>(vect.x / cellXSize);
       auto y = static_cast<int64_t>(vect.y / cellYSize);
 
@@ -52,6 +60,11 @@ auto main() -> int
 
     if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
       Vector2 vect = camera.GetScreenToWorld(mousePosition);
+
+      // Apply grid offset
+      vect.x -= gridOffsetX;
+      vect.y -= gridOffsetY;
+
       auto x = static_cast<int64_t>(vect.x / cellXSize);
       auto y = static_cast<int64_t>(vect.y / cellYSize);
       if (x >= 0 && x < gol.GetWidth() && y >= 0 && y < gol.GetHeight()) {
@@ -147,12 +160,18 @@ auto main() -> int
     // Drawing world
 
     // Draw only on screen
-    const Vector2 vectH = camera.GetScreenToWorld((Vector2) {0.0f, 0.0f});
-    const Vector2 vectB =
+    Vector2 vectH = camera.GetScreenToWorld((Vector2) {0.0f, 0.0f});
+    Vector2 vectB =
         camera.GetScreenToWorld((Vector2) {static_cast<float>(screenWidth), static_cast<float>(screenHeight)});
 
-    int64_t xStart = static_cast<int64_t>(vectH.x / cellXSize);
-    int64_t yStart = static_cast<int64_t>(vectH.y / cellYSize);
+    // Apply grid offset
+    vectH.x -= gridOffsetX;
+    vectH.y -= gridOffsetY;
+    vectB.x -= gridOffsetX;
+    vectB.y -= gridOffsetY;
+
+    int64_t xStart = static_cast<int64_t>(vectH.x / cellXSize) - 1;
+    int64_t yStart = static_cast<int64_t>(vectH.y / cellYSize) - 1;
 
     int64_t xEnd = static_cast<int64_t>(vectB.x / cellXSize) + 1;
     int64_t yEnd = static_cast<int64_t>(vectB.y / cellYSize) + 1;
@@ -177,22 +196,22 @@ auto main() -> int
       for (uint64_t y = yStart; y < yEnd; y++) {
         // If cell is alive
         if (gol.GetCell(x, y)) {
-          DrawRectangle(static_cast<int>(x * cellXSize),
-                        static_cast<int>(y * cellYSize),
+          DrawRectangle(static_cast<int>(x * cellXSize + gridOffsetX),
+                        static_cast<int>(y * cellYSize + gridOffsetY),
                         static_cast<int>(cellXSize),
                         static_cast<int>(cellYSize),
                         BLACK);
         } else {
-          DrawRectangle(static_cast<int>(x * cellXSize),
-                        static_cast<int>(y * cellYSize),
+          DrawRectangle(static_cast<int>(x * cellXSize + gridOffsetX),
+                        static_cast<int>(y * cellYSize + gridOffsetY),
                         static_cast<int>(cellXSize),
                         static_cast<int>(cellYSize),
                         LIGHTGRAY);
         }
 
         if (displayGrid) {
-          DrawRectangleLinesEx((Rectangle) {static_cast<float>(x * cellXSize),
-                                            static_cast<float>(y * cellYSize),
+          DrawRectangleLinesEx((Rectangle) {static_cast<float>(x * cellXSize + gridOffsetX),
+                                            static_cast<float>(y * cellYSize + gridOffsetY),
                                             static_cast<float>(cellXSize),
                                             static_cast<float>(cellYSize)},
                                0.7f,

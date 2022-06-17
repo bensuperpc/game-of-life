@@ -53,5 +53,5 @@ target_link_libraries(game-of-life-lib PRIVATE raylib raylib_cpp)
 
 if (OpenMP_FOUND OR OpenMP_CXX_FOUND)
   target_link_libraries(game-of-life-lib PRIVATE OpenMP::OpenMP_CXX OpenMP::OpenMP_C)
-  target_compile_definitions(game-of-life-lib PUBLIC -DENABLE_OPENMP)
+  target_compile_definitions(game-of-life-lib PRIVATE -DENABLE_OPENMP)
 endif()

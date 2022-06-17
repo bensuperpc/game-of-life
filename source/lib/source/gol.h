@@ -11,7 +11,7 @@ extern "C" {
 #include <stdlib.h>  // malloc, realloc, free
 #include <string.h>  // memset, memcpy
 #if defined(ENABLE_OPENMP)
-#include <omp.h> // openmp
+#  include <omp.h>  // openmp
 #endif
 
 bool** CreateGrid(uint64_t rows, uint64_t cols);

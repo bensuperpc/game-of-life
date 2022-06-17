@@ -13,6 +13,9 @@ int main()
   const uint32_t targetFPS = 120;
   const uint32_t gridUpdatePerSecond = 10;
 
+  const float gridOffsetX = 0.0f;
+  const float gridOffsetY = 0.0f;
+
   SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_MSAA_4X_HINT);
 
   InitWindow(screenWidth, screenHeight, "raylib game of life");
@@ -30,7 +33,7 @@ int main()
   float cellYSize = 10.0f;
 
   Camera2D camera = {};
-  camera.target = (Vector2) {screenWidth / 2.0f, screenHeight / 2.0f};
+  camera.target = (Vector2) {screenWidth / 2.0f + gridOffsetX, screenHeight / 2.0f + gridOffsetY};
   camera.offset = (Vector2) {screenWidth / 2.0f, screenHeight / 2.0f};
   camera.rotation = 0.0f;
   camera.zoom = 1.0f;
@@ -48,8 +51,13 @@ int main()
 
     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
       Vector2 vect = GetScreenToWorld2D(mousePosition, camera);
-      int x = (int)(vect.x / cellXSize);
-      int y = (int)(vect.y / cellYSize);
+
+      // Apply grid offset
+      vect.x -= gridOffsetX;
+      vect.y -= gridOffsetY;
+
+      uint64_t x = (uint64_t)(vect.x / cellXSize);
+      uint64_t y = (uint64_t)(vect.y / cellYSize);
 
       if (x >= 0 && x < cols && y >= 0 && y < rows) {
         grid[x][y] = true;
@@ -58,8 +66,13 @@ int main()
 
     if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
       Vector2 vect = GetScreenToWorld2D(mousePosition, camera);
-      int x = (int)(vect.x / cellXSize);
-      int y = (int)(vect.y / cellYSize);
+
+      // Apply grid offset
+      vect.x -= gridOffsetX;
+      vect.y -= gridOffsetY;
+
+      uint64_t x = (uint64_t)(vect.x / cellXSize);
+      uint64_t y = (uint64_t)(vect.y / cellYSize);
 
       if (x >= 0 && x < cols && y >= 0 && y < rows) {
         grid[x][y] = false;
@@ -154,8 +167,14 @@ int main()
     // Drawing world
 
     // Draw only on screen
-    const Vector2 vectH = GetScreenToWorld2D((Vector2) {0.0f, 0.0f}, camera);
-    const Vector2 vectB = GetScreenToWorld2D((Vector2) {(float)screenWidth, (float)screenHeight}, camera);
+    Vector2 vectH = GetScreenToWorld2D((Vector2) {0.0f, 0.0f}, camera);
+    Vector2 vectB = GetScreenToWorld2D((Vector2) {(float)screenWidth, (float)screenHeight}, camera);
+
+    // Apply grid offset
+    vectH.x -= gridOffsetX;
+    vectH.y -= gridOffsetY;
+    vectB.x -= gridOffsetX;
+    vectB.y -= gridOffsetY;
 
     int64_t xStart = (int64_t)(vectH.x / cellXSize);
     int64_t yStart = (int64_t)(vectH.y / cellYSize);
@@ -183,16 +202,26 @@ int main()
       for (uint64_t y = yStart; y < yEnd; y++) {
         // If cell is alive
         if (grid[x][y]) {
-          DrawRectangle((int)(x * cellXSize), (int)(y * cellYSize), (int)(cellXSize), (int)(cellYSize), BLACK);
+          DrawRectangle((int)(x * cellXSize + gridOffsetX),
+                        (int)(y * cellYSize + gridOffsetY),
+                        (int)(cellXSize),
+                        (int)(cellYSize),
+                        BLACK);
         } else {
-          DrawRectangle((int)(x * cellXSize), (int)(y * cellYSize), (int)(cellXSize), (int)(cellYSize), LIGHTGRAY);
+          DrawRectangle((int)(x * cellXSize + gridOffsetX),
+                        (int)(y * cellYSize + gridOffsetY),
+                        (int)(cellXSize),
+                        (int)(cellYSize),
+                        LIGHTGRAY);
         }
 
         if (displayGrid) {
-          DrawRectangleLinesEx(
-              (Rectangle) {(float)(x * cellXSize), (float)(y * cellYSize), (float)(cellXSize), (float)(cellYSize)},
-              0.7f,
-              BLACK);
+          DrawRectangleLinesEx((Rectangle) {(float)(x * cellXSize + gridOffsetX),
+                                            (float)(y * cellYSize + gridOffsetY),
+                                            (float)(cellXSize),
+                                            (float)(cellYSize)},
+                               0.7f,
+                               BLACK);
         }
       }
     }
