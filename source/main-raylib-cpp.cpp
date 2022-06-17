@@ -126,7 +126,7 @@ auto main() -> int
     if (IsKeyPressed(KEY_B)) {
       camera.zoom = 1.0f;
       camera.rotation = 0.0f;
-      camera.target = (Vector2) {screenWidth / 2.0f, screenHeight / 2.0f};
+      camera.target = (Vector2) {screenWidth / 2.0f + gridOffsetX, screenHeight / 2.0f + gridOffsetY};
     }
 
     if (IsKeyDown(KEY_A)) {

@@ -9,6 +9,11 @@ install(
     RUNTIME COMPONENT game-of-life_Runtime
 )
 
+install(
+    TARGETS game-of-life-exe
+    RUNTIME COMPONENT game-of-life_Runtime
+)
+
 write_basic_package_version_file(
     "${package}ConfigVersion.cmake"
     COMPATIBILITY SameMajorVersion
@@ -30,6 +35,12 @@ install(
 # Export variables for the install script to use
 install(CODE "
 set(game-of-life_NAME [[$<TARGET_FILE_NAME:game-of-life-cpp-exe>]])
+set(game-of-life_INSTALL_CMAKEDIR [[${game-of-life_INSTALL_CMAKEDIR}]])
+set(CMAKE_INSTALL_BINDIR [[${CMAKE_INSTALL_BINDIR}]])
+" COMPONENT game-of-life_Development)
+
+install(CODE "
+set(game-of-life_NAME [[$<TARGET_FILE_NAME:game-of-life-exe>]])
 set(game-of-life_INSTALL_CMAKEDIR [[${game-of-life_INSTALL_CMAKEDIR}]])
 set(CMAKE_INSTALL_BINDIR [[${CMAKE_INSTALL_BINDIR}]])
 " COMPONENT game-of-life_Development)
