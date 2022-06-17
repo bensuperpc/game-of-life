@@ -44,7 +44,7 @@ set(HEADERS
 add_library(game-of-life-lib ${SRCS} ${HEADERS})
 
 target_include_directories(
-    game-of-life-lib ${warning_guard}
+    game-of-life-lib
     PUBLIC
     "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/source>"
 )
