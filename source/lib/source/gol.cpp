@@ -132,7 +132,7 @@ void benlib::Gol::Update()
   // Copy grid to gridB
   gridB = grid;
 #if defined(_OPENMP)
-#  pragma omp parallel for collapse(1) schedule(auto)
+#  pragma omp parallel for collapse(2) schedule(auto)
 #endif
   for (uint64_t x = 0; x < grid.size(); x++) {
     for (uint64_t y = 0; y < grid[0].size(); y++) {

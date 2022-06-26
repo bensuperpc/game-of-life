@@ -45,7 +45,8 @@ include(../cmake/lib/benchmark.cmake)
   # Add tests
   add_test_fn(game-of-life-test)
   add_test_fn(game-of-life-test-cpp)
-
+  add_test_fn(game-of-life-parity-test)
+  
   # Add bench
   add_bench_fn(game-of-life-bench)
 endif()
