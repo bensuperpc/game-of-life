@@ -523,3 +523,27 @@ TEST(gol_cpp, resize_decrease3)
   EXPECT_EQ(NewWidth, gol.GetWidth());
   EXPECT_EQ(NewHeight, gol.GetHeight());
 }
+
+TEST(gol_cpp, constructor1)
+{
+  const auto width = 32;
+  const auto height = 64;
+
+  auto gol = benlib::Gol(width, height);
+
+  EXPECT_EQ(width, gol.GetWidth());
+  EXPECT_EQ(height, gol.GetHeight());
+}
+
+TEST(gol_cpp, constructor2)
+{
+  const auto width = 64;
+  const auto height = 32;
+
+  std::vector<std::vector<uint8_t>> new_grid(width, std::vector<uint8_t>(height, 0));
+
+  auto gol = benlib::Gol(new_grid);
+
+  EXPECT_EQ(width, gol.GetWidth());
+  EXPECT_EQ(height, gol.GetHeight());
+}

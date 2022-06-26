@@ -6,6 +6,33 @@ benlib::Gol::Gol(const uint64_t width, const uint64_t height)
   grid = new_grid;
 }
 
+benlib::Gol::Gol(uint8_t** _grid, const uint64_t width, const uint64_t height)
+{
+  std::vector<std::vector<uint8_t>> new_grid(width, std::vector<uint8_t>(height, 0));
+  for (uint64_t i = 0; i < width; i++) {
+    for (uint64_t j = 0; j < height; j++) {
+      new_grid[i][j] = _grid[i][j];
+    }
+  }
+  this->grid = new_grid;
+}
+
+benlib::Gol::Gol(bool** _grid, const uint64_t width, const uint64_t height)
+{
+  std::vector<std::vector<uint8_t>> new_grid(width, std::vector<uint8_t>(height, 0));
+  for (uint64_t i = 0; i < width; i++) {
+    for (uint64_t j = 0; j < height; j++) {
+      new_grid[i][j] = _grid[i][j] ? 1 : 0;
+    }
+  }
+  this->grid = new_grid;
+}
+
+benlib::Gol::Gol(const std::vector<std::vector<uint8_t>>& _grid)
+{
+  this->grid = _grid;
+}
+
 benlib::Gol::~Gol() {}
 
 uint64_t benlib::Gol::GetWidth() const
@@ -95,6 +122,19 @@ void benlib::Gol::SetGrid(const std::vector<std::vector<uint8_t>>& _grid)
   // this->grid.clear();
   // this->grid.shrink_to_fit();
   // this->grid.insert(this->grid.end(), grid.begin(), grid.end());
+}
+
+void benlib::Gol::SetGrid(const uint8_t** _grid, const uint64_t width, const uint64_t height)
+{
+  // this->grid.clear();
+  // this->grid.shrink_to_fit();
+  this->grid.resize(width);
+  for (uint64_t i = 0; i < width; i++) {
+    this->grid[i].resize(height);
+    for (uint64_t j = 0; j < height; j++) {
+      this->grid[i][j] = _grid[i][j];
+    }
+  }
 }
 
 void benlib::Gol::SetCell(const uint64_t x, const uint64_t y, const uint8_t alive)

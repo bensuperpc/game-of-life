@@ -28,6 +28,12 @@ class Gol
 public:
   // Constructor.
   Gol(const uint64_t width, const uint64_t height);
+  // Constructor.
+  Gol(uint8_t** _grid, const uint64_t width, const uint64_t height);
+  // Constructor.
+  Gol(bool** _grid, const uint64_t width, const uint64_t height);
+  // Constructor.
+  Gol(const std::vector<std::vector<uint8_t>>& _grid);
   // Destructor.
   ~Gol();
   // Get the width of the game of life.
@@ -52,6 +58,8 @@ public:
   std::vector<std::vector<uint8_t>> GetGrid() const;
   // Set grid.
   void SetGrid(const std::vector<std::vector<uint8_t>>& grid);
+  // Set grid.
+  void SetGrid(const uint8_t** grid, const uint64_t width, const uint64_t height);
   // Update the game of life.
   void Update();
   // Print the game of life.

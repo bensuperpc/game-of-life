@@ -8,8 +8,6 @@ TEST(gol_parity, basic1)
 {
   const auto width = 64;
   const auto height = 64;
-  const auto cells = width * height;
-
   bool** golC = CreateGrid(width, height);
   ResetGrid(golC, width, height);
 
@@ -57,8 +55,6 @@ TEST(gol_parity, basic2)
 {
   const auto width = 128;
   const auto height = 128;
-  const auto cells = width * height;
-
   bool** golC = CreateGrid(width, height);
   ResetGrid(golC, width, height);
 
@@ -106,8 +102,6 @@ TEST(gol_parity, basic3)
 {
   const auto width = 128;
   const auto height = 64;
-  const auto cells = width * height;
-
   bool** golC = CreateGrid(width, height);
   ResetGrid(golC, width, height);
 
@@ -155,8 +149,6 @@ TEST(gol_parity, basic4)
 {
   const auto width = 64;
   const auto height = 128;
-  const auto cells = width * height;
-
   bool** golC = CreateGrid(width, height);
   ResetGrid(golC, width, height);
 
@@ -196,6 +188,40 @@ TEST(gol_parity, basic4)
     golCPP.Update();
     EXPECT_EQ(golCPP.GetLivingCells(), GetLivingCells(golC, width, height));
   }
+
+  FreeGrid(golC, width);
+}
+
+TEST(gol_parity, setGrid1)
+{
+  const auto width = 128;
+  const auto height = 128;
+
+  bool** golC = CreateGrid(width, height);
+  ResetGrid(golC, width, height);
+
+  FillGrid(golC, width, height, true);
+
+  benlib::Gol golCPP(golC, width, height);
+
+  EXPECT_EQ(golCPP.GetLivingCells(), GetLivingCells(golC, width, height));
+
+  FreeGrid(golC, width);
+}
+
+TEST(gol_parity, setGrid2)
+{
+  const auto width = 64;
+  const auto height = 128;
+
+  bool** golC = CreateGrid(width, height);
+  ResetGrid(golC, width, height);
+
+  FillGrid(golC, width, height, true);
+
+  benlib::Gol golCPP(golC, width, height);
+
+  EXPECT_EQ(golCPP.GetLivingCells(), GetLivingCells(golC, width, height));
 
   FreeGrid(golC, width);
 }
