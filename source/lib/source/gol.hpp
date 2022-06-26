@@ -45,13 +45,13 @@ public:
   // Set the number of generations.
   void SetGenerations(const uint64_t generations);
   // Set the cell at the given coordinates to be alive.
-  void SetCell(const uint64_t x, const uint64_t y, const bool alive);
+  void SetCell(const uint64_t x, const uint64_t y, const uint8_t alive);
   // Get the cell at the given coordinates.
-  bool GetCell(const uint64_t x, const uint64_t y) const;
+  uint8_t GetCell(const uint64_t x, const uint64_t y) const;
   // Get grid.
-  std::vector<std::vector<bool>> GetGrid() const;
+  std::vector<std::vector<uint8_t>> GetGrid() const;
   // Set grid.
-  void SetGrid(const std::vector<std::vector<bool>>& grid);
+  void SetGrid(const std::vector<std::vector<uint8_t>>& grid);
   // Update the game of life.
   void Update();
   // Print the game of life.
@@ -67,19 +67,19 @@ public:
   void RandomFill(std::mt19937_64& rng);
   // Randomly populate the game of life with a given percentage of life.
   void RandomFill(const float percentage);
-  // Populate the game of life with value in boolean
-  void Fill(const bool value);
+  // Populate the game of life with value in uint8_tean
+  void Fill(const uint8_t value);
   // Reset the game of life.
   void Reset();
 
   // Overload operator== to compare a game of life.
-  bool operator==(const Gol& gol) const;
+  uint8_t operator==(const Gol& gol) const;
   // Overload operator= to copy a game of life.
   Gol& operator=(const Gol& gol);
   // Overload operator!= to compare a game of life.
-  bool operator!=(const Gol& gol) const;
+  uint8_t operator!=(const Gol& gol) const;
   // Overload operator(x, y) to get the cell at the given coordinates.
-  bool operator()(const uint64_t x, const uint64_t y) const;
+  uint8_t operator()(const uint64_t x, const uint64_t y) const;
 
   // Save the game of life to a file.
   void Serialize(const std::string& filename);
@@ -90,7 +90,7 @@ protected:
   // The number of generations.
   uint64_t generations = 0;
   // The game of life grid.
-  std::vector<std::vector<bool>> grid;
+  std::vector<std::vector<uint8_t>> grid;
 };
 }  // namespace benlib
 #endif  // BENLIB_GOL_HPP_

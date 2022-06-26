@@ -2,7 +2,7 @@
 
 benlib::Gol::Gol(const uint64_t width, const uint64_t height)
 {
-  std::vector<std::vector<bool>> new_grid(width, std::vector<bool>(height, false));
+  std::vector<std::vector<uint8_t>> new_grid(width, std::vector<uint8_t>(height, 0));
   grid = new_grid;
 }
 
@@ -24,13 +24,13 @@ void benlib::Gol::Resize(const uint64_t width, const uint64_t height)
   if (width == GetWidth() && height == GetHeight())
     return;
 
-  std::vector<std::vector<bool>> new_grid(width, std::vector<bool>(height, false));
+  std::vector<std::vector<uint8_t>> new_grid(width, std::vector<uint8_t>(height, 0));
   for (uint64_t i = 0; i < width; i++) {
     for (uint64_t j = 0; j < height; j++) {
       if (i < grid.size() && j < grid[0].size()) {
         new_grid[i][j] = grid[i][j];
       } else {
-        new_grid[i][j] = false;
+        new_grid[i][j] = 0;
       }
     }
   }
@@ -40,7 +40,7 @@ void benlib::Gol::Resize(const uint64_t width, const uint64_t height)
 
 void benlib::Gol::Reset()
 {
-  Fill(false);
+  Fill(0);
 }
 
 uint64_t benlib::Gol::GetLivingCells() const
@@ -84,12 +84,12 @@ void benlib::Gol::SetGenerations(const uint64_t _generations)
   this->generations = _generations;
 }
 
-std::vector<std::vector<bool>> benlib::Gol::GetGrid() const
+std::vector<std::vector<uint8_t>> benlib::Gol::GetGrid() const
 {
   return grid;
 }
 
-void benlib::Gol::SetGrid(const std::vector<std::vector<bool>>& _grid)
+void benlib::Gol::SetGrid(const std::vector<std::vector<uint8_t>>& _grid)
 {
   this->grid = _grid;
   // this->grid.clear();
@@ -97,12 +97,12 @@ void benlib::Gol::SetGrid(const std::vector<std::vector<bool>>& _grid)
   // this->grid.insert(this->grid.end(), grid.begin(), grid.end());
 }
 
-void benlib::Gol::SetCell(const uint64_t x, const uint64_t y, const bool alive)
+void benlib::Gol::SetCell(const uint64_t x, const uint64_t y, const uint8_t alive)
 {
   grid[x][y] = alive;
 }
 
-bool benlib::Gol::GetCell(const uint64_t x, const uint64_t y) const
+uint8_t benlib::Gol::GetCell(const uint64_t x, const uint64_t y) const
 {
   return grid[x][y];
 }
@@ -111,7 +111,7 @@ void benlib::Gol::Print()
 {
   for (uint64_t x = 0; x < grid.size(); x++) {
     for (uint64_t y = 0; y < grid[0].size(); y++) {
-      if (grid[x][y] == true) {
+      if (grid[x][y] == 1) {
         std::cout << " O ";
       } else {
         std::cout << " . ";
@@ -128,7 +128,7 @@ void benlib::Gol::Update()
 {
   generations++;
 
-  std::vector<std::vector<bool>> gridB {};
+  std::vector<std::vector<uint8_t>> gridB {};
   // Copy grid to gridB
   gridB = grid;
 #if defined(_OPENMP)
@@ -163,11 +163,11 @@ void benlib::Gol::Update()
       // Game of life rules
       if (grid[x][y]) {
         if (aliveCell < 2 || aliveCell > 3) {
-          grid[x][y] = false;
+          grid[x][y] = 0;
         }
       } else {
         if (aliveCell == 3) {
-          grid[x][y] = true;
+          grid[x][y] = 1;
         }
       }
     }
@@ -186,7 +186,7 @@ void benlib::Gol::RandomFill()
   std::random_device rnd_device;
   rng.seed(rnd_device());
   std::uniform_int_distribution<uint32_t> dist(0, 1000);
-  auto gen = [&dist, &rng]() { return dist(rng) < 500 ? true : false; };
+  auto gen = [&dist, &rng]() { return dist(rng) < 500 ? 1 : 0; };
 
   for (auto& i : grid) {
     std::generate(i.begin(), i.end(), gen);
@@ -196,7 +196,7 @@ void benlib::Gol::RandomFill()
 void benlib::Gol::RandomFill(std::mt19937_64& rng)
 {
   std::uniform_int_distribution<uint32_t> dist(0, 1000);
-  auto gen = [&dist, &rng]() { return dist(rng) < 500 ? true : false; };
+  auto gen = [&dist, &rng]() { return dist(rng) < 500 ? 1 : 0; };
 
   for (auto& i : grid) {
     std::generate(i.begin(), i.end(), gen);
@@ -210,26 +210,26 @@ void benlib::Gol::RandomFill(const float percentage)
   rng.seed(rnd_device());
   std::uniform_real_distribution<float> dist(0.0f, 1.0f);
 
-  auto gen = [&dist, &rng, &percentage]() { return dist(rng) < percentage ? true : false; };
+  auto gen = [&dist, &rng, &percentage]() { return dist(rng) < percentage ? 1 : 0; };
 
   for (auto& i : grid) {
     std::generate(i.begin(), i.end(), gen);
   }
 }
 
-void benlib::Gol::Fill(const bool value)
+void benlib::Gol::Fill(const uint8_t value)
 {
   for (auto& i : grid) {
     std::fill(i.begin(), i.end(), value);
   }
 }
 
-bool benlib::Gol::operator==(const benlib::Gol& other) const
+uint8_t benlib::Gol::operator==(const benlib::Gol& other) const
 {
   return grid == other.grid;
 }
 
-bool benlib::Gol::operator!=(const benlib::Gol& other) const
+uint8_t benlib::Gol::operator!=(const benlib::Gol& other) const
 {
   return grid != other.grid;
 }
@@ -242,7 +242,7 @@ benlib::Gol& benlib::Gol::operator=(const benlib::Gol& other)
   return *this;
 }
 
-bool benlib::Gol::operator()(const uint64_t x, const uint64_t y) const
+uint8_t benlib::Gol::operator()(const uint64_t x, const uint64_t y) const
 {
   return grid[x][y];
 }
@@ -256,15 +256,15 @@ void benlib::Gol::Deserialize(const std::string& filename)
   }
 
   std::string line;
-  std::vector<std::vector<bool>> _grid {};
+  std::vector<std::vector<uint8_t>> _grid {};
   while (std::getline(file, line)) {
     // std::cout << line << std::endl;
-    std::vector<bool> row {};
+    std::vector<uint8_t> row {};
     for (char c : line) {
       if (c == '0') {
-        row.push_back(true);
+        row.push_back(1);
       } else if (c == '.') {
-        row.push_back(false);
+        row.push_back(0);
       } else if (c == '\n') {
       } else {
         // std::cout << "Unknown character: " << c << std::endl;
