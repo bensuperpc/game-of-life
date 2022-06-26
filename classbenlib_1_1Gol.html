@@ -111,23 +111,23 @@
               <span class="m-doc-wrap-bumper">void <a href="#a01de477b20df81c6725e16378babd5c7" class="m-doc-self">SetGenerations</a>(</span><span class="m-doc-wrap">const uint64_t generations)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a9d3f773a0ac4c7b7ee9e35152676cfb2">
-              <span class="m-doc-wrap-bumper">void <a href="#a9d3f773a0ac4c7b7ee9e35152676cfb2" class="m-doc-self">SetCell</a>(</span><span class="m-doc-wrap">const uint64_t x,
+            <dt id="a50070acf3954c3c83142dae7d82d3523">
+              <span class="m-doc-wrap-bumper">void <a href="#a50070acf3954c3c83142dae7d82d3523" class="m-doc-self">SetCell</a>(</span><span class="m-doc-wrap">const uint64_t x,
               const uint64_t y,
-              const bool alive)</span>
+              const uint8_t alive)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a19994d6aafa922bd654ec3fed1776130">
-              <span class="m-doc-wrap-bumper">auto <a href="#a19994d6aafa922bd654ec3fed1776130" class="m-doc-self">GetCell</a>(</span><span class="m-doc-wrap">const uint64_t x,
-              const uint64_t y) const -&gt; bool</span>
+            <dt id="abfa76237c8b2145a939019924c75e291">
+              <span class="m-doc-wrap-bumper">auto <a href="#abfa76237c8b2145a939019924c75e291" class="m-doc-self">GetCell</a>(</span><span class="m-doc-wrap">const uint64_t x,
+              const uint64_t y) const -&gt; uint8_t</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="adf01a3c37f9afbb1cc8ae0cd5d9a4a71">
-              <span class="m-doc-wrap-bumper">auto <a href="#adf01a3c37f9afbb1cc8ae0cd5d9a4a71" class="m-doc-self">GetGrid</a>(</span><span class="m-doc-wrap">) const -&gt; std::vector&lt;std::vector&lt;bool&gt;&gt;</span>
+            <dt id="a6cc91df59e1279f9eb27a1ab8b3ed637">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6cc91df59e1279f9eb27a1ab8b3ed637" class="m-doc-self">GetGrid</a>(</span><span class="m-doc-wrap">) const -&gt; std::vector&lt;std::vector&lt;uint8_t&gt;&gt;</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a9c31253a59bd166074638ce3f85c524d">
-              <span class="m-doc-wrap-bumper">void <a href="#a9c31253a59bd166074638ce3f85c524d" class="m-doc-self">SetGrid</a>(</span><span class="m-doc-wrap">const std::vector&lt;std::vector&lt;bool&gt;&gt;&amp; grid)</span>
+            <dt id="a3bf365c301fec3029c60955326f647ad">
+              <span class="m-doc-wrap-bumper">void <a href="#a3bf365c301fec3029c60955326f647ad" class="m-doc-self">SetGrid</a>(</span><span class="m-doc-wrap">const std::vector&lt;std::vector&lt;uint8_t&gt;&gt;&amp; grid)</span>
             </dt>
             <dd><span></span></dd>
             <dt id="a2ee221bdc4daab14a415667521b92b20">
@@ -159,29 +159,29 @@
               <span class="m-doc-wrap-bumper">void <a href="#a40b2a265773e6c1bee32c116897b2447" class="m-doc-self">RandomFill</a>(</span><span class="m-doc-wrap">const float percentage)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="aec335527acc6f73039f25d04e61ac939">
-              <span class="m-doc-wrap-bumper">void <a href="#aec335527acc6f73039f25d04e61ac939" class="m-doc-self">Fill</a>(</span><span class="m-doc-wrap">const bool value)</span>
+            <dt id="aababe30b05d5d2d0694ae0624beb159b">
+              <span class="m-doc-wrap-bumper">void <a href="#aababe30b05d5d2d0694ae0624beb159b" class="m-doc-self">Fill</a>(</span><span class="m-doc-wrap">const uint8_t value)</span>
             </dt>
             <dd><span></span></dd>
             <dt id="ad7a0f0c0f674d65250a13e77e8db4e2a">
               <span class="m-doc-wrap-bumper">void <a href="#ad7a0f0c0f674d65250a13e77e8db4e2a" class="m-doc-self">Reset</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a469623ebf31fc25cbbe03728a354c5ea">
-              <span class="m-doc-wrap-bumper">auto <a href="#a469623ebf31fc25cbbe03728a354c5ea" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbenlib_1_1Gol.html" class="m-doc">Gol</a>&amp; gol) const -&gt; bool</span>
+            <dt id="a95e7716c5a634dff9d59944077f3d46c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a95e7716c5a634dff9d59944077f3d46c" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbenlib_1_1Gol.html" class="m-doc">Gol</a>&amp; gol) const -&gt; uint8_t</span>
             </dt>
             <dd><span></span></dd>
             <dt id="a720c0ab804073fa7312c2a50aa94e986">
               <span class="m-doc-wrap-bumper">auto <a href="#a720c0ab804073fa7312c2a50aa94e986" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbenlib_1_1Gol.html" class="m-doc">Gol</a>&amp; gol) -&gt; <a href="classbenlib_1_1Gol.html" class="m-doc">Gol</a>&amp;</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="aeb1448cd5a6625f02f072c34b3dd8f4f">
-              <span class="m-doc-wrap-bumper">auto <a href="#aeb1448cd5a6625f02f072c34b3dd8f4f" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbenlib_1_1Gol.html" class="m-doc">Gol</a>&amp; gol) const -&gt; bool</span>
+            <dt id="a8fb59fd9add5c59aaf35854b983e33a9">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8fb59fd9add5c59aaf35854b983e33a9" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbenlib_1_1Gol.html" class="m-doc">Gol</a>&amp; gol) const -&gt; uint8_t</span>
             </dt>
             <dd><span></span></dd>
-            <dt id="a5af4d54e3d93822abf2f69ed5ffa41c3">
-              <span class="m-doc-wrap-bumper">auto <a href="#a5af4d54e3d93822abf2f69ed5ffa41c3" class="m-doc-self">operator()</a>(</span><span class="m-doc-wrap">const uint64_t x,
-              const uint64_t y) const -&gt; bool</span>
+            <dt id="acfeb245fd92f9435698914de68263108">
+              <span class="m-doc-wrap-bumper">auto <a href="#acfeb245fd92f9435698914de68263108" class="m-doc-self">operator()</a>(</span><span class="m-doc-wrap">const uint64_t x,
+              const uint64_t y) const -&gt; uint8_t</span>
             </dt>
             <dd><span></span></dd>
             <dt id="a0cdd2abcaa553ae7f88f240a17b8781b">
@@ -201,8 +201,8 @@
               uint64_t <a href="#ac64586855031d6d7580cca0bd05fb734" class="m-doc-self">generations</a>
             </dt>
             <dd><span></span></dd>
-            <dt id="abd6294992df96e4db089230dc7097703">
-              std::vector&lt;std::vector&lt;bool&gt;&gt; <a href="#abd6294992df96e4db089230dc7097703" class="m-doc-self">grid</a>
+            <dt id="a51dc4fcc30b9799120799e661b72d272">
+              std::vector&lt;std::vector&lt;uint8_t&gt;&gt; <a href="#a51dc4fcc30b9799120799e661b72d272" class="m-doc-self">grid</a>
             </dt>
             <dd><span></span></dd>
           </dl>
