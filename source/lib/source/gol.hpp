@@ -54,8 +54,12 @@ public:
   void SetGenerations(const uint64_t generations);
   // Set the cell at the given coordinates to be alive.
   void SetCell(const uint64_t x, const uint64_t y, const uint8_t alive);
+  // Set row
+  void SetRow(const uint64_t row, const std::vector<uint8_t>& rowData);
   // Get the cell at the given coordinates.
   uint8_t GetCell(const uint64_t x, const uint64_t y) const;
+  // Get the row at the given coordinates.
+  std::vector<uint8_t> GetRow(const uint64_t y) const;
   // Get grid.
   std::vector<std::vector<uint8_t>> GetGrid() const;
   // Set grid.

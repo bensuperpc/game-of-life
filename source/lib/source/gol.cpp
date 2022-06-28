@@ -149,9 +149,19 @@ void benlib::Gol::SetCell(const uint64_t x, const uint64_t y, const uint8_t aliv
   grid[x][y] = alive;
 }
 
+void benlib::Gol::SetRow(const uint64_t row, const std::vector<uint8_t>& _row)
+{
+  grid[row] = _row;
+}
+
 uint8_t benlib::Gol::GetCell(const uint64_t x, const uint64_t y) const
 {
   return grid[x][y];
+}
+
+std::vector<uint8_t> benlib::Gol::GetRow(const uint64_t y) const
+{
+  return grid[y];
 }
 
 void benlib::Gol::Print()
