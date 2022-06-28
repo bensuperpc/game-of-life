@@ -34,6 +34,8 @@ public:
   Gol(bool** _grid, const uint64_t width, const uint64_t height);
   // Constructor.
   Gol(const std::vector<std::vector<uint8_t>>& _grid);
+  // Constructor.
+  Gol(const std::vector<uint8_t>& _grid1D, const uint64_t width, const uint64_t height);
   // Destructor.
   ~Gol();
   // Get the width of the game of life.

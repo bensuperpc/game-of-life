@@ -10,9 +10,7 @@ benlib::Gol::Gol(uint8_t** _grid, const uint64_t width, const uint64_t height)
 {
   std::vector<std::vector<uint8_t>> new_grid(width, std::vector<uint8_t>(height, 0));
   for (uint64_t i = 0; i < width; i++) {
-    for (uint64_t j = 0; j < height; j++) {
-      new_grid[i][j] = _grid[i][j];
-    }
+    std::copy(_grid[i], _grid[i] + height, new_grid[i].begin());
   }
   this->grid = new_grid;
 }
@@ -31,6 +29,15 @@ benlib::Gol::Gol(bool** _grid, const uint64_t width, const uint64_t height)
 benlib::Gol::Gol(const std::vector<std::vector<uint8_t>>& _grid)
 {
   this->grid = _grid;
+}
+
+benlib::Gol::Gol(const std::vector<uint8_t>& _grid1D, const uint64_t width, const uint64_t height)
+{
+  std::vector<std::vector<uint8_t>> new_grid(width, std::vector<uint8_t>(height, 0));
+  for (uint64_t i = 0; i < width; i++) {
+    std::copy(_grid1D.begin() + i * height, _grid1D.begin() + (i + 1) * height, new_grid[i].begin());
+  }
+  this->grid = new_grid;
 }
 
 benlib::Gol::~Gol() {}
@@ -61,13 +68,13 @@ void benlib::Gol::Resize(const uint64_t width, const uint64_t height)
       }
     }
   }
-  Clear();
+  this->Clear();
   grid = new_grid;
 }
 
 void benlib::Gol::Reset()
 {
-  Fill(0);
+  this->Fill(0);
 }
 
 uint64_t benlib::Gol::GetLivingCells() const
