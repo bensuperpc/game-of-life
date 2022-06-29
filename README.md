@@ -10,12 +10,12 @@ My game of life with raylib and raylib-cpp (C and C++ version).
 |---|---|---|
 |Game of life C|&check;|1.0.0|
 |Game of life C++|&check;|1.0.0|
+|Multi-thread (OpenMP)|&check;|1.0.0|
 |Free camera|&check;|1.0.0|
 |Load/Unload file|&check;|1.0.0|
 |Unit test|&check;|1.0.0|
 |Benchmark|&check;|1.0.0|
-|Change GOL size in game|&cross;|-|
-|Multi-thread|&cross;|WIP|
+|Change GOL size in game|&cross;|WIP|
 |GPU/CUDA|&cross;|-|
 
 # Media
