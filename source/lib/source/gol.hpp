@@ -8,6 +8,9 @@
 #include <string>  // std::string
 #include <vector>  // std::vector
 
+#include "vector2D.hpp"
+#include "vectorFlat2D.hpp"
+
 #if ((defined(_MSVC_LANG) && _MSVC_LANG >= 201703L) || __cplusplus >= 201703L)
 #  if __has_include("omp.h")
 #    include <omp.h>
@@ -62,12 +65,16 @@ public:
   std::vector<uint8_t> GetRow(const uint64_t y) const;
   // Get grid.
   std::vector<std::vector<uint8_t>> GetGrid() const;
+  // Get grid2D
+  benlib::vector2D<uint8_t> GetGrid2D() const;
   // Set grid.
   void SetGrid(const std::vector<std::vector<uint8_t>>& grid);
   // Set grid.
   void SetGrid(const uint8_t** grid, const uint64_t width, const uint64_t height);
   // Update the game of life.
   void Update();
+
+  void Update1D();
   // Print the game of life.
   void Print();
   // Clear the game of life.
@@ -104,7 +111,9 @@ protected:
   // The number of generations.
   uint64_t generations = 0;
   // The game of life grid.
-  std::vector<std::vector<uint8_t>> grid;
+  benlib::vector2D<uint8_t> grid2D;
+  // vector flat 2d
+  // benlib::vectorFlat2D<uint8_t> grid2D;
 };
 }  // namespace benlib
 #endif  // BENLIB_GOL_HPP_
