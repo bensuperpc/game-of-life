@@ -11,6 +11,7 @@ namespace benlib
 template<typename T>
 class MultiVector;
 
+// Needed for MultiVector on [][]... notation.
 template<typename T>
 class MultiVectorView
 {
@@ -58,11 +59,7 @@ public:
   MultiVector(std::vector<size_t> dimensions_)
       : dimensions(dimensions_)
   {
-    /*
-    size_t size = dimensions[0];
-    for (size_t i = 1; i < dimensions.size(); ++i)
-      size *= dimensions[i];
-    */
+    // Multiply dimensions together.
     size_t size = std::reduce(dimensions_.begin(), dimensions_.end(), 1, std::multiplies<size_t>());
 
     content.resize(size);
@@ -123,6 +120,10 @@ public:
 
   void SetGrid(const std::vector<T>& grid_)
   {
+    /*
+    if (grid_.size() != std::reduce(dimensions.begin(), dimensions.end(), 1, std::multiplies<size_t>()))
+      throw std::runtime_error("MultiVector: content size does not match dimensions");
+    */
     content = grid_;
   }
 
@@ -143,6 +144,10 @@ public:
 
   void SetDim(const std::vector<size_t>& dimensions_)
   {
+    /*
+    if (dimensions_.size() != dimensions.size())
+      throw std::runtime_error("MultiVector: dimensions size does not match");
+    */
     dimensions = dimensions_;
   }
 
@@ -216,8 +221,9 @@ public:
     return content != other.content || dimensions != other.dimensions;
   }
 
-  std::vector<T> content;
+protected:
   std::vector<size_t> dimensions;
+  std::vector<T> content;
 };
 
 }  // namespace benlib

@@ -66,9 +66,7 @@ public:
   // Get grid.
   std::vector<uint8_t>& GetGrid();
   // Set grid.
-  void SetGrid(const std::vector<std::vector<uint8_t>>& grid);
-  // Set grid.
-  void SetGrid(const uint8_t** grid, const uint64_t width, const uint64_t height);
+  void SetGrid(const std::vector<uint8_t>& _grid);
   // Update the game of life.
   void Update();
 

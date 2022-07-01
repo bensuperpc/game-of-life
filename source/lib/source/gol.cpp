@@ -51,12 +51,12 @@ benlib::Gol::~Gol() {}
 
 uint64_t benlib::Gol::GetWidth()
 {
-  return grid2D.dimensions[0];
+  return grid2D.GetDim()[0];
 }
 
 uint64_t benlib::Gol::GetHeight()
 {
-  return grid2D.dimensions[1];
+  return grid2D.GetDim()[1];
 }
 
 void benlib::Gol::Resize(const uint64_t width, const uint64_t height)
@@ -119,28 +119,10 @@ std::vector<uint8_t>& benlib::Gol::GetGrid()
   return grid2D.GetGrid();
 }
 
-/*
-
-void benlib::Gol::SetGrid(const std::vector<std::vector<uint8_t>>& _grid)
+void benlib::Gol::SetGrid(const std::vector<uint8_t>& _grid)
 {
-  grid2D = _grid;
-  // this->grid.clear();
-  // this->grid.shrink_to_fit();
-  // this->grid.insert(this->grid.end(), grid.begin(), grid.end());
+  grid2D.SetGrid(_grid);
 }
-
-void benlib::Gol::SetGrid(const uint8_t** _grid, const uint64_t width, const uint64_t height)
-{
-  // this->grid.clear();
-  // this->grid.shrink_to_fit();
-  grid2D.Resize(width, height);
-  for (uint64_t i = 0; i < width; i++) {
-    for (uint64_t j = 0; j < height; j++) {
-      grid2D.SetValue(i, j, _grid[i][j]);
-    }
-  }
-}
-*/
 
 void benlib::Gol::SetCell(const uint64_t x, const uint64_t y, const uint8_t alive)
 {
