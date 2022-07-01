@@ -188,12 +188,12 @@ public:
     grid = other;
     return *this;
   }
-    /*
-  // Overload [] operator
-  std::vector<T>& operator[](const size_type i)
-  {
-    return grid[i];
-  }*/
+  /*
+// Overload [] operator
+std::vector<T>& operator[](const size_type i)
+{
+  return grid[i];
+}*/
 
 private:
   std::vector<std::vector<T>> grid;
