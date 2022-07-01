@@ -9,8 +9,6 @@
 #include <vector>  // std::vector
 
 #include "multiDimVector.hpp"
-#include "vector2D.hpp"
-#include "vectorFlat2D.hpp"
 
 #if ((defined(_MSVC_LANG) && _MSVC_LANG >= 201703L) || __cplusplus >= 201703L)
 #  if __has_include("omp.h")
@@ -94,11 +92,11 @@ public:
   void Reset();
 
   // Overload operator== to compare a game of life.
-  bool operator==(const Gol& gol);
+  bool operator==(const Gol& gol) const;
   // Overload operator= to copy a game of life.
   Gol& operator=(const Gol& gol);
   // Overload operator!= to compare a game of life.
-  bool operator!=(const Gol& gol);
+  bool operator!=(const Gol& gol) const;
   // Overload operator(x, y) to get the cell at the given coordinates.
   uint8_t operator()(const uint64_t x, const uint64_t y);
 
@@ -111,10 +109,6 @@ protected:
   // The number of generations.
   uint64_t generations = 0;
   // The game of life grid.
-  // benlib::vector2D<uint8_t> grid2D;
-  // vector flat 2d
-  // benlib::vectorFlat2D<uint8_t> grid2D;
-
   benlib::MultiVector<uint8_t> grid2D;
 };
 }  // namespace benlib

@@ -1,7 +1,9 @@
 #ifndef BENLIB_MULTIDIMVECTOR_HPP_
 #define BENLIB_MULTIDIMVECTOR_HPP_
 
+#include <algorithm>  // std::move, std::copy, std::fill
 #include <cstdarg>  // std::va_list, std::va_start, std::va_end
+#include <numeric>  // std::reduce
 #include <vector>  // std::vector
 
 namespace benlib
@@ -56,9 +58,12 @@ public:
   MultiVector(std::vector<size_t> dimensions_)
       : dimensions(dimensions_)
   {
+    /*
     size_t size = dimensions[0];
     for (size_t i = 1; i < dimensions.size(); ++i)
       size *= dimensions[i];
+    */
+    size_t size = std::reduce(dimensions_.begin(), dimensions_.end(), 1, std::multiplies<size_t>());
 
     content.resize(size);
   }
@@ -67,6 +72,10 @@ public:
       : dimensions(dimensions_)
       , content(content_)
   {
+    /*
+    if (content.size() != std::reduce(dimensions_.begin(), dimensions_.end(), 1, std::multiplies<size_t>()))
+      throw std::runtime_error("MultiVector: content size does not match dimensions");
+    */
   }
 
   // Variadic constructor
@@ -196,9 +205,15 @@ public:
   }
 
   // Overload == operator
-  bool operator==(const MultiVector<T>& other)
+  bool operator==(const MultiVector<T>& other) const
   {
     return content == other.content && dimensions == other.dimensions;
+  }
+
+  // Overload != operator
+  bool operator!=(const MultiVector<T>& other) const
+  {
+    return content != other.content || dimensions != other.dimensions;
   }
 
   std::vector<T> content;

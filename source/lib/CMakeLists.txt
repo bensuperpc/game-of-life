@@ -39,6 +39,7 @@ set(SRCS
 set(HEADERS
     source/gol.h
     source/gol.hpp
+    source/multiDimVector.hpp
     )
 
 add_library(game-of-life-lib ${SRCS} ${HEADERS})

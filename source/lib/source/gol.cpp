@@ -264,14 +264,14 @@ void benlib::Gol::Fill(const uint8_t value)
   grid2D.Fill(value);
 }
 
-bool benlib::Gol::operator==(const benlib::Gol& other)
+bool benlib::Gol::operator==(const benlib::Gol& other) const
 {
-  return grid2D.IsEqual(other.grid2D);
+  return grid2D == other.grid2D;
 }
 
-bool benlib::Gol::operator!=(const benlib::Gol& other)
+bool benlib::Gol::operator!=(const benlib::Gol& other) const
 {
-  return !grid2D.IsEqual(other.grid2D);
+  return grid2D != other.grid2D;
 }
 
 benlib::Gol& benlib::Gol::operator=(const benlib::Gol& other)
@@ -315,8 +315,13 @@ void benlib::Gol::Deserialize(const std::string& filename)
   }
   file.close();
 
-  std::vector<uint64_t> v = {_grid.size(), _grid[0].size()};
-  grid2D = benlib::MultiVector<uint8_t>(v);
+  std::vector<uint8_t> new_grid;
+  for (auto& i : _grid) {
+    new_grid.insert(new_grid.end(), i.begin(), i.end());
+  }
+  std::vector<size_t> dim = {_grid.size(), _grid[0].size()};
+  this->grid2D = benlib::MultiVector<uint8_t>(dim, new_grid);
+  this->grid2D.SetGrid(new_grid);
 }
 
 void benlib::Gol::Serialize(const std::string& filename)
