@@ -8,6 +8,8 @@
 #include <string>  // std::string
 #include <vector>  // std::vector
 
+#include "multiDimVector.hpp"
+
 #if ((defined(_MSVC_LANG) && _MSVC_LANG >= 201703L) || __cplusplus >= 201703L)
 #  if __has_include("omp.h")
 #    include <omp.h>
@@ -26,6 +28,7 @@ namespace benlib
 class Gol
 {
 public:
+  Gol();
   // Constructor.
   Gol(const uint64_t width, const uint64_t height);
   // Constructor.
@@ -39,17 +42,17 @@ public:
   // Destructor.
   ~Gol();
   // Get the width of the game of life.
-  uint64_t GetWidth() const;
+  uint64_t GetWidth();
   // Get the height of the game of life.
-  uint64_t GetHeight() const;
+  uint64_t GetHeight();
   // Get the number of living cells.
-  uint64_t GetLivingCells() const;
+  uint64_t GetLivingCells();
   // Get the number of dead cells.
-  uint64_t GetDeadCells() const;
+  uint64_t GetDeadCells();
   // Get the number of cells.
-  uint64_t GetCells() const;
+  uint64_t GetCells();
   // Get the number of generations.
-  uint64_t GetGenerations() const;
+  uint64_t GetGenerations();
   // Set the number of generations.
   void SetGenerations(const uint64_t generations);
   // Set the cell at the given coordinates to be alive.
@@ -57,17 +60,17 @@ public:
   // Set row
   void SetRow(const uint64_t row, const std::vector<uint8_t>& rowData);
   // Get the cell at the given coordinates.
-  uint8_t GetCell(const uint64_t x, const uint64_t y) const;
+  uint8_t GetCell(const uint64_t x, const uint64_t y);
   // Get the row at the given coordinates.
-  std::vector<uint8_t> GetRow(const uint64_t y) const;
+  std::vector<uint8_t> GetRow(const uint64_t y);
   // Get grid.
-  std::vector<std::vector<uint8_t>> GetGrid() const;
+  std::vector<uint8_t>& GetGrid();
   // Set grid.
-  void SetGrid(const std::vector<std::vector<uint8_t>>& grid);
-  // Set grid.
-  void SetGrid(const uint8_t** grid, const uint64_t width, const uint64_t height);
+  void SetGrid(const std::vector<uint8_t>& _grid);
   // Update the game of life.
   void Update();
+
+  void Update1D();
   // Print the game of life.
   void Print();
   // Clear the game of life.
@@ -87,13 +90,13 @@ public:
   void Reset();
 
   // Overload operator== to compare a game of life.
-  uint8_t operator==(const Gol& gol) const;
+  bool operator==(const Gol& gol) const;
   // Overload operator= to copy a game of life.
   Gol& operator=(const Gol& gol);
   // Overload operator!= to compare a game of life.
-  uint8_t operator!=(const Gol& gol) const;
+  bool operator!=(const Gol& gol) const;
   // Overload operator(x, y) to get the cell at the given coordinates.
-  uint8_t operator()(const uint64_t x, const uint64_t y) const;
+  uint8_t operator()(const uint64_t x, const uint64_t y);
 
   // Save the game of life to a file.
   void Serialize(const std::string& filename);
@@ -104,7 +107,7 @@ protected:
   // The number of generations.
   uint64_t generations = 0;
   // The game of life grid.
-  std::vector<std::vector<uint8_t>> grid;
+  benlib::MultiVector<uint8_t> grid2D;
 };
 }  // namespace benlib
 #endif  // BENLIB_GOL_HPP_
