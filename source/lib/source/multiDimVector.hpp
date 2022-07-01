@@ -60,7 +60,7 @@ public:
       : dimensions(dimensions_)
   {
     // Multiply dimensions together.
-    size_t size = std::reduce(dimensions_.begin(), dimensions_.end(), 1, std::multiplies<size_t>());
+    auto size = std::reduce(dimensions_.begin(), dimensions_.end(), 1, std::multiplies<size_t>());
 
     content.resize(size);
   }
@@ -94,6 +94,16 @@ public:
 
   // Resize
   void Resize(std::vector<size_t> dimensions_)
+  {
+    dimensions = dimensions_;
+    size_t size = dimensions[0];
+    for (size_t i = 1; i < dimensions.size(); ++i)
+      size *= dimensions[i];
+
+    content.resize(size);
+  }
+
+  void Resize(std::vector<uint64_t> dimensions_)
   {
     dimensions = dimensions_;
     size_t size = dimensions[0];
