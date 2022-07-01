@@ -4,7 +4,7 @@ benlib::Gol::Gol() {}
 
 benlib::Gol::Gol(const uint64_t width, const uint64_t height)
 {
-  std::vector<size_t> v = {width, height};
+  std::vector<uint64_t> v = {width, height};
   this->grid2D = benlib::MultiVector<uint8_t>(v);
 }
 
@@ -14,7 +14,7 @@ benlib::Gol::Gol(uint8_t** _grid, const uint64_t width, const uint64_t height)
   for (uint64_t i = 0; i < width; i++) {
     std::copy(_grid[i], _grid[i] + height, new_grid.begin() + i * height);
   }
-  std::vector<size_t> dim = {width, height};
+  std::vector<uint64_t> dim = {width, height};
   this->grid2D = benlib::MultiVector<uint8_t>(dim, new_grid);
 }
 
@@ -24,13 +24,13 @@ benlib::Gol::Gol(bool** _grid, const uint64_t width, const uint64_t height)
   for (uint64_t i = 0; i < width; i++) {
     std::copy(_grid[i], _grid[i] + height, new_grid.begin() + i * height);
   }
-  std::vector<size_t> dim = {width, height};
+  std::vector<uint64_t> dim = {width, height};
   this->grid2D = benlib::MultiVector<uint8_t>(dim, new_grid);
 }
 
 benlib::Gol::Gol(const std::vector<uint8_t>& _grid1D, const uint64_t width, const uint64_t height)
 {
-  std::vector<size_t> v = {width, height};
+  std::vector<uint64_t> v = {width, height};
   this->grid2D = benlib::MultiVector<uint8_t>(v);
   this->grid2D.SetGrid(_grid1D);
 }
@@ -42,7 +42,7 @@ benlib::Gol::Gol(const std::vector<std::vector<uint8_t>>& _grid)
   for (auto& i : _grid) {
     new_grid.insert(new_grid.end(), i.begin(), i.end());
   }
-  std::vector<size_t> dim = {_grid.size(), _grid[0].size()};
+  std::vector<uint64_t> dim = {_grid.size(), _grid[0].size()};
   this->grid2D = benlib::MultiVector<uint8_t>(dim, new_grid);
   this->grid2D.SetGrid(new_grid);
 }
@@ -266,7 +266,7 @@ benlib::Gol& benlib::Gol::operator=(const benlib::Gol& other)
 
 uint8_t benlib::Gol::operator()(const uint64_t x, const uint64_t y)
 {
-  std::vector<size_t> coor {x, y};
+  std::vector<uint64_t> coor {x, y};
   return grid2D.GetValue(coor);
 }
 
@@ -301,7 +301,7 @@ void benlib::Gol::Deserialize(const std::string& filename)
   for (auto& i : _grid) {
     new_grid.insert(new_grid.end(), i.begin(), i.end());
   }
-  std::vector<size_t> dim = {_grid.size(), _grid[0].size()};
+  std::vector<uint64_t> dim = {_grid.size(), _grid[0].size()};
   this->grid2D = benlib::MultiVector<uint8_t>(dim, new_grid);
   this->grid2D.SetGrid(new_grid);
 }
