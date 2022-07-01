@@ -16,7 +16,7 @@ template<typename T>
 class MultiVectorView
 {
 public:
-  MultiVectorView(MultiVector<T>& vec_, size_t index_, size_t dimension_)
+  MultiVectorView(MultiVector<T>& vec_, uint64_t index_, uint64_t dimension_)
       : vec(vec_)
       , index(index_)
       , dimension(dimension_)
@@ -24,13 +24,13 @@ public:
   }
 
   MultiVector<T>& vec;
-  size_t index;
-  size_t dimension;
+  uint64_t index;
+  uint64_t dimension;
 
-  MultiVectorView& operator[](std::size_t n_index)
+  MultiVectorView& operator[](std::uint64_t n_index)
   {
-    size_t index_multiplyer = 1;
-    for (size_t i = 0; i < dimension; ++i)
+    uint64_t index_multiplyer = 1;
+    for (uint64_t i = 0; i < dimension; ++i)
       index_multiplyer *= vec.dimensions[i];
     index += n_index * index_multiplyer;
     dimension++;
@@ -56,21 +56,21 @@ class MultiVector
 public:
   MultiVector() {}
 
-  MultiVector(std::vector<size_t> dimensions_)
+  MultiVector(std::vector<uint64_t> dimensions_)
       : dimensions(dimensions_)
   {
     // Multiply dimensions together.
-    size_t size = std::reduce(dimensions_.begin(), dimensions_.end(), 1, std::multiplies<size_t>());
+    auto size = std::reduce(dimensions_.begin(), dimensions_.end(), 1, std::multiplies<uint64_t>());
 
     content.resize(size);
   }
 
-  MultiVector(std::vector<size_t> dimensions_, std::vector<T> content_)
+  MultiVector(std::vector<uint64_t> dimensions_, std::vector<T> content_)
       : dimensions(dimensions_)
       , content(content_)
   {
     /*
-    if (content.size() != std::reduce(dimensions_.begin(), dimensions_.end(), 1, std::multiplies<size_t>()))
+    if (content.size() != std::reduce(dimensions_.begin(), dimensions_.end(), 1, std::multiplies<uint64_t>()))
       throw std::runtime_error("MultiVector: content size does not match dimensions");
     */
   }
@@ -85,19 +85,19 @@ public:
       dimensions[i] = va_arg(args, int);
     va_end(args);
 
-    size_t size = dimensions[0];
-    for (size_t i = 1; i < dimensions.size(); ++i)
+    uint64_t size = dimensions[0];
+    for (uint64_t i = 1; i < dimensions.size(); ++i)
       size *= dimensions[i];
 
     content.resize(size);
   }
 
   // Resize
-  void Resize(std::vector<size_t> dimensions_)
+  void Resize(std::vector<uint64_t> dimensions_)
   {
     dimensions = dimensions_;
-    size_t size = dimensions[0];
-    for (size_t i = 1; i < dimensions.size(); ++i)
+    uint64_t size = dimensions[0];
+    for (uint64_t i = 1; i < dimensions.size(); ++i)
       size *= dimensions[i];
 
     content.resize(size);
@@ -121,7 +121,7 @@ public:
   void SetGrid(const std::vector<T>& grid_)
   {
     /*
-    if (grid_.size() != std::reduce(dimensions.begin(), dimensions.end(), 1, std::multiplies<size_t>()))
+    if (grid_.size() != std::reduce(dimensions.begin(), dimensions.end(), 1, std::multiplies<uint64_t>()))
       throw std::runtime_error("MultiVector: content size does not match dimensions");
     */
     content = grid_;
@@ -137,12 +137,12 @@ public:
     return content;
   }
 
-  std::vector<size_t>& GetDim()
+  std::vector<uint64_t>& GetDim()
   {
     return dimensions;
   }
 
-  void SetDim(const std::vector<size_t>& dimensions_)
+  void SetDim(const std::vector<uint64_t>& dimensions_)
   {
     /*
     if (dimensions_.size() != dimensions.size())
@@ -151,34 +151,34 @@ public:
     dimensions = dimensions_;
   }
 
-  T GetValue(const std::vector<size_t>& indices)
+  T GetValue(const std::vector<uint64_t>& indices)
   {
-    size_t index = 0;
-    size_t index_multiplyer = 1;
-    for (size_t i = 0; i < dimensions.size(); ++i) {
+    uint64_t index = 0;
+    uint64_t index_multiplyer = 1;
+    for (uint64_t i = 0; i < dimensions.size(); ++i) {
       index += indices[i] * index_multiplyer;
       index_multiplyer *= dimensions[i];
     }
     return content[index];
   }
 
-  T GetValue(const size_t index)
+  T GetValue(const uint64_t index)
   {
     return content[index];
   }
 
-  void SetValue(const std::vector<size_t>& indices, T value)
+  void SetValue(const std::vector<uint64_t>& indices, T value)
   {
-    size_t index = 0;
-    size_t index_multiplyer = 1;
-    for (size_t i = 0; i < dimensions.size(); ++i) {
+    uint64_t index = 0;
+    uint64_t index_multiplyer = 1;
+    for (uint64_t i = 0; i < dimensions.size(); ++i) {
       index += indices[i] * index_multiplyer;
       index_multiplyer *= dimensions[i];
     }
     content[index] = value;
   }
 
-  void SetValue(size_t index, T value)
+  void SetValue(uint64_t index, T value)
   {
     content[index] = value;
   }
@@ -194,7 +194,7 @@ public:
     return true;
   }
 
-  MultiVectorView<T> operator[](size_t index)
+  MultiVectorView<T> operator[](uint64_t index)
   {
     return MultiVectorView<T>(*this, index, 1);
   }
@@ -222,7 +222,7 @@ public:
   }
 
 protected:
-  std::vector<size_t> dimensions;
+  std::vector<uint64_t> dimensions;
   std::vector<T> content;
 };
 
