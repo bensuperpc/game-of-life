@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>source/lib/source/ directory | game-of-life</title>
+  <title>benlib::MultiVectorView class | game-of-life</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -49,7 +49,9 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="dir_b2f33c71d4aa5e7af42a1ca61ff5af1b.html">source</a>/</span><span class="m-breadcrumb"><a href="dir_e9f938b6a0a3145773b24039556c08b4.html">lib</a>/</span>source<span class="m-breadcrumb">/</span> <span class="m-thin">directory</span>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="multiDimVector_8hpp.html">&lt;multiDimVector.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename T&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebenlib.html">benlib</a>::<wbr/></span>MultiVectorView <span class="m-thin">class</span>
         </h1>
         <p><span></span></p>
         <div class="m-block m-default">
@@ -58,23 +60,59 @@
             <li>
               Reference
               <ul>
-                <li><a href="#files">Files</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
               </ul>
             </li>
           </ul>
         </div>
-        <section id="files">
-          <h2><a href="#files">Files</a></h2>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt>file <a href="gol_8c.html" class="m-doc">gol.c</a></dt>
+            <dt id="a8996f979152c22c8f17f7d956b72fb92">
+              <span class="m-doc-wrap-bumper"><a href="#a8996f979152c22c8f17f7d956b72fb92" class="m-doc-self">MultiVectorView</a>(</span><span class="m-doc-wrap"><a href="classbenlib_1_1MultiVector.html" class="m-doc">MultiVector</a>&lt;T&gt;&amp; vec_,
+              uint64_t index_,
+              uint64_t dimension_)</span>
+            </dt>
             <dd><span></span></dd>
-            <dt>file <a href="gol_8cpp.html" class="m-doc">gol.cpp</a></dt>
+            <dt id="a24fb656a1bbc2b43dd8374d31c9277bf">
+              <span class="m-doc-wrap-bumper"><a href="#a24fb656a1bbc2b43dd8374d31c9277bf" class="m-doc-self">operator T</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
             <dd><span></span></dd>
-            <dt>file <a href="gol_8h.html" class="m-doc">gol.h</a></dt>
+            <dt id="ac9ad846c9bfcca4b38f873c1b6697317">
+              <span class="m-doc-wrap-bumper"><a href="#ac9ad846c9bfcca4b38f873c1b6697317" class="m-doc-self">~MultiVectorView</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
             <dd><span></span></dd>
-            <dt>file <a href="gol_8hpp.html" class="m-doc">gol.hpp</a></dt>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a173c50208e541170881c84f9cf549ff5">
+              <span class="m-doc-wrap-bumper">auto <a href="#a173c50208e541170881c84f9cf549ff5" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap">std::uint64_t n_index) -&gt; <a href="classbenlib_1_1MultiVectorView.html" class="m-doc">MultiVectorView</a>&amp;</span>
+            </dt>
             <dd><span></span></dd>
-            <dt>file <a href="multiDimVector_8hpp.html" class="m-doc">multiDimVector.hpp</a></dt>
+            <dt id="a1f5a47339d05675cfc5972299867a54f">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1f5a47339d05675cfc5972299867a54f" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">T val) -&gt; <a href="classbenlib_1_1MultiVectorView.html" class="m-doc">MultiVectorView</a>&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="a60e7d9eb5ed205bada111eb036bbcce6">
+              <a href="classbenlib_1_1MultiVector.html" class="m-doc">MultiVector</a>&lt;T&gt;&amp; <a href="#a60e7d9eb5ed205bada111eb036bbcce6" class="m-doc-self">vec</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="afc0d7dd95e96d4c9b0157bdaf215749c">
+              uint64_t <a href="#afc0d7dd95e96d4c9b0157bdaf215749c" class="m-doc-self">index</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aadf32bf5a24f075e24ed696e59c9636e">
+              uint64_t <a href="#aadf32bf5a24f075e24ed696e59c9636e" class="m-doc-self">dimension</a>
+            </dt>
             <dd><span></span></dd>
           </dl>
         </section>

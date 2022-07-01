@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>benlib::MultiVector class | game-of-life</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">game-of-life</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="multiDimVector_8hpp.html">&lt;multiDimVector.hpp&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename T&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebenlib.html">benlib</a>::<wbr/></span>MultiVector <span class="m-thin">class</span>
+        </h1>
+        <p><span></span></p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pro-attribs">Protected variables</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="ac60aa5cc8461b772ae2f3ba3d7a127fd">
+              <span class="m-doc-wrap-bumper"><a href="#ac60aa5cc8461b772ae2f3ba3d7a127fd" class="m-doc-self">MultiVector</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aad34345b2071b57a21fee230bdfa8988">
+              <span class="m-doc-wrap-bumper"><a href="#aad34345b2071b57a21fee230bdfa8988" class="m-doc-self">MultiVector</a>(</span><span class="m-doc-wrap">std::vector&lt;uint64_t&gt; dimensions_)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a5de21080e40d4e8e4c1914f5f180e3f0">
+              <span class="m-doc-wrap-bumper"><a href="#a5de21080e40d4e8e4c1914f5f180e3f0" class="m-doc-self">MultiVector</a>(</span><span class="m-doc-wrap">std::vector&lt;uint64_t&gt; dimensions_,
+              std::vector&lt;T&gt; content_)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="af1a75afdb4f64ea8d3dfbdf5b9531603">
+              <span class="m-doc-wrap-bumper"><a href="#af1a75afdb4f64ea8d3dfbdf5b9531603" class="m-doc-self">MultiVector</a>(</span><span class="m-doc-wrap">int argSize,
+              ...)</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a4691944873f9266069871bbe6f4e3e9d">
+              <span class="m-doc-wrap-bumper">void <a href="#a4691944873f9266069871bbe6f4e3e9d" class="m-doc-self">Resize</a>(</span><span class="m-doc-wrap">std::vector&lt;uint64_t&gt; dimensions_)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a37df6677e1b2b937c8fe0c5321fc7180">
+              <span class="m-doc-wrap-bumper">void <a href="#a37df6677e1b2b937c8fe0c5321fc7180" class="m-doc-self">Fill</a>(</span><span class="m-doc-wrap">const T value)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a2bca54587baebaedcad8a2fe4cfc8b12">
+              <span class="m-doc-wrap-bumper">void <a href="#a2bca54587baebaedcad8a2fe4cfc8b12" class="m-doc-self">Clear</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="adaafa8b16cf74b61d00359ccf1c90e14">
+              <span class="m-doc-wrap-bumper">auto <a href="#adaafa8b16cf74b61d00359ccf1c90e14" class="m-doc-self">GetGrid</a>(</span><span class="m-doc-wrap">) -&gt; std::vector&lt;T&gt;&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a2882fd9dad0e30201bcc37207825ab87">
+              <span class="m-doc-wrap-bumper">void <a href="#a2882fd9dad0e30201bcc37207825ab87" class="m-doc-self">SetGrid</a>(</span><span class="m-doc-wrap">const std::vector&lt;T&gt;&amp; grid_)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a934e286e37d21b6fe4f4a305dd4f6333">
+              <span class="m-doc-wrap-bumper">auto <a href="#a934e286e37d21b6fe4f4a305dd4f6333" class="m-doc-self">GetGridPtr</a>(</span><span class="m-doc-wrap">) -&gt; std::vector&lt;T&gt;*</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ac92e14c8b931c1538555222c1423ea98">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac92e14c8b931c1538555222c1423ea98" class="m-doc-self">CopyGrid</a>(</span><span class="m-doc-wrap">) -&gt; std::vector&lt;T&gt;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a51d51dcf8868c58e62170bfb23c3cb86">
+              <span class="m-doc-wrap-bumper">auto <a href="#a51d51dcf8868c58e62170bfb23c3cb86" class="m-doc-self">GetDim</a>(</span><span class="m-doc-wrap">) -&gt; std::vector&lt;uint64_t&gt;&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="afb1aba799ab31ac8452ded3d964adf82">
+              <span class="m-doc-wrap-bumper">void <a href="#afb1aba799ab31ac8452ded3d964adf82" class="m-doc-self">SetDim</a>(</span><span class="m-doc-wrap">const std::vector&lt;uint64_t&gt;&amp; dimensions_)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="aaa8e306f36b049b09ba464d4b061038b">
+              <span class="m-doc-wrap-bumper">auto <a href="#aaa8e306f36b049b09ba464d4b061038b" class="m-doc-self">GetValue</a>(</span><span class="m-doc-wrap">const std::vector&lt;uint64_t&gt;&amp; indices) -&gt; T</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a056201e9b47ae3da802390465230c5fd">
+              <span class="m-doc-wrap-bumper">auto <a href="#a056201e9b47ae3da802390465230c5fd" class="m-doc-self">GetValue</a>(</span><span class="m-doc-wrap">const uint64_t index) -&gt; T</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a2f9cd3d2ff5b38ce90b1e95df26a7166">
+              <span class="m-doc-wrap-bumper">void <a href="#a2f9cd3d2ff5b38ce90b1e95df26a7166" class="m-doc-self">SetValue</a>(</span><span class="m-doc-wrap">const std::vector&lt;uint64_t&gt;&amp; indices,
+              T value)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a96d51cd933544969b92089fe97e4461d">
+              <span class="m-doc-wrap-bumper">void <a href="#a96d51cd933544969b92089fe97e4461d" class="m-doc-self">SetValue</a>(</span><span class="m-doc-wrap">uint64_t index,
+              T value)</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ac33e3dc53dc8be4bc6778bdcdef19c91">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac33e3dc53dc8be4bc6778bdcdef19c91" class="m-doc-self">IsEqual</a>(</span><span class="m-doc-wrap">const <a href="classbenlib_1_1MultiVector.html" class="m-doc">MultiVector</a>&lt;T&gt;&amp; other) -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a9f690d994d3d202721edccebcb2ac42a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9f690d994d3d202721edccebcb2ac42a" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap">uint64_t index) -&gt; <a href="classbenlib_1_1MultiVectorView.html" class="m-doc">MultiVectorView</a>&lt;T&gt;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a10af7faccd3e46b299b2733575d02ca6">
+              <span class="m-doc-wrap-bumper">auto <a href="#a10af7faccd3e46b299b2733575d02ca6" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbenlib_1_1MultiVector.html" class="m-doc">MultiVector</a>&lt;T&gt;&amp; other) -&gt; <a href="classbenlib_1_1MultiVector.html" class="m-doc">MultiVector</a>&lt;T&gt;&amp;</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a0ab77b5f0038c9242b0fc1e79d776cbf">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0ab77b5f0038c9242b0fc1e79d776cbf" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbenlib_1_1MultiVector.html" class="m-doc">MultiVector</a>&lt;T&gt;&amp; other) const -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="ab4d3bf6b4869065ce2ee418b85c99ba3">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab4d3bf6b4869065ce2ee418b85c99ba3" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbenlib_1_1MultiVector.html" class="m-doc">MultiVector</a>&lt;T&gt;&amp; other) const -&gt; bool</span>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+        <section id="pro-attribs">
+          <h2><a href="#pro-attribs">Protected variables</a></h2>
+          <dl class="m-doc">
+            <dt id="af8d5dd4e9c576ac17c3c1aeecfd8b5ff">
+              std::vector&lt;uint64_t&gt; <a href="#af8d5dd4e9c576ac17c3c1aeecfd8b5ff" class="m-doc-self">dimensions</a>
+            </dt>
+            <dd><span></span></dd>
+            <dt id="a35171a7a3092c7fa8c36705d4773b953">
+              std::vector&lt;T&gt; <a href="#a35171a7a3092c7fa8c36705d4773b953" class="m-doc-self">content</a>
+            </dt>
+            <dd><span></span></dd>
+          </dl>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>game-of-life. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
