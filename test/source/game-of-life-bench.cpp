@@ -44,29 +44,6 @@ static void gol_cpp_bench_random_fill(benchmark::State& state)
 }
 BENCHMARK(gol_cpp_bench_random_fill)->Name("gol_cpp_bench_random_fill")->RangeMultiplier(4)->Range(64, 1024);
 
-static void gol_cpp_bench_random_fill2(benchmark::State& state)
-{
-  const auto width = state.range(0);
-  const auto height = state.range(0);
-  const auto cells = width * height;
-
-  std::mt19937_64 rng;
-  std::random_device rnd_device;
-  rng.seed(rnd_device());
-
-  auto grid = benlib::Gol(width, height);
-  benchmark::DoNotOptimize(grid);
-
-  for (auto _ : state) {
-    grid.RandomFill(rng);
-    benchmark::ClobberMemory();
-  }
-
-  state.SetItemsProcessed(state.iterations() * cells);
-  state.SetBytesProcessed(state.iterations() * cells * sizeof(uint8_t));
-}
-BENCHMARK(gol_cpp_bench_random_fill2)->Name("gol_cpp_bench_random_fill2")->RangeMultiplier(4)->Range(64, 1024);
-
 static void gol_cpp_bench_fill(benchmark::State& state)
 {
   const auto width = state.range(0);

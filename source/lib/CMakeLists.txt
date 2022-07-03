@@ -31,6 +31,9 @@ find_package(raylib QUIET)
 find_package(raylib_cpp QUIET)
 find_package(OpenMP 3.0 QUIET)
 
+
+include(../../cmake/lib/vector.cmake)
+
 set(SRCS
     source/gol.cpp
     source/gol.c
@@ -39,7 +42,6 @@ set(SRCS
 set(HEADERS
     source/gol.h
     source/gol.hpp
-    source/multiDimVector.hpp
     )
 
 add_library(game-of-life-lib ${SRCS} ${HEADERS})
@@ -51,6 +53,9 @@ target_include_directories(
 )
 
 target_link_libraries(game-of-life-lib PRIVATE raylib raylib_cpp)
+
+# Needed to be PUBLIC to link with game-of-life
+target_link_libraries(game-of-life-lib PUBLIC vector::vector)
 
 if (OpenMP_FOUND OR OpenMP_CXX_FOUND)
   target_link_libraries(game-of-life-lib PRIVATE OpenMP::OpenMP_CXX OpenMP::OpenMP_C)

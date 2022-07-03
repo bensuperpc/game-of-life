@@ -5,7 +5,7 @@ benlib::Gol::Gol() {}
 benlib::Gol::Gol(const uint64_t width, const uint64_t height)
 {
   std::vector<uint64_t> v = {width, height};
-  this->grid2D = benlib::MultiVector<uint8_t>(v);
+  this->grid2D = benlib::multi_array<uint8_t>(v);
 }
 
 benlib::Gol::Gol(uint8_t** _grid, const uint64_t width, const uint64_t height)
@@ -15,7 +15,7 @@ benlib::Gol::Gol(uint8_t** _grid, const uint64_t width, const uint64_t height)
     std::copy(_grid[i], _grid[i] + height, new_grid.begin() + i * height);
   }
   std::vector<uint64_t> dim = {width, height};
-  this->grid2D = benlib::MultiVector<uint8_t>(dim, new_grid);
+  this->grid2D = benlib::multi_array<uint8_t>(dim, new_grid);
 }
 
 benlib::Gol::Gol(bool** _grid, const uint64_t width, const uint64_t height)
@@ -25,13 +25,13 @@ benlib::Gol::Gol(bool** _grid, const uint64_t width, const uint64_t height)
     std::copy(_grid[i], _grid[i] + height, new_grid.begin() + i * height);
   }
   std::vector<uint64_t> dim = {width, height};
-  this->grid2D = benlib::MultiVector<uint8_t>(dim, new_grid);
+  this->grid2D = benlib::multi_array<uint8_t>(dim, new_grid);
 }
 
 benlib::Gol::Gol(const std::vector<uint8_t>& _grid1D, const uint64_t width, const uint64_t height)
 {
   std::vector<uint64_t> v = {width, height};
-  this->grid2D = benlib::MultiVector<uint8_t>(v);
+  this->grid2D = benlib::multi_array<uint8_t>(v);
   this->grid2D.SetGrid(_grid1D);
 }
 
@@ -43,7 +43,7 @@ benlib::Gol::Gol(const std::vector<std::vector<uint8_t>>& _grid)
     new_grid.insert(new_grid.end(), i.begin(), i.end());
   }
   std::vector<uint64_t> dim = {_grid.size(), _grid[0].size()};
-  this->grid2D = benlib::MultiVector<uint8_t>(dim, new_grid);
+  this->grid2D = benlib::multi_array<uint8_t>(dim, new_grid);
   this->grid2D.SetGrid(new_grid);
 }
 
@@ -65,7 +65,7 @@ void benlib::Gol::Resize(const uint64_t width, const uint64_t height)
   if (width == GetWidth() && height == GetHeight())
     return;
   std::vector<uint64_t> v = {width, height};
-  grid2D.Resize(v);
+  grid2D.resize(v);
 }
 
 void benlib::Gol::Reset()
@@ -75,10 +75,10 @@ void benlib::Gol::Reset()
 
 uint64_t benlib::Gol::GetLivingCells()
 {
-  auto& gridPtr = grid2D.GetGrid();
+  auto* gridPtr = grid2D.data();
   uint64_t livingCell = 0;
   for (uint64_t x = 0; x < GetWidth() * GetHeight(); x++) {
-    if (gridPtr[x]) {
+    if ((*gridPtr)[x]) {
       ++livingCell;
     }
   }
@@ -88,10 +88,10 @@ uint64_t benlib::Gol::GetLivingCells()
 
 uint64_t benlib::Gol::GetDeadCells()
 {
-  auto& gridPtr = grid2D.GetGrid();
+  auto* gridPtr = grid2D.data();
   uint64_t deadCell = 0;
   for (uint64_t x = 0; x < GetWidth() * GetHeight(); x++) {
-    if (!gridPtr[x]) {
+    if (!(*gridPtr)[x]) {
       ++deadCell;
     }
   }
@@ -114,7 +114,7 @@ void benlib::Gol::SetGenerations(const uint64_t _generations)
   this->generations = _generations;
 }
 
-std::vector<uint8_t>& benlib::Gol::GetGrid()
+std::vector<uint8_t> benlib::Gol::GetGrid()
 {
   return grid2D.GetGrid();
 }
@@ -185,7 +185,7 @@ void benlib::Gol::Update()
 {
   generations++;
   // Copy grid to gridB
-  std::vector<uint8_t>&& gridB = grid2D.CopyGrid();
+  std::vector<uint8_t>&& gridB = grid2D.GetGrid();
 #if defined(_OPENMP)
 #  pragma omp parallel for collapse(2) schedule(auto)
 #endif
@@ -210,47 +210,19 @@ void benlib::Gol::Update()
 
 void benlib::Gol::Clear()
 {
-  grid2D.Clear();
+  grid2D.clear();
   // grid2D.ShrinkToFit();
 }
 
 void benlib::Gol::RandomFill()
 {
-  std::mt19937_64 rng;
-  std::random_device rnd_device;
-  rng.seed(rnd_device());
-  std::uniform_int_distribution<uint32_t> dist(0, 1000);
-  auto gen = [&dist, &rng]() { return dist(rng) < 500 ? 1 : 0; };
-
-  auto& grid = grid2D.GetGrid();
-  std::generate(grid.begin(), grid.end(), gen);
-}
-
-void benlib::Gol::RandomFill(std::mt19937_64& rng)
-{
-  std::uniform_int_distribution<uint32_t> dist(0, 1000);
-  auto gen = [&dist, &rng]() { return dist(rng) < 500 ? 1 : 0; };
-
-  auto& grid = grid2D.GetGrid();
-  std::generate(grid.begin(), grid.end(), gen);
-}
-
-void benlib::Gol::RandomFill(const float percentage)
-{
-  std::mt19937_64 rng;
-  std::random_device rnd_device;
-  rng.seed(rnd_device());
-  std::uniform_real_distribution<float> dist(0.0f, 1.0f);
-
-  auto gen = [&dist, &rng, &percentage]() { return dist(rng) < percentage ? 1 : 0; };
-
-  auto& grid = grid2D.GetGrid();
-  std::generate(grid.begin(), grid.end(), gen);
+  auto* grid = grid2D.data();
+  random<uint8_t>((*grid), 0, 1);
 }
 
 void benlib::Gol::Fill(const uint8_t value)
 {
-  grid2D.Fill(value);
+  grid2D.fill(value);
 }
 
 bool benlib::Gol::operator==(const benlib::Gol& other) const
@@ -309,7 +281,7 @@ void benlib::Gol::Deserialize(const std::string& filename)
     new_grid.insert(new_grid.end(), i.begin(), i.end());
   }
   std::vector<uint64_t> dim = {_grid.size(), _grid[0].size()};
-  this->grid2D = benlib::MultiVector<uint8_t>(dim, new_grid);
+  this->grid2D = benlib::multi_array<uint8_t>(dim, new_grid);
   this->grid2D.SetGrid(new_grid);
 }
 

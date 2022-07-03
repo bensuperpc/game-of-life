@@ -8,7 +8,8 @@
 #include <string>  // std::string
 #include <vector>  // std::vector
 
-#include "multiDimVector.hpp"
+#include "vector/multi_array.hpp"
+#include "vector/vector.hpp"
 
 #if ((defined(_MSVC_LANG) && _MSVC_LANG >= 201703L) || __cplusplus >= 201703L)
 #  if __has_include("omp.h")
@@ -64,7 +65,7 @@ public:
   // Get the row at the given coordinates.
   std::vector<uint8_t> GetRow(const uint64_t y);
   // Get grid.
-  std::vector<uint8_t>& GetGrid();
+  std::vector<uint8_t> GetGrid();
   // Set grid.
   void SetGrid(const std::vector<uint8_t>& _grid);
   // Get neighbors.
@@ -86,10 +87,6 @@ public:
 
   // Randomly populate the game of life.
   void RandomFill();
-  // Randomly populate the game of life with rng.
-  void RandomFill(std::mt19937_64& rng);
-  // Randomly populate the game of life with a given percentage of life.
-  void RandomFill(const float percentage);
   // Populate the game of life with value in uint8_tean
   void Fill(const uint8_t value);
   // Reset the game of life.
@@ -113,7 +110,7 @@ protected:
   // The number of generations.
   uint64_t generations = 0;
   // The game of life grid.
-  benlib::MultiVector<uint8_t> grid2D;
+  benlib::multi_array<uint8_t> grid2D;
 };
 }  // namespace benlib
 #endif  // BENLIB_GOL_HPP_

@@ -23,6 +23,7 @@ include(cmake/utile/ccache.cmake)
 
 # ---- Download and install dependencies
 
+# ---- Enable Utile ----
 find_package(OpenMP 3.0)
 
 set(FETCHCONTENT_BASE_DIR "${CMAKE_BINARY_DIR}/3rd-party" CACHE BOOL "" FORCE)
@@ -31,6 +32,7 @@ set(FETCHCONTENT_QUIET FALSE CACHE BOOL "" FORCE)
 include(cmake/lib/raylib.cmake)
 include(cmake/lib/raygui.cmake)
 include(cmake/lib/raylib-cpp.cmake)
+include(cmake/lib/vector.cmake)
 
 # include(cmake/lib/json.cmake)
 
