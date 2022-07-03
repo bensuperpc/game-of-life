@@ -151,20 +151,36 @@ void benlib::Gol::Print()
   std::cout << std::endl;
 }
 
+uint64_t benlib::Gol::GetNeighborsCount(const uint64_t x, const uint64_t y)
+{
+  uint64_t neighbors = 0;
+  for (uint64_t i = -1; i <= 1; i++) {
+    for (uint64_t j = -1; j <= 1; j++) {
+      if (i == 0 && j == 0)
+        continue;
+      if (x + i < GetWidth() && y + j < GetHeight()) {
+        if (grid2D.GetValue((x + i) * GetHeight() + (y + j)) == 1) {
+          neighbors++;
+        }
+      }
+    }
+  }
+  return neighbors;
+}
+
 void benlib::Gol::Update()
 {
   generations++;
-  std::vector<uint8_t> gridB {};
   // Copy grid to gridB
-  gridB = std::move(grid2D.CopyGrid());
-  // gridB = std::move(grid2D.GetGrid());
+  std::vector<uint8_t>&& gridB = grid2D.CopyGrid();
+  int64_t aliveCell = 0;
 #if defined(_OPENMP)
-#  pragma omp parallel for collapse(2) schedule(auto)
+#  pragma omp parallel for collapse(2) schedule(auto) firstprivate(aliveCell)
 #endif
   for (uint64_t x = 0; x < GetWidth(); x++) {
     for (uint64_t y = 0; y < GetHeight(); y++) {
       // Count living neighbors
-      uint64_t aliveCell = 0;
+      aliveCell = 0;
       for (int8_t i = -1; i < 2; i++) {
         for (int8_t j = -1; j < 2; j++) {
           // If is not the center cell
