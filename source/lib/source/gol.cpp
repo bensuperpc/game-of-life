@@ -51,12 +51,12 @@ benlib::Gol::~Gol() {}
 
 uint64_t benlib::Gol::GetWidth()
 {
-  return grid2D.GetDim()[0];
+  return (*grid2D.data_dim())[0];
 }
 
 uint64_t benlib::Gol::GetHeight()
 {
-  return grid2D.GetDim()[1];
+  return (*grid2D.data_dim())[1];
 }
 
 void benlib::Gol::Resize(const uint64_t width, const uint64_t height)
