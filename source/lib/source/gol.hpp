@@ -68,7 +68,11 @@ public:
   // Set grid.
   void SetGrid(const std::vector<uint8_t>& _grid);
   // Get neighbors.
-  uint64_t GetNeighborsCount(const uint64_t x, const uint64_t y);
+  uint64_t GetNeighborsCount(const std::vector<uint8_t>& _grid,
+                             const uint64_t width,
+                             const uint64_t height,
+                             const uint64_t x,
+                             const uint64_t y);
   // Update the game of life.
   void Update();
 

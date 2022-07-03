@@ -151,21 +151,34 @@ void benlib::Gol::Print()
   std::cout << std::endl;
 }
 
-uint64_t benlib::Gol::GetNeighborsCount(const uint64_t x, const uint64_t y)
+uint64_t benlib::Gol::GetNeighborsCount(
+    const std::vector<uint8_t>& _grid, const uint64_t width, const uint64_t height, const uint64_t x, const uint64_t y)
 {
-  uint64_t neighbors = 0;
-  for (uint64_t i = -1; i <= 1; i++) {
-    for (uint64_t j = -1; j <= 1; j++) {
-      if (i == 0 && j == 0)
+  uint64_t aliveCell = 0;
+  for (int8_t i = -1; i < 2; i++) {
+    for (int8_t j = -1; j < 2; j++) {
+      // If is not the center cell
+      if (i == 0 && j == 0) {
         continue;
-      if (x + i < GetWidth() && y + j < GetHeight()) {
-        if (grid2D.GetValue((x + i) * GetHeight() + (y + j)) == 1) {
-          neighbors++;
-        }
+      }
+
+      // Avoid underflow of the grid
+      if ((x == 0 && i == -1) || (y == 0 && j == -1)) {
+        continue;
+      }
+
+      // Avoid overflow of grid
+      if (x + i >= width || y + j >= height) {
+        continue;
+      }
+
+      // Count living neighbors
+      if (_grid[(x + i) * height + y + j]) {
+        ++aliveCell;
       }
     }
   }
-  return neighbors;
+  return aliveCell;
 }
 
 void benlib::Gol::Update()
@@ -173,36 +186,14 @@ void benlib::Gol::Update()
   generations++;
   // Copy grid to gridB
   std::vector<uint8_t>&& gridB = grid2D.CopyGrid();
-  int64_t aliveCell = 0;
 #if defined(_OPENMP)
-#  pragma omp parallel for collapse(2) schedule(auto) firstprivate(aliveCell)
+#  pragma omp parallel for collapse(2) schedule(auto)
 #endif
   for (uint64_t x = 0; x < GetWidth(); x++) {
     for (uint64_t y = 0; y < GetHeight(); y++) {
       // Count living neighbors
-      aliveCell = 0;
-      for (int8_t i = -1; i < 2; i++) {
-        for (int8_t j = -1; j < 2; j++) {
-          // If is not the center cell
-          if (i == 0 && j == 0) {
-            continue;
-          }
+      uint64_t&& aliveCell = GetNeighborsCount(gridB, GetWidth(), GetHeight(), x, y);
 
-          // Avoid underflow of the grid
-          if ((x == 0 && i == -1) || (y == 0 && j == -1)) {
-            continue;
-          }
-
-          // Avoid overflow of grid
-          if (x + i >= GetWidth() || y + j >= GetHeight()) {
-            continue;
-          }
-          // Count living neighbors
-          if (gridB[(x + i) * GetHeight() + y + j]) {
-            ++aliveCell;
-          }
-        }
-      }
       // Game of life rules
       if (grid2D.GetValue(x * GetHeight() + y)) {
         if (aliveCell < 2 || aliveCell > 3) {
