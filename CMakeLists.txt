@@ -109,23 +109,23 @@ endif()
 
 # ---- Declare executable raylib ----
 
-add_executable(game-of-life-exe source/main-raylib.c)
-add_executable(game-of-life::exe ALIAS game-of-life-exe)
+add_executable(game-of-life-c-exe source/main-raylib.c)
+add_executable(game-of-life-c::exe ALIAS game-of-life-c-exe)
 
 set_target_properties(
-    game-of-life-exe PROPERTIES
-    OUTPUT_NAME game-of-life
+    game-of-life-c-exe PROPERTIES
+    OUTPUT_NAME game-of-life-c
     EXPORT_NAME exe
 )
 
-#target_compile_features(game-of-life-exe PRIVATE cxx_std_17)
+#target_compile_features(game-of-life-c-exe PRIVATE cxx_std_17)
 
-target_link_libraries(game-of-life-exe PRIVATE game-of-life-lib)
+target_link_libraries(game-of-life-c-exe PRIVATE game-of-life-lib)
 
-target_link_libraries(game-of-life-exe PRIVATE raylib)
+target_link_libraries(game-of-life-c-exe PRIVATE raylib)
 
 #if (OpenMP_FOUND OR OpenMP_CXX_FOUND)
-#  target_link_libraries(game-of-life-exe PRIVATE OpenMP::OpenMP_CXX)
+#  target_link_libraries(game-of-life-c-exe PRIVATE OpenMP::OpenMP_CXX)
 #endif()
 
 

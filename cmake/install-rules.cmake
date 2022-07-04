@@ -10,7 +10,7 @@ install(
 )
 
 install(
-    TARGETS game-of-life-exe
+    TARGETS game-of-life-c-exe
     RUNTIME COMPONENT game-of-life_Runtime
 )
 
@@ -40,7 +40,7 @@ set(CMAKE_INSTALL_BINDIR [[${CMAKE_INSTALL_BINDIR}]])
 " COMPONENT game-of-life_Development)
 
 install(CODE "
-set(game-of-life_NAME [[$<TARGET_FILE_NAME:game-of-life-exe>]])
+set(game-of-life_NAME [[$<TARGET_FILE_NAME:game-of-life-c-exe>]])
 set(game-of-life_INSTALL_CMAKEDIR [[${game-of-life_INSTALL_CMAKEDIR}]])
 set(CMAKE_INSTALL_BINDIR [[${CMAKE_INSTALL_BINDIR}]])
 " COMPONENT game-of-life_Development)

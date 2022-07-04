@@ -185,7 +185,7 @@ void benlib::Gol::Update()
 {
   generations++;
   // Copy grid to gridB
-  std::vector<uint8_t>&& gridB = grid2D.GetGrid();
+  std::vector<uint8_t> gridB(grid2D.GetGrid());
 #if defined(_OPENMP)
 #  pragma omp parallel for collapse(2) schedule(auto)
 #endif

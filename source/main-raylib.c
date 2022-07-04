@@ -41,7 +41,7 @@ int main()
   uint64_t framesCounter = 0;
 
   bool paused = false;
-  bool displayGrid = true;
+  bool displayGrid = false;
   bool displayHelp = true;
 
   while (!WindowShouldClose()) {
@@ -181,6 +181,18 @@ int main()
 
     int64_t xEnd = (int64_t)(vectB.x / cellXSize) + 1;
     int64_t yEnd = (int64_t)(vectB.y / cellYSize) + 1;
+
+    if (xStart > xEnd) {
+      int64_t tmp = xStart;
+      xStart = xEnd;
+      xEnd = tmp;
+    }
+
+    if (yStart > yEnd) {
+      int64_t tmp = yStart;
+      yStart = yEnd;
+      yEnd = tmp;
+    }
 
     // Avoid out of bounds of the grid
     if (xStart < 0) {

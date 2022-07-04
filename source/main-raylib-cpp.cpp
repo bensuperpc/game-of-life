@@ -35,7 +35,7 @@ auto main() -> int
   uint64_t framesCounter = 0;
 
   bool paused = false;
-  bool displayGrid = true;
+  bool displayGrid = false;
   bool displayHelp = true;
 
   while (!WindowShouldClose()) {
@@ -146,7 +146,6 @@ auto main() -> int
     }
 
     camera.zoom += ((float)GetMouseWheelMove() * 0.10f);
-
     if (camera.zoom > 35.0f)
       camera.zoom = 5.0f;
     else if (camera.zoom < 0.01f)
@@ -175,6 +174,13 @@ auto main() -> int
 
     int64_t xEnd = static_cast<int64_t>(vectB.x / cellXSize) + 1;
     int64_t yEnd = static_cast<int64_t>(vectB.y / cellYSize) + 1;
+
+    if (xStart > xEnd) {
+      std::swap(xStart, xEnd);
+    }
+    if (yStart > yEnd) {
+      std::swap(yStart, yEnd);
+    }
 
     // Avoid out of bounds of the grid
     if (xStart < 0) {
@@ -240,7 +246,7 @@ auto main() -> int
       DrawText("- R to random values", 40, 153, 10, DARKGRAY);
       DrawText("- C to clear game", 40, 173, 10, DARKGRAY);
       DrawText("- Space to pause", 40, 193, 10, DARKGRAY);
-      DrawText("- G to display grid", 40, 213, 10, DARKGRAY);
+      DrawText("- G to display grid (Less perf)", 40, 213, 10, DARKGRAY);
       DrawText("- H to display help", 40, 233, 10, DARKGRAY);
       DrawText("- U to Serialize, L to Deserialize", 40, 253, 10, DARKGRAY);
     }
