@@ -50,7 +50,7 @@
       "hidden": true,
       "cacheVariables": {
         "CMAKE_CXX_EXTENSIONS": "ON",
-        "CMAKE_CXX_STANDARD": "17",
+        "CMAKE_CXX_STANDARD": "20",
         "CMAKE_CXX_STANDARD_REQUIRED": "ON",
         "CMAKE_C_EXTENSIONS": "ON",
         "CMAKE_C_STANDARD": "11",
@@ -69,8 +69,8 @@
       "name": "flags-gprof",
       "hidden": true,
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -pg",
-        "CMAKE_C_FLAGS": "-Wall -Wextra -Wpedantic -pg"
+        "CMAKE_CXX_FLAGS": "-Og -g -Wall -Wextra -Wpedantic -pg",
+        "CMAKE_C_FLAGS": "-Og -g -Wall -Wextra -Wpedantic -pg"
       }
     },
     {

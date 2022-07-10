@@ -38,17 +38,6 @@ include(cmake/lib/vector.cmake)
 
 include(FetchContent)
 
-FetchContent_Declare(bs-thread-pool
-    GIT_REPOSITORY https://github.com/bshoshany/thread-pool.git
-    GIT_TAG 9d43f5d05d11835ec027ae0679f8cd8a1a87e9cb # 2022-05-31
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
-    INSTALL_COMMAND ""
-    TEST_COMMAND ""
-)
-FetchContent_MakeAvailable(bs-thread-pool)
-include_directories("${bs-thread-pool_SOURCE_DIR}")
-
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -88,44 +77,44 @@ add_subdirectory(source/lib)
 
 # ---- Declare executable raylib-cpp ----
 
-add_executable(game-of-life-cpp-exe source/main-raylib-cpp.cpp)
-add_executable(game-of-life-cpp::exe ALIAS game-of-life-cpp-exe)
+add_executable(game-of-life-cpp_exe source/main-raylib-cpp.cpp)
+add_executable(game-of-life-cpp::exe ALIAS game-of-life-cpp_exe)
 
 set_target_properties(
-    game-of-life-cpp-exe PROPERTIES
+    game-of-life-cpp_exe PROPERTIES
     OUTPUT_NAME game-of-life-cpp
     EXPORT_NAME exe
 )
 
-#target_compile_features(game-of-life-cpp-exe PRIVATE cxx_std_17)
+#target_compile_features(game-of-life-cpp_exe PRIVATE cxx_std_17)
 
-target_link_libraries(game-of-life-cpp-exe PRIVATE game-of-life-lib)
+target_link_libraries(game-of-life-cpp_exe PRIVATE game-of-life-lib)
 
-target_link_libraries(game-of-life-cpp-exe PRIVATE raylib raylib_cpp)
+target_link_libraries(game-of-life-cpp_exe PRIVATE raylib raylib_cpp)
 
 if (OpenMP_FOUND OR OpenMP_CXX_FOUND)
-  target_link_libraries(game-of-life-cpp-exe PRIVATE OpenMP::OpenMP_CXX)
+  target_link_libraries(game-of-life-cpp_exe PRIVATE OpenMP::OpenMP_CXX)
 endif()
 
 # ---- Declare executable raylib ----
 
-add_executable(game-of-life-c-exe source/main-raylib.c)
-add_executable(game-of-life-c::exe ALIAS game-of-life-c-exe)
+add_executable(game-of-life-c_exe source/main-raylib.c)
+add_executable(game-of-life-c::exe ALIAS game-of-life-c_exe)
 
 set_target_properties(
-    game-of-life-c-exe PROPERTIES
+    game-of-life-c_exe PROPERTIES
     OUTPUT_NAME game-of-life-c
     EXPORT_NAME exe
 )
 
-#target_compile_features(game-of-life-c-exe PRIVATE cxx_std_17)
+#target_compile_features(game-of-life-c_exe PRIVATE cxx_std_17)
 
-target_link_libraries(game-of-life-c-exe PRIVATE game-of-life-lib)
+target_link_libraries(game-of-life-c_exe PRIVATE game-of-life-lib)
 
-target_link_libraries(game-of-life-c-exe PRIVATE raylib)
+target_link_libraries(game-of-life-c_exe PRIVATE raylib)
 
 #if (OpenMP_FOUND OR OpenMP_CXX_FOUND)
-#  target_link_libraries(game-of-life-c-exe PRIVATE OpenMP::OpenMP_CXX)
+#  target_link_libraries(game-of-life-c_exe PRIVATE OpenMP::OpenMP_CXX)
 #endif()
 
 
