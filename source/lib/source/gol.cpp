@@ -126,19 +126,19 @@ void benlib::Gol::SetGrid(const std::vector<uint8_t>& _grid)
 
 void benlib::Gol::SetCell(const uint64_t x, const uint64_t y, const uint8_t alive)
 {
-  grid2D.SetValue(x * GetHeight() + y, alive);
+  grid2D.set_value(x * GetHeight() + y, alive);
 }
 
 uint8_t benlib::Gol::GetCell(const uint64_t x, const uint64_t y)
 {
-  return grid2D.GetValue(x * GetHeight() + y);
+  return grid2D.get_value(x * GetHeight() + y);
 }
 
 void benlib::Gol::Print()
 {
   for (uint64_t x = 0; x < GetWidth(); x++) {
     for (uint64_t y = 0; y < GetHeight(); y++) {
-      if (grid2D.GetValue(x * GetHeight() + y) == 1) {
+      if (grid2D.get_value(x * GetHeight() + y) == 1) {
         std::cout << " O ";
       } else {
         std::cout << " . ";
@@ -195,13 +195,13 @@ void benlib::Gol::Update()
       uint64_t&& aliveCell = GetNeighborsCount(gridB, GetWidth(), GetHeight(), x, y);
 
       // Game of life rules
-      if (grid2D.GetValue(x * GetHeight() + y)) {
+      if (grid2D.get_value(x * GetHeight() + y)) {
         if (aliveCell < 2 || aliveCell > 3) {
-          grid2D.SetValue(x * GetHeight() + y, 0);
+          grid2D.set_value(x * GetHeight() + y, 0);
         }
       } else {
         if (aliveCell == 3) {
-          grid2D.SetValue(x * GetHeight() + y, 1);
+          grid2D.set_value(x * GetHeight() + y, 1);
         }
       }
     }
@@ -246,7 +246,7 @@ benlib::Gol& benlib::Gol::operator=(const benlib::Gol& other)
 uint8_t benlib::Gol::operator()(const uint64_t x, const uint64_t y)
 {
   std::vector<uint64_t> coor {x, y};
-  return grid2D.GetValue(coor);
+  return grid2D.get_value(coor);
 }
 
 void benlib::Gol::Deserialize(const std::string& filename)
@@ -295,7 +295,7 @@ void benlib::Gol::Serialize(const std::string& filename)
 
   for (uint64_t x = 0; x < GetWidth(); x++) {
     for (uint64_t y = 0; y < GetHeight(); y++) {
-      if (grid2D.GetValue(x * GetHeight() + y)) {
+      if (grid2D.get_value(x * GetHeight() + y)) {
         file << "0";
       } else {
         file << ".";
