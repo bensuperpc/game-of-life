@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3.1.0
 
     - uses: actions/setup-python@v4
       with: { python-version: "3.8" }
@@ -43,7 +43,7 @@ jobs:
     if: github.repository_owner == 'bensuperpc'
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3.1.0
 
     - name: Install LCov
       run: sudo apt-get update -q
@@ -76,7 +76,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3.1.0
 
     - name: Install Linux Dependencies
       run: sudo apt-get install xorg-dev libglu1-mesa-dev ninja-build -y
@@ -109,7 +109,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3.1.0
 
     - name: Install static analyzers
       if: matrix.os == 'ubuntu-latest'
@@ -155,7 +155,7 @@ jobs:
       && github.repository_owner == 'bensuperpc'
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3.1.0
 
     - uses: actions/setup-python@v4
       with: { python-version: "3.8" }
